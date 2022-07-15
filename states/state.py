@@ -7,7 +7,7 @@ class State:
         self.game = game
 
 
-    def update(self) -> None:
+    def update(self, events, keys) -> None:
         pass
 
 

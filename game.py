@@ -30,7 +30,8 @@ class Game:
                 pygame.quit()
                 sys.exit()
 
-            self.events = pygame.event.get()
+            keys = pygame.key.get_pressed()
+            events = pygame.event.get()
 
             if self.nextState is not None:
                 self.dicStates[self.curState].onExitState()
@@ -41,7 +42,7 @@ class Game:
 
             self.screen.fill(Game.BACKGROUND_COLOR)
 
-            self.dicStates[self.curState].update()
+            self.dicStates[self.curState].update(events, keys)
             self.dicStates[self.curState].draw()
 
             pygame.display.flip()

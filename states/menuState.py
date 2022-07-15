@@ -42,8 +42,8 @@ class MenuState (State):
         self.screen.blit(self.surf, (0, 0))
 
 
-    def update(self) -> None:
-        self.menu.update(self.game.events)
+    def update(self, events, keys) -> None:
+        self.menu.update(events)
 
 
     def menuAction(self) -> None:
