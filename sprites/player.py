@@ -7,7 +7,7 @@ class Player(pygame.sprite.Sprite):
         self.image = image
         self.rect = self.image.get_rect(**kwargs)
         self.direction = pygame.math.Vector2()
-        self.speed = 5
+        self.speed = 10
 
 
     def input(self):
@@ -30,4 +30,18 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.input()
-        self.rect.center += self.direction * self.speed
+        newPos = self.direction * self.speed
+        self.rect.center += newPos
+
+        screen = pygame.display.get_surface()
+
+        if self.rect.left < 0:
+            self.rect.left = 0
+        elif self.rect.right > screen.get_width():
+            self.rect.right = screen.get_width()
+            
+        if self.rect.top < 0:
+            self.rect.top = 0
+        elif self.rect.bottom > screen.get_height():
+            self.rect.bottom = screen.get_height()
+        
