@@ -2,7 +2,6 @@ from pkg_resources import EGG_DIST
 import pygame
 import pygame_menu
 import numpy
-from menus import Button
 from math import floor
 from constants import BLACK, EGGPLANT, EMERALD, GREEN_COLOR, HONEYDEW, ZOMP
 
@@ -17,14 +16,6 @@ class MenuState (State):
     def __init__(self, game, renderer: Renderer):
         super().__init__(game, renderer)
         self.surf = pygame.Surface(Renderer.SURFACE_SIZE)
-        self.cool_snake = pygame.image.load('./res/shnake.png')
-        self.bigSnakeFont = pygame.font.Font('./res/SnakeFont.ttf', 72)
-        self.smolSnakeFont = pygame.font.Font('./res/SnakeFont.ttf', 24)
-        self.rows = 17
-        self.columns = 17
-        self.appleSpawn = 1
-        self.delay = 6
-
         self.setupMenu()
 
     def draw(self) -> None:
