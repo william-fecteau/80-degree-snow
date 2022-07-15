@@ -1,10 +1,9 @@
 from typing import NamedTuple
-from display import Renderer
 import pygame
 
 class State:
-    def __init__(self, game, renderer: Renderer):
-        self.renderer = renderer
+    def __init__(self, game, screen: pygame.Surface):
+        self.screen = screen
         self.game = game
 
 

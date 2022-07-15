@@ -3,17 +3,13 @@ from re import T
 from typing import NamedTuple
 import pygame
 from constants import TARGET_FPS
-
-from display import Renderer
 from states.payloads import InGameStatePayload
 
 from .state import State
 
 class InGameState(State):
-    CELL_SIZE = 32
-
-    def __init__(self, game, renderer: Renderer):
-        super().__init__(game, renderer)
+    def __init__(self, game, screen: pygame.Surface):
+        super().__init__(game, screen)
 
     def update(self) -> None:
         for event in self.game.events:
