@@ -14,6 +14,8 @@ class InGameState(State):
         for event in self.game.events:
             if event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
                 self.game.switchState("MenuState")
+            if event.type == pygame.KEYUP and event.key == pygame.K_RETURN:
+                self.game.switchState("InGameState", InGameStatePayload(self.level.num + 1))
         
         self.level.update(self.game.events)
 

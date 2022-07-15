@@ -53,6 +53,8 @@ class Game:
         if self.nextState is None and newStateStr in self.dicStates:
             self.nextState = newStateStr
             self.nextStatePayload = payload
+        else:
+            print("CANT SWITCH STATE")
 
 
 if __name__ == "__main__":
