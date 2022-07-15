@@ -11,10 +11,11 @@ class InGameState(State):
         super().__init__(game, screen)
 
     def update(self, events, keys) -> None:
-        if keys[pygame.K_ESCAPE]:
-            self.game.switchState("MenuState")
-        if keys[pygame.K_RETURN]:
-            self.game.switchState("InGameState", InGameStatePayload(self.level.num + 1))
+        for event in events:
+            if event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
+                self.game.switchState("MenuState")
+            if event.type == pygame.KEYUP and event.key == pygame.K_RETURN:
+                self.game.switchState("InGameState", InGameStatePayload(self.level.num + 1))
         
         self.level.update(events, keys)
 
