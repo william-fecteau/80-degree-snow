@@ -3,7 +3,7 @@ import pygame
 import pygame_menu
 import numpy
 from math import floor
-from constants import BLACK, EGGPLANT, EMERALD, GREEN_COLOR, HONEYDEW, ZOMP
+from constants import BLACK, EGGPLANT, EMERALD, GREEN_COLOR, HONEYDEW, ZOMP, SURFACE_SIZE, WIDTH, HEIGHT
 
 from .payloads import InGameStatePayload
 from .state import State
@@ -13,7 +13,7 @@ class MenuState (State):
 
     def __init__(self, game, renderer: pygame.Surface):
         super().__init__(game, renderer)
-        self.surf = pygame.Surface(game.SURFACE_SIZE)
+        self.surf = pygame.Surface(SURFACE_SIZE)
         self.cool_snake = pygame.image.load('./res/shnake.png')
         self.bigSnakeFont = pygame.font.Font('./res/SnakeFont.ttf', 72)
         self.smolSnakeFont = pygame.font.Font('./res/SnakeFont.ttf', 24)
@@ -31,11 +31,11 @@ class MenuState (State):
         self.surf.blit(self.smolSnakeFont.render(
             "A game where a snake eats balls", True, GREEN_COLOR), (150, 125))
         self.surf.blit(self.smolSnakeFont.render("Centering text is hard",
-                       True, GREEN_COLOR), (self.game.WIDTH-450, self.game.HEIGHT-50))
+                       True, GREEN_COLOR), (WIDTH-450, HEIGHT-50))
 
         for i in range(10):
             self.surf.blit(self.cool_snake, (numpy.random.randint(
-                0, self.game.WIDTH - 100), numpy.random.randint(0, self.game.HEIGHT - 100)))
+                0, WIDTH - 100), numpy.random.randint(0, HEIGHT - 100)))
 
         self.surf.blit(self.cool_snake, (900, 150))
 
@@ -47,8 +47,7 @@ class MenuState (State):
 
 
     def menuAction(self) -> None:
-        self.game.switchState(
-            "InGameState", InGameStatePayload(self.rows, self.columns, self.appleSpawn, self.delay, 2))
+        self.game.switchState("InGameState", InGameStatePayload(1))
 
 
     def setupMenu(self) -> None:
@@ -61,7 +60,7 @@ class MenuState (State):
 
 
         self.menu = pygame_menu.Menu(
-            '', self.game.WIDTH, self.game.HEIGHT, theme=cool_theme, center_content=False)
+            '', WIDTH, HEIGHT, theme=cool_theme, center_content=False)
         self.menu.get_menubar().hide()
 
         self.menu.add.button('Play', self.menuAction)

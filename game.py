@@ -1,19 +1,16 @@
 import sys, pygame
 from typing import NamedTuple
-from constants import TARGET_FPS
+from constants import TARGET_FPS, SURFACE_SIZE
 from states import InGameState, MenuState, State
 
 class Game:
-    WIDTH = 1600
-    HEIGHT = 900
-    SURFACE_SIZE = (WIDTH, HEIGHT)
     BACKGROUND_COLOR = (74, 74, 74)
 
     def __init__(self):
         pygame.init()
         pygame.font.init()
 
-        self.screen = pygame.display.set_mode(Game.SURFACE_SIZE, pygame.HWSURFACE|pygame.DOUBLEBUF)
+        self.screen = pygame.display.set_mode(SURFACE_SIZE, pygame.HWSURFACE|pygame.DOUBLEBUF)
 
         # States
         self.dicStates = {
