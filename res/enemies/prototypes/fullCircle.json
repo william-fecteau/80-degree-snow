@@ -1,14 +1,14 @@
 {
-    "name": "shnake",
+    "name": "fullCircle",
     "image": "basicEnemy",
     "health": 5,
     "attack": {
         "projectileImage": "basic16projectile",
-        "nbProjectiles": 1,
+        "nbProjectiles": 30,
         "projectileSpeed": 3,
-        "rotateSpeedRad": 0,
+        "rotateSpeedRad": 12,
         "initialRotationRad": 90,
-        "shotCooldownMs": 500
+        "shotCooldownMs": 1500
     },
     "moves": [
         {
