@@ -7,9 +7,11 @@ from sprites.projectile import Projectile
 from constants import TARGET_FPS
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, enemyPrototype: EnemyPrototype, **kwargs):
+    def __init__(self, enemyPrototype: EnemyPrototype, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
+        self.playerProjectileGroup = playerProjectileGroup
+        self.enemyProjectileGroup = enemyProjectileGroup
         self.enemyPrototype = enemyPrototype
         self.image = enemyPrototype.image
         self.rect = self.image.get_rect(**kwargs)
@@ -27,7 +29,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def update(self, **kwargs) -> None:
         # Kill enemy if it's hit by a player projectile
-        for projectile in self.enemyPrototype.playerProjectileGroup.sprites():
+        for projectile in self.playerProjectileGroup.sprites():
             if self.rect.colliderect(projectile.rect):
                 self.enemyPrototype.health -= 1
 
@@ -41,7 +43,7 @@ class Enemy(pygame.sprite.Sprite):
         if "events" in kwargs:
             for event in kwargs["events"]:
                 if event.type == self.shotEventId:
-                    self.enemyPrototype.attack.performAttack(self.rect, self.enemyPrototype.enemyProjectileGroup)
+                    self.enemyPrototype.attack.performAttack(self.rect, self.enemyProjectileGroup)
 
 
 
