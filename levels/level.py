@@ -5,6 +5,7 @@ from constants import TARGET_FPS, WIDTH, HEIGHT
 from enemyMove import EnemyMove
 from enemySpawn import EnemySpawn
 from sprites import Player
+from sprites import enemyPrototype
 from sprites.BackgroundObject import BackgroundObject
 from sprites.enemy import Enemy
 import numpy
@@ -200,7 +201,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             projectileImgName = attack['projectileImage']
             radianRotate = numpy.radians(attack['initialRotationRad'])
             radianInitialRotationRad = numpy.radians(attack['rotateSpeedRad'])
-            attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'], attack['projectileSpeed'], radianRotate, radianInitialRotationRad, attack['shotCooldownMs'])
+            attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'], attack['projectileSpeed'], radianInitialRotationRad, radianRotate, attack['shotCooldownMs'])
 
             # Load moves
             moves = prototypeData['moves']
@@ -227,6 +228,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             lstEnemiesSpawn = []
             for enemy in enemies:
                 prototypeToSpawn = enemy['prototypeName']
+                
                 enemySpawn = EnemySpawn(dicEnemyPrototypes[prototypeToSpawn], pygame.Vector2(enemy['spawnPosition']))
                 lstEnemiesSpawn.append(enemySpawn)
 

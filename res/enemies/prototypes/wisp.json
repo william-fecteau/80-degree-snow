@@ -1,0 +1,23 @@
+{
+    "name": "wisp",
+    "image": "basicEnemy",
+    "health": 5,
+    "attack": {
+        "projectileImage": "basic16projectile",
+        "nbProjectiles": 3,
+        "projectileSpeed": 5,
+        "rotateSpeedRad": 30,
+        "initialRotationRad": 60,
+        "shotCooldownMs": 700
+    },
+    "moves": [
+        {
+            "dest": [800, 300], 
+            "durationSec": 5
+        },
+        {
+            "dest": [0, 600], 
+            "durationSec": 5
+        }
+    ]
+}
