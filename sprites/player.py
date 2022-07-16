@@ -30,6 +30,7 @@ class Player(pygame.sprite.Sprite):
         self.speed = 10
         self.pewSound = pygame.mixer.Sound("res/pew1.mp3")
         self.dieSound = pygame.mixer.Sound("res/playerHit1.mp3")
+        self.oldFrost = 5
 
         self.playerProjectileGroup = playerProjectileGroup
         self.enemyProjectileGroup = enemyProjectileGroup
@@ -101,7 +102,9 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(center=oldPos)
 
         # Scale hitbox in function of frostlevel if it has changed
-        self.scalePlayer(frostLevel)
+        if oldState != self.curState or self.oldFrost != frostLevel:
+            self.scalePlayer(frostLevel)
+            self.oldFrost = frostLevel
 
         self.rect.center += self.direction * self.speed
 
