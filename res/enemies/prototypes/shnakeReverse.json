@@ -1,19 +1,19 @@
 {
-    "name": "shnake",
-    "image": "basicEnemy",
+    "name": "shnakeReverse",
+    "image": "basicEnemyReverse",
     "health": 5,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 1,
         "projectileSpeed": 3,
         "rotateSpeedRad": 0,
-        "initialRotationRad": 180,
+        "initialRotationRad": 0,
         "shotCooldownMs": 1000
     },
     "moves": [
         {
-            "dest": [800, 300], 
-            "durationSec": 60
+            "dest": [0, 300], 
+            "durationSec": 5
         }
     ]
 }

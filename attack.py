@@ -1,5 +1,6 @@
 import pygame
 import numpy
+import math
 
 from sprites.projectile import Projectile
 
