@@ -30,7 +30,7 @@ class Attack:
     def performAttack(self, casterRect: pygame.Rect, projectileGroup: pygame.sprite.Group) -> None:
         rotation = self.initialRotation
         for _ in range(self.nbProjectiles):
-            numpy.sqrt((self.projectileSpeed*numpy.cos(rotation) + self.projectileSpeed*numpy.sin(rotation)^2))
+            #numpy.sqrt((self.projectileSpeed*numpy.cos(rotation) + self.projectileSpeed*numpy.sin(rotation)^2))
             speed = pygame.math.Vector2(self.projectileSpeed*numpy.cos(rotation), self.projectileSpeed*numpy.sin(rotation))
             projectile = Projectile(self.projectileImg, speed, centerx=casterRect.centerx, bottom=casterRect.bottom)
             projectileGroup.add(projectile)
