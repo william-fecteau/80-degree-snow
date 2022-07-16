@@ -8,14 +8,22 @@ import numpy
 import random
 from sprites.enemyPrototype import EnemyPrototype
 
-CLOUDS = 25
-CLOUDSIMG = [
-    pygame.image.load("res/cloud-1.png"),
-    pygame.image.load("res/cloud-2.png"),
-    pygame.image.load("res/cloud-3.png"),
-]
-
 class Level:
+    CLOUDS = 25
+    CLOUDSIMG = [
+        pygame.image.load("res/cloud-1.png"),
+        pygame.image.load("res/cloud-2.png"),
+        pygame.image.load("res/cloud-3.png"),
+        pygame.image.load("res/cloud-4.png"),
+        pygame.image.load("res/cloud-5.png"),
+    ]
+
+    BG = pygame.image.load("res/sea-2.jpg")
+    NB_TOT_TILES = 0
+    NB_WIDTH_TILES = 4
+    SIZE_TILE = WIDTH/(2*NB_WIDTH_TILES)
+    LOADING_TILES = False
+
     def __init__(self, num: int, screen: pygame.Surface, background: pygame.Surface) -> None:
         self.num = num
         self.screen = screen
@@ -32,6 +40,7 @@ class Level:
         self.playerProjectileGroup = pygame.sprite.Group()
         self.enemyProjectileGroup = pygame.sprite.Group()
         self.backgroundObjectsGroup = pygame.sprite.Group()
+        self.backgroundTilesGroup = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
 
         # Prototypes
@@ -50,15 +59,22 @@ class Level:
             self.enemies.add(enemy)
             self.enemyProjectileGroup.add(enemy) # Enemy will count as a projectile cuz if it collides with player it will kill him
         
-        for _ in range(CLOUDS):
+        # Generate initial clouds
+        for _ in range(self.CLOUDS):
             self.backgroundObjectsGroup.add(self.generateCloud(True))
 
+        # Generate initial bg
+        for i in range(self.NB_WIDTH_TILES):
+            for j in range(int(HEIGHT/self.SIZE_TILE)+2):
+                self.backgroundTilesGroup.add(BackgroundObject(self.BG, pygame.Vector2(0, -2), self.SIZE_TILE, center=(WIDTH/4 - 25 + self.SIZE_TILE * i,  250 + self.SIZE_TILE * j)))
+                self.NB_TOT_TILES += 1
+
     def generateCloud(self, randomY = False):
-            img = CLOUDSIMG[random.randint(0, len(CLOUDSIMG)-1)]
-            width = random.randint(int(WIDTH/10), int(WIDTH))
-            randomX = random.randint(-int(width/2), WIDTH+int(width/2))
-            Y = random.randint(0 - HEIGHT/2, HEIGHT) if randomY else 0 - img.get_height()
-            speed =  pygame.Vector2(0, -(width*2.5 / WIDTH)*10)
+            img = self.CLOUDSIMG[random.randint(0, len(self.CLOUDSIMG)-1)]                  # Pick a random sprite
+            width = random.randint(int(WIDTH/10), int(WIDTH))                               # Pick a random size 
+            randomX = random.randint(-int(width/2), WIDTH+int(width/2))                     # Pick a random X position
+            Y = random.randint(0 - HEIGHT/2, HEIGHT) if randomY else 0 - img.get_height()   # Pick a randon Y position or top of the screen
+            speed =  pygame.Vector2(0, -(width*2.5 / WIDTH)*10)                             # Pick a speed calculated by size of image
             return BackgroundObject(img, speed, width, center=(randomX,  Y))
         
     def update(self, game, events, keys) -> None:
@@ -68,7 +84,14 @@ class Level:
         self.playerProjectileGroup.update()
         self.player.update(events, keys)
         self.backgroundObjectsGroup.update()
-        if(len(self.backgroundObjectsGroup.sprites()) < CLOUDS): self.backgroundObjectsGroup.add(self.generateCloud())
+        self.backgroundTilesGroup.update()
+        if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS): self.backgroundObjectsGroup.add(self.generateCloud())
+        if(len(self.backgroundTilesGroup.sprites()) < self.NB_TOT_TILES):
+            print(self.NB_TOT_TILES)
+            for i in range(self.NB_WIDTH_TILES):
+                self.backgroundTilesGroup.add(
+                    BackgroundObject(self.BG, pygame.Vector2(0, -2), self.SIZE_TILE, center=(WIDTH/4 - 25 + self.SIZE_TILE * i, self.SIZE_TILE))
+                )
 
         if not self.player.isAlive:
             game.switchState("MenuState")
@@ -76,6 +99,10 @@ class Level:
 
     def draw(self) -> None:
         self.gameWorldSurf.blit(self.background, (0, 0))
+
+        # Background tiles
+        for sprite in self.backgroundTilesGroup.sprites():
+            self.gameWorldSurf.blit(sprite.image, sprite.rect)
 
         # Background elems
         for sprite in self.backgroundObjectsGroup.sprites():
