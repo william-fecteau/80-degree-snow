@@ -1,0 +1,19 @@
+{
+    "name": "fullCircle",
+    "image": "basicEnemy",
+    "health": 5,
+    "attack": {
+        "projectileImage": "basic16projectile",
+        "nbProjectiles": 30,
+        "projectileSpeed": 3,
+        "rotateSpeedDeg": 12,
+        "initialRotationDeg": 90,
+        "shotCooldownMs": 1500
+    },
+    "moves": [
+        {
+            "delta": [800, 300], 
+            "durationSec": 5
+        }
+    ]
+}

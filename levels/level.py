@@ -1,3 +1,4 @@
+import math
 import queue
 from math import ceil
 import pygame
@@ -7,6 +8,7 @@ from constants import BLACK, WIDTH, HEIGHT
 from enemyMove import EnemyMove
 from enemySpawn import EnemySpawn
 from sprites import Player
+from sprites import enemyPrototype
 from sprites.BackgroundObject import BackgroundObject
 from sprites.enemy import Enemy
 import numpy
@@ -108,8 +110,9 @@ class Level:
         del self.dicEnemySpawns[self.nextSpawnTimeMs]
 
         if (len(self.dicEnemySpawns) > 0):
+            oldSpawn = self.nextSpawnTimeMs
             self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
-            pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs)
+            pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs - oldSpawn)
         else:
             pygame.time.set_timer(E_NEXT_SPAWN, 0)
 
@@ -171,7 +174,6 @@ class Level:
                     BackgroundObject(self.BG, pygame.Vector2(0, -self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
                 )
                 # print("BG: " +  str(int(self.SIZE_TILE * i)) +", " + str(-self.SIZE_TILE))
-
 
         if not self.player.isAlive:
             game.switchState("MenuState")
@@ -272,15 +274,16 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             # Load attack
             attack = prototypeData['attack']
             projectileImgName = attack['projectileImage']
-            attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'], attack['projectileSpeed'],
-                               attack['rotateSpeedRad'], attack['initialRotationRad'], attack['shotCooldownMs'])
+            radianRotate = math.radians(attack['initialRotationDeg'])
+            radianInitialRotationRad = math.radians(attack['rotateSpeedDeg'])
+            attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'], attack['projectileSpeed'], radianInitialRotationRad, radianRotate, attack['shotCooldownMs'])
 
             # Load moves
             moves = prototypeData['moves']
             movesObj = []
             for move in moves:
-                dest = move['dest']
-                enemyMove = EnemyMove(dest[0], dest[1], move['durationSec'])
+                delta = move['delta']
+                enemyMove = EnemyMove(pygame.Vector2(delta), move['durationSec'])
                 movesObj.append(enemyMove)
 
             # Load prototype
@@ -300,8 +303,8 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             lstEnemiesSpawn = []
             for enemy in enemies:
                 prototypeToSpawn = enemy['prototypeName']
-                enemySpawn = EnemySpawn(
-                    dicEnemyPrototypes[prototypeToSpawn], pygame.Vector2(enemy['spawnPosition']))
+                
+                enemySpawn = EnemySpawn(dicEnemyPrototypes[prototypeToSpawn], pygame.Vector2(enemy['spawnPosition']))
                 lstEnemiesSpawn.append(enemySpawn)
 
             dicEnemySpawns[spawn['timeToSpawnMs']] = lstEnemiesSpawn
