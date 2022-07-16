@@ -105,8 +105,9 @@ class Level:
         del self.dicEnemySpawns[self.nextSpawnTimeMs]
 
         if (len(self.dicEnemySpawns) > 0):
+            oldSpawn = self.nextSpawnTimeMs
             self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
-            pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs)
+            pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs - oldSpawn)
         else:
             pygame.time.set_timer(E_NEXT_SPAWN, 0)
 
