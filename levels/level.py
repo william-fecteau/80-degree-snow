@@ -72,7 +72,7 @@ class Level:
 
         # Setting up player
         self.player = Player(self.playerProjectileGroup, self.enemyProjectileGroup,
-                             self.gameWorldSurf.get_rect(), centerx=0, bottom=HEIGHT)
+                             self.gameWorldSurf, centerx=0, bottom=HEIGHT)
 
         # enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
         # self.enemies.add(enemy)

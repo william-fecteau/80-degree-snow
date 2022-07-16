@@ -7,14 +7,14 @@ E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, gameworld: pygame.Rect, **kwargs):
+    def __init__(self, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, gameWorldSurf: pygame.Surface, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
         # Loading images
         self.spritesheet = SpriteSheet("res/frosto.png", 64, 64)
 
         self.image = self.spritesheet.image_at(0, 0, -1)
-        self.gameworld = gameworld
+        self.gameWorldSurf = gameWorldSurf
         self.rect = self.image.get_rect(**kwargs)
         self.direction = pygame.math.Vector2()
         self.canShoot = True
@@ -38,7 +38,7 @@ class Player(pygame.sprite.Sprite):
         if self.canShoot:
             pygame.mixer.Sound.play(self.pewSound)
 
-            projectile = Projectile(self.projectileSurface, pygame.Vector2(
+            projectile = Projectile(self.gameWorldSurf, self.projectileSurface, pygame.Vector2(
                 0, -20), bottom=(self.rect.top), centerx=self.rect.centerx)
             self.playerProjectileGroup.add(projectile)
             self.canShoot = False
@@ -77,12 +77,13 @@ class Player(pygame.sprite.Sprite):
         self.rect.center += self.direction * self.speed
 
         # If player goes offscreen, dont lmao
-        if self.rect.left < self.gameworld.left:
-            self.rect.left = self.gameworld.left
-        elif self.rect.right > self.gameworld.right:
-            self.rect.right = self.gameworld.right
+        rect = self.gameWorldSurf.get_rect()
+        if self.rect.left < rect.left:
+            self.rect.left = rect.left
+        elif self.rect.right > rect.right:
+            self.rect.right = rect.right
 
         if self.rect.top < 0:
             self.rect.top = 0
-        elif self.rect.bottom > self.gameworld.height:
-            self.rect.bottom = self.gameworld.height
+        elif self.rect.bottom > rect.height:
+            self.rect.bottom = rect.height
