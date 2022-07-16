@@ -58,6 +58,7 @@ class Level:
         self.gameWorldSurf = gameWorldSurf
         self.dicEnemySpawns = dicEnemySpawns
         self.background = self.BG
+        self.mockFrost = 10
 
         # TODO Change this to spritesheet
         self.diceFaces = [pygame.image.load(
@@ -183,7 +184,7 @@ class Level:
         self.enemies.update(events=events, keys=keys)
         self.enemyProjectileGroup.update()
         self.playerProjectileGroup.update()
-        self.player.update(events, keys)
+        self.player.update(events, keys, self.mockFrost)
         self.backgroundObjectsGroup.update()
         self.backgroundTilesGroup.update()
         if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
@@ -231,6 +232,8 @@ class Level:
         # Player
         self.gameWorldSurf.blit(self.player.image, self.player.rect)
 
+        pygame.draw.rect(self.gameWorldSurf, "red", self.player.hitbox, 1)
+
         self.screen.blit(self.gameWorldSurf, (WIDTH/4, 0))
 
         self.drawUI()
@@ -242,6 +245,9 @@ class Level:
             if event.type == pygame.KEYUP and event.key == pygame.K_r:
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num))
+            if event.type == pygame.KEYUP and event.key == pygame.K_f:
+                print(self.mockFrost)
+                self.mockFrost -= 1
 
             # TODO remove this once heatwave is implemented
             elif event.type == pygame.KEYUP and event.key == pygame.K_k:

@@ -12,10 +12,6 @@
     },
     "moves": [
         {
-            "delta": [1000, 0],
-            "durationSec": 5
-        },
-        {
             "delta": [-800, 0],
             "durationSec": 10000000000
         }
