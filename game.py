@@ -9,6 +9,7 @@ class Game:
     def __init__(self):
         pygame.init()
         pygame.font.init()
+        pygame.mixer.init()
 
         self.screen = pygame.display.set_mode(SURFACE_SIZE, pygame.HWSURFACE|pygame.DOUBLEBUF)
 

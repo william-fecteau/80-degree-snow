@@ -16,6 +16,8 @@ class Player(pygame.sprite.Sprite):
         self.canShoot = True
         self.isAlive = True
         self.speed = 10
+        self.pewSound = pygame.mixer.Sound("res/pew1.mp3")
+        self.dieSound = pygame.mixer.Sound("res/playerHit1.mp3")
 
         self.playerProjectileGroup = playerProjectileGroup
         self.enemyProjectileGroup = enemyProjectileGroup
@@ -23,17 +25,21 @@ class Player(pygame.sprite.Sprite):
         self.projectileSurface = pygame.image.load("res/intro_ball.gif")
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, DEFAULT_SHOT_SPEED_MS)
 
+
     def setShotCooldown(self, shotSpeedMs: int) -> None:
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, 0)
         self.canShoot = True
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, shotSpeedMs)
 
+
     def shoot(self) -> None:
         if self.canShoot:
-            projectile = Projectile(self.projectileSurface, pygame.Vector2(
-                0, -20), bottom=(self.rect.top), centerx=self.rect.centerx)
+            pygame.mixer.Sound.play(self.pewSound)
+
+            projectile = Projectile(self.projectileSurface, pygame.Vector2(0, -20), bottom=(self.rect.top), centerx=self.rect.centerx)
             self.playerProjectileGroup.add(projectile)
             self.canShoot = False
+
 
     def update(self, events, keys) -> None:
         self.direction = pygame.Vector2(0, 0)
@@ -42,6 +48,7 @@ class Player(pygame.sprite.Sprite):
         for enemy in self.enemyProjectileGroup.sprites():
             if self.rect.colliderect(enemy.rect):
                 self.isAlive = False
+                pygame.mixer.Sound.play(self.dieSound)
                 return
 
         # Check if player can shoot
