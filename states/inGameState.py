@@ -17,9 +17,10 @@ class InGameState(State):
             if event.type == pygame.KEYUP and event.key == pygame.K_RETURN:
                 self.game.switchState("InGameState", InGameStatePayload(self.level.num + 1))
         
-        self.level.update(events, keys)
+        self.level.update(self.game, events, keys)
 
-        
+
+
     def draw(self) -> None:
         self.level.draw()
 
