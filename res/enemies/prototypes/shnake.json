@@ -12,7 +12,15 @@
     },
     "moves": [
         {
-            "dest": [800, 300], 
+            "delta": [800, 900],
+            "durationSec": 10
+        },
+        {
+            "delta": [-400, 0],
+            "durationSec": 5
+        },
+        {
+            "delta": [0, -900],
             "durationSec": 5
         }
     ]

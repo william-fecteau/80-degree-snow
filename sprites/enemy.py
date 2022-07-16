@@ -50,7 +50,7 @@ class Enemy(pygame.sprite.Sprite):
         move = self.enemyPrototype.moves[self.curMoveIndex]
 
         # If move is completed
-        if move.destX == numpy.ceil(numpy.round(self.precisePos.x, 2)) and move.destY == numpy.ceil(numpy.round(self.precisePos.y, 2)): # Floating point :)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
+        if self.curDestionation.x == numpy.ceil(numpy.round(self.precisePos.x, 2)) and self.curDestionation.y == numpy.ceil(numpy.round(self.precisePos.y, 2)): # Floating point :)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
             self.curMoveIndex += 1
 
             # If there are no more moves, kill the sprite
@@ -69,7 +69,7 @@ class Enemy(pygame.sprite.Sprite):
     def computeSpeed(self) -> None:
         self.precisePos = pygame.Vector2(self.rect.centerx, self.rect.centery)
         move = self.enemyPrototype.moves[self.curMoveIndex]
-        deltaX = (move.destX - self.rect.centerx)
-        deltaY = (move.destY - self.rect.centery)
 
-        return pygame.Vector2(deltaX, deltaY) / (TARGET_FPS * move.duration)
+        self.curDestionation = pygame.Vector2(self.rect.center) + pygame.Vector2(move.delta)
+
+        return pygame.Vector2(move.delta) / (TARGET_FPS * move.duration)
