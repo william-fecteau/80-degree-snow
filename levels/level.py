@@ -27,9 +27,9 @@ class Level:
 
         # Generating some ennemies
         for _ in range(5):
-            randomX = random.randint(schnakeImg.get_width(), WIDTH - schnakeImg.get_width())
-            randomY = random.randint(schnakeImg.get_height(), HEIGHT - schnakeImg.get_height() - self.player.image.get_height())
-            enemy = Enemy(schnakeImg, 5, self.playerProjectileGroup, self.enemyProjectileGroup, numpy.pi/2, 3, 5, numpy.pi/2, center=(randomX, randomY))
+            randomX = random.randint(schnakeImg.get_width(), self.gameWorldSurf.get_width() - schnakeImg.get_width())
+            randomY = random.randint(schnakeImg.get_height(), self.gameWorldSurf.get_height() - schnakeImg.get_height() - self.player.image.get_height())
+            enemy = Enemy(schnakeImg, 5, self.playerProjectileGroup, self.enemyProjectileGroup, center=(randomX, randomY))
 
             self.enemies.add(enemy)
             self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
