@@ -1,7 +1,9 @@
+import queue
 import pygame
 from attack import Attack
 from constants import TARGET_FPS, WIDTH, HEIGHT
 from enemyMove import EnemyMove
+from enemySpawn import EnemySpawn
 from sprites import Player
 from sprites.BackgroundObject import BackgroundObject
 from sprites.enemy import Enemy
@@ -10,6 +12,8 @@ import random
 from sprites.enemyPrototype import EnemyPrototype
 import json
 import os
+
+E_NEXT_SPAWN = pygame.USEREVENT + 5
 
 class Level:
     CLOUDS = 25
@@ -27,11 +31,12 @@ class Level:
     SIZE_TILE = WIDTH/(2*NB_WIDTH_TILES)
     LOADING_TILES = False
 
-    def __init__(self, num: int, screen: pygame.Surface, gameWorldSurf: pygame.surface, dicEnemyPrototypes: dict[EnemyPrototype]) -> None:
+    def __init__(self, num: int, screen: pygame.Surface, gameWorldSurf: pygame.surface, dicEnemyPrototypes: dict, dicEnemySpawns: dict) -> None:
         self.num = num
         self.screen = screen
         self.dicEnemyPrototypes = dicEnemyPrototypes
         self.gameWorldSurf = gameWorldSurf
+        self.dicEnemySpawns = dicEnemySpawns
 
         # Loading images
         playerImg = pygame.image.load("res/player.png")
@@ -46,16 +51,9 @@ class Level:
         # Setting up player
         self.player = Player(playerImg, self.playerProjectileGroup, self.enemyProjectileGroup, self.gameWorldSurf.get_rect(), centerx=0, bottom=HEIGHT)
 
-        enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
-        self.enemies.add(enemy)
-        self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
-        self.enemies.add(enemy2)
-        self.enemyProjectileGroup.add(enemy2)
-        # # Generating some ennemies
-        # for _ in range(5):
-        #     randomX = random.randint(schnakeImg.get_width(), self.gameWorldSurf.get_width() - schnakeImg.get_width())
-        #     randomY = random.randint(schnakeImg.get_height(), self.gameWorldSurf.get_height() - schnakeImg.get_height() - self.player.image.get_height())
-        #     enemy = Enemy(schnakePrototype, center=(randomX, randomY))
+        # enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
+        # self.enemies.add(enemy)
+        # self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
 
         for _ in range(self.CLOUDS):
             self.backgroundObjectsGroup.add(self.generateCloud(True))
@@ -65,6 +63,30 @@ class Level:
             for j in range(int(HEIGHT/self.SIZE_TILE)+2):
                 self.backgroundTilesGroup.add(BackgroundObject(self.BG, pygame.Vector2(0, -2), self.SIZE_TILE, center=(WIDTH/4 - 25 + self.SIZE_TILE * i,  250 + self.SIZE_TILE * j)))
                 self.NB_TOT_TILES += 1
+
+        # Check for first enemy spawn
+        self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
+        if (self.nextSpawnTimeMs == 0):
+            self.spawnEnemies()
+        else:
+            pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs)
+
+
+    def spawnEnemies(self):
+        for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
+            prototype = enemySpawn.enemyPrototype
+            spawn = enemySpawn.spawnPosition
+            enemy = Enemy(prototype, self.playerProjectileGroup, self.enemyProjectileGroup, center=(spawn.x, spawn.y))
+            self.enemies.add(enemy)
+            self.enemyProjectileGroup.add(enemy)
+
+        del self.dicEnemySpawns[self.nextSpawnTimeMs]
+
+        if (len(self.dicEnemySpawns) > 0):
+            self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
+            pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs)
+        else:
+            pygame.time.set_timer(E_NEXT_SPAWN, 0)
 
 
     def generateCloud(self, randomY = False):
@@ -86,7 +108,6 @@ class Level:
         self.backgroundTilesGroup.update()
         if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS): self.backgroundObjectsGroup.add(self.generateCloud())
         if(len(self.backgroundTilesGroup.sprites()) < self.NB_TOT_TILES):
-            print(self.NB_TOT_TILES)
             for i in range(self.NB_WIDTH_TILES):
                 self.backgroundTilesGroup.add(
                     BackgroundObject(self.BG, pygame.Vector2(0, -2), self.SIZE_TILE, center=(WIDTH/4 - 25 + self.SIZE_TILE * i, self.SIZE_TILE))
@@ -94,6 +115,12 @@ class Level:
 
         if not self.player.isAlive:
             game.switchState("MenuState")
+
+        # Spawn enemies
+        for event in events:
+            if event.type == E_NEXT_SPAWN:
+                self.spawnEnemies()
+                break
 
 
     def draw(self) -> None:
@@ -183,4 +210,20 @@ def loadLevel(screen: pygame.Surface, levelNum: int) -> Level:
             prototypeName = prototypeData['name']
             dicEnemyPrototypes[prototypeName] = prototypeObj
 
-    return Level(levelNum, screen, gameWorldSurf, dicEnemyPrototypes)
+
+    # Loading enemy spawns
+    dicEnemySpawns = {}
+    with open(f'res/enemies/levels/{levelNum}.json') as file:
+        spawnData = json.load(file)
+        for spawn in spawnData:
+            enemies = spawn['enemies']
+            lstEnemiesSpawn = []
+            for enemy in enemies:
+                prototypeToSpawn = enemy['prototypeName']
+                enemySpawn = EnemySpawn(dicEnemyPrototypes[prototypeToSpawn], pygame.Vector2(enemy['spawnPosition']))
+                lstEnemiesSpawn.append(enemySpawn)
+
+            dicEnemySpawns[spawn['timeToSpawnMs']] = lstEnemiesSpawn
+
+
+    return Level(levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns)

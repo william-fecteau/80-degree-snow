@@ -16,7 +16,7 @@ class Attack:
 
 
     def createShotTimer(self) -> int:
-        eventId = pygame.USEREVENT + 100 + Attack.eventCounter
+        eventId = pygame.USEREVENT + 10000 + Attack.eventCounter
         Attack.eventCounter += 1
         pygame.time.set_timer(eventId, self.shotCooldownMs)
         return eventId
