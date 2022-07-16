@@ -16,5 +16,5 @@ class BackgroundObject(pygame.sprite.Sprite):
 
         # If it goes offscreen, die
         screen = pygame.display.get_surface()
-        if self.rect.right < 0 or self.rect.left > screen.get_width() or self.rect.top > screen.get_height():
+        if self.rect.top > screen.get_height():
             self.kill()
