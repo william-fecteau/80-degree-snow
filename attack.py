@@ -27,7 +27,7 @@ class Attack:
         pygame.time.set_timer(eventId, 0)
 
 
-    def performAttack(self, casterRect: pygame.Rect, projectileGroup: pygame.sprite.Group) -> None:
+    def performAttack(self, gameWorldSurf: pygame.Surface, casterRect: pygame.Rect, projectileGroup: pygame.sprite.Group) -> None:
         rotation = self.initialRotation
         for _ in range(self.nbProjectiles):
             cosTheta = math.cos(rotation)
@@ -39,7 +39,7 @@ class Attack:
             projectileSpeed.x = projectileSpeed.x
             projectileSpeed.y = projectileSpeed.y
 
-            projectile = Projectile(self.projectileImg, projectileSpeed, centerx=casterRect.centerx, bottom=casterRect.bottom)
+            projectile = Projectile(gameWorldSurf, self.projectileImg, projectileSpeed, centerx=casterRect.centerx, bottom=casterRect.bottom)
             projectileGroup.add(projectile)
 
             rotation += self.rotateSpeed

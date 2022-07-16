@@ -48,6 +48,8 @@ class Level:
     # tweek if you see gaps in the textures (this shit is black magic)
     OFFSET = 2
 
+    MAX_FROST = 10
+
     def __init__(self, game, num: int, screen: pygame.Surface, gameWorldSurf: pygame.surface, dicEnemyPrototypes: dict, dicEnemySpawns: dict) -> None:
         self.game = game
         self.num = num
@@ -56,12 +58,16 @@ class Level:
         self.gameWorldSurf = gameWorldSurf
         self.dicEnemySpawns = dicEnemySpawns
         self.background = self.BG
+        self.mockFrost = 10
 
+        # TODO Change this to spritesheet
         self.diceFaces = [pygame.image.load(
             f"res/images/dice{i}.png") for i in range(1, 7)]
         for i in range(len(self.diceFaces)):
             self.diceFaces[i] = pygame.transform.scale(
                 self.diceFaces[i], (DICE_SIZE, DICE_SIZE))
+
+        self.frostLevel = self.MAX_FROST/2
 
         # Setting up groups
         self.playerProjectileGroup = pygame.sprite.Group()
@@ -72,7 +78,7 @@ class Level:
 
         # Setting up player
         self.player = Player(self.playerProjectileGroup, self.enemyProjectileGroup,
-                             self.gameWorldSurf.get_rect(), centerx=0, bottom=HEIGHT)
+                             self.gameWorldSurf, centerx=0, bottom=HEIGHT)
 
         # enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
         # self.enemies.add(enemy)
@@ -107,7 +113,7 @@ class Level:
         for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
             prototype = enemySpawn.enemyPrototype
             spawn = enemySpawn.spawnPosition
-            enemy = Enemy(prototype, self.playerProjectileGroup,
+            enemy = Enemy(self.gameWorldSurf, prototype, self.playerProjectileGroup,
                           self.enemyProjectileGroup, center=(spawn.x, spawn.y))
             self.enemies.add(enemy)
             self.enemyProjectileGroup.add(enemy)
@@ -161,8 +167,15 @@ class Level:
             self.rollDices()
             return
 
-        # TODO: Actually apply heatwave effect
-        self.ui.heatWave(sum(self.nextHeatWave))
+        frostLeft = self.frostLevel - sum(self.nextHeatWave)
+
+        if (frostLeft <= 0):
+            # ur dead lol remove a life here
+            print('ur dead')
+            self.frostLevel = 1
+            pass
+        else:
+            self.frostLevel = frostLeft
 
         self.rollDices()  # Roll dices for next heatwave
 
@@ -171,20 +184,17 @@ class Level:
         self.enemies.update(events=events, keys=keys)
         self.enemyProjectileGroup.update()
         self.playerProjectileGroup.update()
-        self.player.update(events, keys)
+        self.player.update(events, keys, self.mockFrost)
         self.backgroundObjectsGroup.update()
         self.backgroundTilesGroup.update()
         if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
             self.backgroundObjectsGroup.add(self.generateCloud())
         if(len(self.backgroundTilesGroup.sprites()) < self.NB_TOT_TILES):
-            # print(self.NB_TOT_TILES)
-            # print(len(self.backgroundTilesGroup.sprites()))
             for i in range(self.NB_WIDTH_TILES):
                 self.backgroundTilesGroup.add(
                     BackgroundObject(self.BG, pygame.Vector2(
                         0, -self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
                 )
-                # print("BG: " +  str(int(self.SIZE_TILE * i)) +", " + str(-self.SIZE_TILE))
 
         if not self.player.isAlive:
             game.switchState("MenuState")
@@ -222,21 +232,26 @@ class Level:
         # Player
         self.gameWorldSurf.blit(self.player.image, self.player.rect)
 
+        pygame.draw.rect(self.gameWorldSurf, "red", self.player.hitbox, 1)
+
         self.screen.blit(self.gameWorldSurf, (WIDTH/4, 0))
 
         self.drawUI()
 
-        self.ui.draw(self.screen)
+        self.ui.draw(self.screen, self.frostLevel)
 
     def pollInput(self, events, keys) -> None:
         for event in events:
             if event.type == pygame.KEYUP and event.key == pygame.K_r:
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num))
+            if event.type == pygame.KEYUP and event.key == pygame.K_f:
+                print(self.mockFrost)
+                self.mockFrost -= 1
 
             # TODO remove this once heatwave is implemented
             elif event.type == pygame.KEYUP and event.key == pygame.K_k:
-                self.ui.addFrost(1)
+                self.addFrost(1)
 
     def drawUI(self) -> None:
         # Draw left UI rectangle
@@ -255,6 +270,34 @@ class Level:
                             2, diceYStart + i * (DICE_SIZE + diceYOffset)))
 
         self.screen.blit(leftUi, leftUiRect)
+
+    def addFrost(self, amount: int) -> None:
+        if self.frostLevel + amount <= self.MAX_FROST:
+            self.frostLevel += amount
+        else:
+            overFrost = self.frostLevel + amount - self.MAX_FROST
+            self.frostLevel = self.MAX_FROST
+            # Lower the dice value function by overfrost
+            self.overFrostDice(overFrost)
+
+    def overFrostDice(self, overFrost: int) -> None:
+        # Get last dice thats not 0
+        lastDiceIndex = NB_DICE - 1
+        while lastDiceIndex >= 0 and self.nextHeatWave[lastDiceIndex] == 0:
+            lastDiceIndex -= 1
+
+        if (lastDiceIndex >= 0):
+            newDiceValue = self.nextHeatWave[lastDiceIndex] - overFrost
+
+            if (newDiceValue < 0):
+                overFrost -= self.nextHeatWave[lastDiceIndex]
+                self.nextHeatWave[lastDiceIndex] = 0
+                self.overFrostDice(overFrost)
+            else:
+                self.nextHeatWave[lastDiceIndex] = int(newDiceValue)
+
+        # If there are no dices left, just return
+        pass
 
 
 def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
@@ -282,7 +325,8 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             projectileImgName = attack['projectileImage']
             radianRotate = math.radians(attack['initialRotationDeg'])
             radianInitialRotation = math.radians(attack['rotateSpeedDeg'])
-            attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'], attack['projectileSpeed'], radianInitialRotation, radianRotate, attack['shotCooldownMs'])
+            attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'],
+                               attack['projectileSpeed'], radianInitialRotation, radianRotate, attack['shotCooldownMs'])
 
             # Load moves
             moves = prototypeData['moves']

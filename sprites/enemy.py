@@ -7,9 +7,10 @@ from sprites.projectile import Projectile
 from constants import TARGET_FPS
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, enemyPrototype: EnemyPrototype, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, **kwargs):
+    def __init__(self, gameWorldSurf: pygame.Surface, enemyPrototype: EnemyPrototype, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
+        self.gameWorldSurf = gameWorldSurf
         self.playerProjectileGroup = playerProjectileGroup
         self.enemyProjectileGroup = enemyProjectileGroup
         self.enemyPrototype = enemyPrototype
@@ -29,8 +30,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def update(self, **kwargs) -> None:
         # If it goes offscreen, die
-        screen = pygame.display.get_surface()
-        if self.rect.right < 0 or self.rect.bottom < 0 or self.rect.left > screen.get_width() or self.rect.top > screen.get_height():
+        if self.rect.right < 0 or self.rect.bottom < 0 or self.rect.left > self.gameWorldSurf.get_width() or self.rect.top > self.gameWorldSurf.get_height():
             self.kill()
             return
 
@@ -50,7 +50,7 @@ class Enemy(pygame.sprite.Sprite):
         if "events" in kwargs:
             for event in kwargs["events"]:
                 if event.type == self.shotEventId:
-                    self.enemyPrototype.attack.performAttack(self.rect, self.enemyProjectileGroup)
+                    self.enemyPrototype.attack.performAttack(self.gameWorldSurf, self.rect, self.enemyProjectileGroup)
 
 
         # If move is completed
