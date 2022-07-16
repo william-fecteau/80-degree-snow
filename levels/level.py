@@ -107,7 +107,7 @@ class Level:
         for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
             prototype = enemySpawn.enemyPrototype
             spawn = enemySpawn.spawnPosition
-            enemy = Enemy(prototype, self.playerProjectileGroup,
+            enemy = Enemy(self.gameWorldSurf, prototype, self.playerProjectileGroup,
                           self.enemyProjectileGroup, center=(spawn.x, spawn.y))
             self.enemies.add(enemy)
             self.enemyProjectileGroup.add(enemy)
