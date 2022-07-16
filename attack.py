@@ -36,8 +36,8 @@ class Attack:
             speed = pygame.math.Vector2(cosTheta, sinTheta) * self.projectileSpeed
             
             projectileSpeed = speed * speed.magnitude()
-            projectileSpeed.x = round(projectileSpeed.x)
-            projectileSpeed.y = round(projectileSpeed.y)
+            projectileSpeed.x = projectileSpeed.x
+            projectileSpeed.y = projectileSpeed.y
 
             projectile = Projectile(self.projectileImg, projectileSpeed, centerx=casterRect.centerx, bottom=casterRect.bottom)
             projectileGroup.add(projectile)

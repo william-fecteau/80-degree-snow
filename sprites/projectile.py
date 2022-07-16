@@ -6,10 +6,12 @@ class Projectile(pygame.sprite.Sprite):
 
         self.image = pygame.Surface.convert_alpha(image)
         self.rect = self.image.get_rect(**kwargs)
+        self.precisePos = pygame.Vector2(self.rect.center)
         self.speed = speed
                 
     def update(self) -> None:
-        self.rect.center += self.speed
+        self.precisePos += self.speed
+        self.rect.center = self.precisePos
 
         # If it goes offscreen, die
         screen = pygame.display.get_surface()
