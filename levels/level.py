@@ -9,8 +9,7 @@ class Level:
     def __init__(self, num: int, screen: pygame.Surface, background: pygame.Surface) -> None:
         self.num = num
         self.screen = screen
-        self.gameWorldRect = pygame.Rect(
-            (WIDTH/4, 0), (WIDTH/2, HEIGHT))
+        self.gameWorldSurf = pygame.Surface((WIDTH/2, HEIGHT))
         self.background = background
 
         # Loading images
@@ -23,21 +22,17 @@ class Level:
         self.enemies = pygame.sprite.Group()
 
         # Setting up player
-        self.player = Player(playerImg, self.playerProjectileGroup, self.enemyProjectileGroup,
-                             self.gameWorldRect, centerx=WIDTH / 2, bottom=HEIGHT)
+        self.player = Player(playerImg, self.playerProjectileGroup, self.enemyProjectileGroup, self.gameWorldSurf.get_rect(), centerx=WIDTH / 2, bottom=HEIGHT)
 
         # Generating some ennemies
         for _ in range(5):
-            randomX = random.randint(
-                schnakeImg.get_width(), WIDTH - schnakeImg.get_width())
-            randomY = random.randint(schnakeImg.get_height(
-            ), HEIGHT - schnakeImg.get_height() - self.player.image.get_height())
-            enemy = Enemy(schnakeImg, 5, self.playerProjectileGroup,
-                          self.enemyProjectileGroup, center=(randomX, randomY))
+            randomX = random.randint(schnakeImg.get_width(), self.gameWorldSurf.get_width() - schnakeImg.get_width())
+            randomY = random.randint(schnakeImg.get_height(), self.gameWorldSurf.get_height() - schnakeImg.get_height() - self.player.image.get_height())
+            enemy = Enemy(schnakeImg, 5, self.playerProjectileGroup, self.enemyProjectileGroup, center=(randomX, randomY))
 
             self.enemies.add(enemy)
-            # Enemy will count as a projectile cuz if it collides with player it will kill him
-            self.enemyProjectileGroup.add(enemy)
+            self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
+
 
     def update(self, game, events, keys) -> None:
         self.pollInput(events, keys)
@@ -49,28 +44,33 @@ class Level:
         if not self.player.isAlive:
             game.switchState("MenuState")
 
+
     def draw(self) -> None:
-        self.screen.blit(self.background, (0, 0))
+        self.gameWorldSurf.blit(self.background, (0, 0))
 
         # Enemies
         for sprite in self.enemies.sprites():
-            self.screen.blit(sprite.image, sprite.rect)
+            self.gameWorldSurf.blit(sprite.image, sprite.rect)
 
         # Player projectiles
         for sprite in self.playerProjectileGroup.sprites():
-            self.screen.blit(sprite.image, sprite.rect)
+            self.gameWorldSurf.blit(sprite.image, sprite.rect)
 
         # Enemy projectiles
         for sprite in self.enemyProjectileGroup.sprites():
-            self.screen.blit(sprite.image, sprite.rect)
+            self.gameWorldSurf.blit(sprite.image, sprite.rect)
 
         # Player
-        self.screen.blit(self.player.image, self.player.rect)
+        self.gameWorldSurf.blit(self.player.image, self.player.rect)
+
+        self.screen.blit(self.gameWorldSurf, (WIDTH/4, 0))
 
         self.drawUI()
 
+
     def pollInput(self, events, keys) -> None:
         pass
+
 
     def drawUI(self) -> None:
         # Draw left UI rectangle
