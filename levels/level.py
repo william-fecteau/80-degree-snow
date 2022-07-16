@@ -18,6 +18,7 @@ from states.payloads import InGameStatePayload
 
 E_NEXT_SPAWN = pygame.USEREVENT + 5
 
+
 class Level:
     CLOUDS = 25
     CLOUDSIMG = [
@@ -41,10 +42,8 @@ class Level:
         self.dicEnemyPrototypes = dicEnemyPrototypes
         self.gameWorldSurf = gameWorldSurf
         self.dicEnemySpawns = dicEnemySpawns
+        self.time = pygame.time.get_ticks()
         self.ui_font = pygame.font.Font(pygame_menu.font.FONT_MUNRO, 50)
-
-        # Loading images
-        playerImg = pygame.image.load("res/player.png")
 
         # Setting up groups
         self.playerProjectileGroup = pygame.sprite.Group()
@@ -54,7 +53,8 @@ class Level:
         self.enemies = pygame.sprite.Group()
 
         # Setting up player
-        self.player = Player(playerImg, self.playerProjectileGroup, self.enemyProjectileGroup, self.gameWorldSurf.get_rect(), centerx=0, bottom=HEIGHT)
+        self.player = Player(self.playerProjectileGroup, self.enemyProjectileGroup,
+                             self.gameWorldSurf.get_rect(), centerx=0, bottom=HEIGHT)
 
         # enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
         # self.enemies.add(enemy)
@@ -66,7 +66,8 @@ class Level:
         # Generate initial bg
         for i in range(self.NB_WIDTH_TILES):
             for j in range(int(HEIGHT/self.SIZE_TILE)+2):
-                self.backgroundTilesGroup.add(BackgroundObject(self.BG, pygame.Vector2(0, -2), self.SIZE_TILE, center=(WIDTH/4 - 25 + self.SIZE_TILE * i,  250 + self.SIZE_TILE * j)))
+                self.backgroundTilesGroup.add(BackgroundObject(self.BG, pygame.Vector2(
+                    0, -2), self.SIZE_TILE, center=(WIDTH/4 - 25 + self.SIZE_TILE * i,  250 + self.SIZE_TILE * j)))
                 self.NB_TOT_TILES += 1
 
         # Check for first enemy spawn
@@ -76,12 +77,12 @@ class Level:
         else:
             pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs)
 
-
     def spawnEnemies(self):
         for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
             prototype = enemySpawn.enemyPrototype
             spawn = enemySpawn.spawnPosition
-            enemy = Enemy(prototype, self.playerProjectileGroup, self.enemyProjectileGroup, center=(spawn.x, spawn.y))
+            enemy = Enemy(prototype, self.playerProjectileGroup,
+                          self.enemyProjectileGroup, center=(spawn.x, spawn.y))
             self.enemies.add(enemy)
             self.enemyProjectileGroup.add(enemy)
 
@@ -93,15 +94,19 @@ class Level:
         else:
             pygame.time.set_timer(E_NEXT_SPAWN, 0)
 
-
-    def generateCloud(self, randomY = False):
-            img = self.CLOUDSIMG[random.randint(0, len(self.CLOUDSIMG)-1)]                  # Pick a random sprite
-            width = random.randint(int(WIDTH/10), int(WIDTH))                               # Pick a random size 
-            randomX = random.randint(-int(width/2), WIDTH+int(width/2))                     # Pick a random X position
-            Y = random.randint(0 - HEIGHT/2, HEIGHT) if randomY else 0 - img.get_height()   # Pick a randon Y position or top of the screen
-            speed =  pygame.Vector2(0, -(width*2.5 / WIDTH)*10)                             # Pick a speed calculated by size of image
-            return BackgroundObject(img, speed, width, center=(randomX,  Y))
-
+    def generateCloud(self, randomY=False):
+        # Pick a random sprite
+        img = self.CLOUDSIMG[random.randint(0, len(self.CLOUDSIMG)-1)]
+        # Pick a random size
+        width = random.randint(int(WIDTH/10), int(WIDTH))
+        # Pick a random X position
+        randomX = random.randint(-int(width/2), WIDTH+int(width/2))
+        # Pick a randon Y position or top of the screen
+        Y = random.randint(
+            0 - HEIGHT/2, HEIGHT) if randomY else 0 - img.get_height()
+        # Pick a speed calculated by size of image
+        speed = pygame.Vector2(0, -(width*2.5 / WIDTH)*10)
+        return BackgroundObject(img, speed, width, center=(randomX,  Y))
 
     def update(self, game, events, keys) -> None:
         self.pollInput(events, keys)
@@ -111,11 +116,13 @@ class Level:
         self.player.update(events, keys)
         self.backgroundObjectsGroup.update()
         self.backgroundTilesGroup.update()
-        if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS): self.backgroundObjectsGroup.add(self.generateCloud())
+        if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
+            self.backgroundObjectsGroup.add(self.generateCloud())
         if(len(self.backgroundTilesGroup.sprites()) < self.NB_TOT_TILES):
             for i in range(self.NB_WIDTH_TILES):
                 self.backgroundTilesGroup.add(
-                    BackgroundObject(self.BG, pygame.Vector2(0, -2), self.SIZE_TILE, center=(WIDTH/4 - 25 + self.SIZE_TILE * i, self.SIZE_TILE))
+                    BackgroundObject(self.BG, pygame.Vector2(
+                        0, -2), self.SIZE_TILE, center=(WIDTH/4 - 25 + self.SIZE_TILE * i, self.SIZE_TILE))
                 )
 
         if not self.player.isAlive:
@@ -126,7 +133,6 @@ class Level:
             if event.type == E_NEXT_SPAWN:
                 self.spawnEnemies()
                 break
-
 
     def draw(self) -> None:
         # Background tiles
@@ -156,12 +162,11 @@ class Level:
 
         self.drawUI()
 
-
     def pollInput(self, events, keys) -> None:
         for event in events:
             if event.type == pygame.KEYUP and event.key == pygame.K_r:
-                self.game.switchState("InGameState", InGameStatePayload(self.num))
-
+                self.game.switchState(
+                    "InGameState", InGameStatePayload(self.num))
 
     def drawUI(self) -> None:
         # Draw left UI rectangle
@@ -177,15 +182,10 @@ class Level:
                                              True, (255, 255, 255)), (50, 0))
 
 
-
-
-
-
 def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
     worldWidth = WIDTH / 2
     worldHeight = HEIGHT
     gameWorldSurf = pygame.Surface((worldWidth, worldHeight))
-
 
     # Loading images
     dicImages = {}
@@ -193,7 +193,6 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
         data = json.load(file)
         for key in data.keys():
             dicImages[key] = pygame.image.load(data[key])
-
 
     # Loading prototypes
     dicEnemyPrototypes = {}
@@ -206,7 +205,8 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             # Load attack
             attack = prototypeData['attack']
             projectileImgName = attack['projectileImage']
-            attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'], attack['projectileSpeed'], attack['rotateSpeedRad'], attack['initialRotationRad'], attack['shotCooldownMs'])
+            attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'], attack['projectileSpeed'],
+                               attack['rotateSpeedRad'], attack['initialRotationRad'], attack['shotCooldownMs'])
 
             # Load moves
             moves = prototypeData['moves']
@@ -215,14 +215,14 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
                 dest = move['dest']
                 enemyMove = EnemyMove(dest[0], dest[1], move['durationSec'])
                 movesObj.append(enemyMove)
-            
+
             # Load prototype
             imageName = prototypeData['image']
-            prototypeObj = EnemyPrototype(dicImages[imageName], prototypeData['health'], attackObj, movesObj)
+            prototypeObj = EnemyPrototype(
+                dicImages[imageName], prototypeData['health'], attackObj, movesObj)
 
             prototypeName = prototypeData['name']
             dicEnemyPrototypes[prototypeName] = prototypeObj
-
 
     # Loading enemy spawns
     dicEnemySpawns = {}
@@ -233,10 +233,10 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             lstEnemiesSpawn = []
             for enemy in enemies:
                 prototypeToSpawn = enemy['prototypeName']
-                enemySpawn = EnemySpawn(dicEnemyPrototypes[prototypeToSpawn], pygame.Vector2(enemy['spawnPosition']))
+                enemySpawn = EnemySpawn(
+                    dicEnemyPrototypes[prototypeToSpawn], pygame.Vector2(enemy['spawnPosition']))
                 lstEnemiesSpawn.append(enemySpawn)
 
             dicEnemySpawns[spawn['timeToSpawnMs']] = lstEnemiesSpawn
-
 
     return Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns)

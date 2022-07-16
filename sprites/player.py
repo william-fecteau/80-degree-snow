@@ -1,4 +1,5 @@
 import pygame
+from anim.spritesheet import SpriteSheet
 from sprites.projectile import Projectile
 
 DEFAULT_SHOT_SPEED_MS = 100
@@ -6,10 +7,13 @@ E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, image: pygame.Surface, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, gameworld: pygame.Rect, **kwargs):
+    def __init__(self, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, gameworld: pygame.Rect, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = image
+        # Loading images
+        self.spritesheet = SpriteSheet("res/frosto.png", 64, 64)
+
+        self.image = self.spritesheet.image_at(0, 0, -1)
         self.gameworld = gameworld
         self.rect = self.image.get_rect(**kwargs)
         self.direction = pygame.math.Vector2()
@@ -25,21 +29,19 @@ class Player(pygame.sprite.Sprite):
         self.projectileSurface = pygame.image.load("res/intro_ball.gif")
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, DEFAULT_SHOT_SPEED_MS)
 
-
     def setShotCooldown(self, shotSpeedMs: int) -> None:
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, 0)
         self.canShoot = True
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, shotSpeedMs)
 
-
     def shoot(self) -> None:
         if self.canShoot:
             pygame.mixer.Sound.play(self.pewSound)
 
-            projectile = Projectile(self.projectileSurface, pygame.Vector2(0, -20), bottom=(self.rect.top), centerx=self.rect.centerx)
+            projectile = Projectile(self.projectileSurface, pygame.Vector2(
+                0, -20), bottom=(self.rect.top), centerx=self.rect.centerx)
             self.playerProjectileGroup.add(projectile)
             self.canShoot = False
-
 
     def update(self, events, keys) -> None:
         self.direction = pygame.Vector2(0, 0)
@@ -62,8 +64,10 @@ class Player(pygame.sprite.Sprite):
         # Move player
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             self.direction.y = -1
+            self.image = self.spritesheet.image_at(1, 1, -1)
         elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.direction.y = 1
+            self.image = self.spritesheet.image_at(1, 0, -1)
 
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction.x = 1
