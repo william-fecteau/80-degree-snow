@@ -7,8 +7,7 @@ class Projectile(pygame.sprite.Sprite):
         self.image = image
         self.rect = self.image.get_rect(**kwargs)
         self.speed = speed
-
-
+                
     def update(self) -> None:
         self.rect.center += self.speed
 
