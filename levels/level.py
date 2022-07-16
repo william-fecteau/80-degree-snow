@@ -17,6 +17,11 @@ import os
 from states.payloads import InGameStatePayload
 
 E_NEXT_SPAWN = pygame.USEREVENT + 5
+E_HEATWAVE = pygame.USEREVENT + 6
+
+HEATWAVE_INTERVAL_SEC = 5
+NB_DICE = 3
+DICE_SIZE = 100
 
 class Level:
     CLOUDS = 20
@@ -44,11 +49,14 @@ class Level:
         self.dicEnemyPrototypes = dicEnemyPrototypes
         self.gameWorldSurf = gameWorldSurf
         self.dicEnemySpawns = dicEnemySpawns
-        self.gameWorldSurf = pygame.Surface((WIDTH/2, HEIGHT))
         self.background = self.BG
 
         # Loading images
         playerImg = pygame.image.load("res/player.png")
+        self.diceFaces = [pygame.image.load(f"res/images/dice{i}.png") for i in range(1, 7)]
+        for i in range(len(self.diceFaces)):
+            self.diceFaces[i] = pygame.transform.scale(self.diceFaces[i], (DICE_SIZE, DICE_SIZE))
+
 
         # Setting up groups
         self.playerProjectileGroup = pygame.sprite.Group()
@@ -83,6 +91,10 @@ class Level:
         else:
             pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs)
 
+        # Heatwave setup
+        self.nextHeatWave = [0 for _ in range(NB_DICE)]
+        pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
+
 
     def spawnEnemies(self):
         for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
@@ -109,6 +121,24 @@ class Level:
             speed =  pygame.Vector2(0, -(width*2.5 / WIDTH)*12)                             # Pick a speed calculated by size of image
             return BackgroundObject(img, speed, width, topleft=(randomX,  Y))
         
+    def rollDices(self):
+        for i in range(NB_DICE):
+            self.nextHeatWave[i] = random.randint(1, 6)
+
+    def applyHeatwave(self):
+
+        # If its the first heatwave, just roll dice
+        if self.nextHeatWave[0] == 0:
+            self.rollDices()
+            return
+        
+        # TODO: Actually apply heatwave effect
+        self.rollDices() # Roll dices for next heatwave
+
+
+
+
+
     def update(self, game, events, keys) -> None:
         self.pollInput(events, keys)
         self.enemies.update(events=events, keys=keys)
@@ -135,6 +165,9 @@ class Level:
         for event in events:
             if event.type == E_NEXT_SPAWN:
                 self.spawnEnemies()
+                break
+            elif event.type == E_HEATWAVE:
+                self.applyHeatwave()
                 break
 
 
@@ -175,9 +208,27 @@ class Level:
 
     def drawUI(self) -> None:
         # Draw left UI rectangle
-        pygame.draw.rect(self.screen, (0, 0, 0), (0, 0, WIDTH/4, HEIGHT))
-        pygame.draw.rect(self.screen, (255, 255, 255),
-                         (WIDTH/4 * 3, 0, WIDTH/4, HEIGHT))
+        leftUi = pygame.Surface((WIDTH/4, HEIGHT))
+        leftUiRect = leftUi.get_rect(topleft=(0, 0))
+
+        rightUi = pygame.Surface((WIDTH/4, HEIGHT))
+        rightUiRect = leftUi.get_rect(topright=(WIDTH, 0))
+
+
+        # If we're not on the first round, draw the dices
+        if self.nextHeatWave[0] != 0:
+            # Dices
+            diceYOffset = 10
+            diceYStart = HEIGHT - (NB_DICE * (DICE_SIZE + diceYOffset))
+            centerx = leftUiRect.centerx
+            for i in range(NB_DICE):
+                num = self.nextHeatWave[i] - 1
+                leftUi.blit(self.diceFaces[num], (centerx - DICE_SIZE / 2, diceYStart + i * (DICE_SIZE + diceYOffset)))
+
+        self.screen.blit(leftUi, leftUiRect)
+        self.screen.blit(rightUi, rightUiRect)
+        
+
 
 
 
