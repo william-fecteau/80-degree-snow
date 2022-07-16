@@ -16,11 +16,11 @@
             "durationSec": 5
         },
         {
-            "delta": [0, 600], 
+            "delta": [-800, 300], 
             "durationSec": 5
         },
         {
-            "delta": [800, 900], 
+            "delta": [800, 300], 
             "durationSec": 5
         }
     ]

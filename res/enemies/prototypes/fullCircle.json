@@ -1,5 +1,5 @@
 {
-    "name": "fullCircle",
+    "name": "angel",
     "image": "basicEnemy",
     "health": 5,
     "attack": {
@@ -12,7 +12,27 @@
     },
     "moves": [
         {
-            "delta": [800, 300], 
+            "delta": [800, 100], 
+            "durationSec": 5
+        },
+        {
+            "delta": [-800,0],
+            "durationSec": 5
+        },
+        {
+            "delta": [800, 0], 
+            "durationSec": 5
+        },
+        {
+            "delta": [-800,0],
+            "durationSec": 5
+        },
+        {
+            "delta": [800, 0], 
+            "durationSec": 5
+        },
+        {
+            "delta": [-800,0],
             "durationSec": 5
         }
     ]
