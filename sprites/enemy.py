@@ -7,9 +7,10 @@ from sprites.projectile import Projectile
 from constants import TARGET_FPS
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, enemyPrototype: EnemyPrototype, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, **kwargs):
+    def __init__(self, gameWorldSurf: pygame.Surface, enemyPrototype: EnemyPrototype, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
+        self.gameWorldSurf = gameWorldSurf
         self.playerProjectileGroup = playerProjectileGroup
         self.enemyProjectileGroup = enemyProjectileGroup
         self.enemyPrototype = enemyPrototype
@@ -28,6 +29,11 @@ class Enemy(pygame.sprite.Sprite):
         self.enemyPrototype.attack.removeShotTimer(self.shotEventId)
 
     def update(self, **kwargs) -> None:
+        # If it goes offscreen, die
+        if self.rect.right < 0 or self.rect.bottom < 0 or self.rect.left > self.gameWorldSurf.get_width() or self.rect.top > self.gameWorldSurf.get_height():
+            self.kill()
+            return
+
         # Kill enemy if it's hit by a player projectile
         for projectile in self.playerProjectileGroup.sprites():
             if self.rect.colliderect(projectile.rect):
@@ -39,15 +45,13 @@ class Enemy(pygame.sprite.Sprite):
 
                 projectile.kill()
 
+
         # Shoot
         if "events" in kwargs:
             for event in kwargs["events"]:
                 if event.type == self.shotEventId:
-                    self.enemyPrototype.attack.performAttack(self.rect, self.enemyProjectileGroup)
+                    self.enemyPrototype.attack.performAttack(self.gameWorldSurf, self.rect, self.enemyProjectileGroup)
 
-
-
-        move = self.enemyPrototype.moves[self.curMoveIndex]
 
         # If move is completed
         if self.curDestionation.x == numpy.ceil(numpy.round(self.precisePos.x, 2)) and self.curDestionation.y == numpy.ceil(numpy.round(self.precisePos.y, 2)): # Floating point :)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))

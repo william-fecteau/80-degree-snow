@@ -5,7 +5,7 @@
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 1,
-        "projectileSpeed": 3,
+        "projectileSpeed": 2,
         "rotateSpeedDeg": 0,
         "initialRotationDeg": 90,
         "shotCooldownMs": 500

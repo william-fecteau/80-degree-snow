@@ -77,7 +77,7 @@ class Level:
 
         # Setting up player
         self.player = Player(self.playerProjectileGroup, self.enemyProjectileGroup,
-                             self.gameWorldSurf.get_rect(), centerx=0, bottom=HEIGHT)
+                             self.gameWorldSurf, centerx=0, bottom=HEIGHT)
 
         # enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
         # self.enemies.add(enemy)
@@ -112,7 +112,7 @@ class Level:
         for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
             prototype = enemySpawn.enemyPrototype
             spawn = enemySpawn.spawnPosition
-            enemy = Enemy(prototype, self.playerProjectileGroup,
+            enemy = Enemy(self.gameWorldSurf, prototype, self.playerProjectileGroup,
                           self.enemyProjectileGroup, center=(spawn.x, spawn.y))
             self.enemies.add(enemy)
             self.enemyProjectileGroup.add(enemy)

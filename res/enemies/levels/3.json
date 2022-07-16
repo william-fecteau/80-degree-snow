@@ -1,0 +1,8 @@
+[
+    {
+        "timeToSpawnMs": 0,
+        "enemies": [
+            {"prototypeName": "shnake", "spawnPosition": [450, 0]}
+        ]
+    }
+]

@@ -5,15 +5,19 @@
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 1,
-        "projectileSpeed": 3,
+        "projectileSpeed": 2,
         "rotateSpeedDeg": 0,
         "initialRotationDeg": 90,
         "shotCooldownMs": 500
     },
     "moves": [
         {
-            "delta": [800, 300],
+            "delta": [1000, 0],
             "durationSec": 5
+        },
+        {
+            "delta": [-800, 0],
+            "durationSec": 10000000000
         }
     ]
 }
