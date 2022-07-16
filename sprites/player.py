@@ -12,27 +12,43 @@ class Player(pygame.sprite.Sprite):
 
         # Loading images
         self.spritesheet = SpriteSheet("res/frosto.png", 64, 64)
-
         self.image = self.spritesheet.image_at(0, 0, -1)
+        self.initialSize = self.image.get_size()
         self.gameWorldSurf = gameWorldSurf
         self.rect = self.image.get_rect(**kwargs)
         self.direction = pygame.math.Vector2()
         self.canShoot = True
         self.isAlive = True
         self.speed = 10
+        self.lastFrost = 5
         self.pewSound = pygame.mixer.Sound("res/pew1.mp3")
         self.dieSound = pygame.mixer.Sound("res/playerHit1.mp3")
 
         self.playerProjectileGroup = playerProjectileGroup
         self.enemyProjectileGroup = enemyProjectileGroup
 
+        # Shooting
         self.projectileSurface = pygame.image.load("res/intro_ball.gif")
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, DEFAULT_SHOT_SPEED_MS)
+
+        # Hitbox
+        self.resetHitbox()
+
+
+    def resetHitbox(self):
+        self.hitbox = pygame.Rect(self.rect.left, self.rect.top, self.rect.width / 2, self.rect.height)
+
 
     def setShotCooldown(self, shotSpeedMs: int) -> None:
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, 0)
         self.canShoot = True
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, shotSpeedMs)
+
+
+    def setHitboxSize(self, size: tuple[int, int]) -> None:
+        self.hitbox.width = size[0]
+        self.hitbox.height = size[1]
+
 
     def shoot(self) -> None:
         if self.canShoot:
@@ -43,12 +59,13 @@ class Player(pygame.sprite.Sprite):
             self.playerProjectileGroup.add(projectile)
             self.canShoot = False
 
-    def update(self, events, keys) -> None:
+
+    def update(self, events, keys, frostLevel: int) -> None:
         self.direction = pygame.Vector2(0, 0)
 
         # Check if player is dead
         for enemy in self.enemyProjectileGroup.sprites():
-            if self.rect.colliderect(enemy.rect):
+            if self.hitbox.colliderect(enemy.rect):
                 self.isAlive = False
                 pygame.mixer.Sound.play(self.dieSound)
                 return
@@ -76,6 +93,11 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.center += self.direction * self.speed
 
+        # Scale hitbox in function of frostlevel if it has changed
+        if frostLevel:
+            self.scalePlayer(frostLevel)
+            self.lastFrost = frostLevel
+
         # If player goes offscreen, dont lmao
         rect = self.gameWorldSurf.get_rect()
         if self.rect.left < rect.left:
@@ -87,3 +109,16 @@ class Player(pygame.sprite.Sprite):
             self.rect.top = 0
         elif self.rect.bottom > rect.height:
             self.rect.bottom = rect.height
+
+        self.hitbox.center = self.rect.center
+
+        
+
+    def scalePlayer(self, frostLevel: int) -> None:
+        factor = frostLevel/5
+        curPos = self.rect.center
+
+        self.image = pygame.transform.scale(self.image, (self.initialSize[0] * factor, self.initialSize[1] * factor))
+        self.rect = self.image.get_rect(center=curPos)
+
+        self.resetHitbox()
