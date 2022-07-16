@@ -170,7 +170,6 @@ class Level:
                 )
                 # print("BG: " +  str(int(self.SIZE_TILE * i)) +", " + str(-self.SIZE_TILE))
 
-
         if not self.player.isAlive:
             game.switchState("MenuState")
 
@@ -211,11 +210,13 @@ class Level:
 
         self.drawUI()
 
+
     def pollInput(self, events, keys) -> None:
         for event in events:
             if event.type == pygame.KEYUP and event.key == pygame.K_r:
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num))
+
 
     def drawUI(self) -> None:
         # Draw left UI rectangle
@@ -277,8 +278,8 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             moves = prototypeData['moves']
             movesObj = []
             for move in moves:
-                dest = move['dest']
-                enemyMove = EnemyMove(dest[0], dest[1], move['durationSec'])
+                delta = move['delta']
+                enemyMove = EnemyMove(pygame.Vector2(delta), move['durationSec'])
                 movesObj.append(enemyMove)
 
             # Load prototype
