@@ -90,6 +90,9 @@ class Level:
         else:
             pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs)
 
+        # Setup UI
+        self.ui = UI()
+
         # Heatwave setup
         self.nextHeatWave = [0 for _ in range(NB_DICE)]
         pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
@@ -147,9 +150,9 @@ class Level:
             return
         
         # TODO: Actually apply heatwave effect
-        self.rollDices() # Roll dices for next heatwave
+        self.ui.heatWave(sum(self.nextHeatWave))
 
-
+        self.rollDices()  # Roll dices for next heatwave
 
 
 
@@ -212,6 +215,7 @@ class Level:
 
         self.drawUI()
 
+        self.ui.draw(self.screen)
 
     def pollInput(self, events, keys) -> None:
         for event in events:
@@ -219,15 +223,14 @@ class Level:
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num))
 
+            # TODO remove this once heatwave is implemented
+            elif event.type == pygame.KEYUP and event.key == pygame.K_k:
+                self.ui.addFrost(1)
 
     def drawUI(self) -> None:
         # Draw left UI rectangle
         leftUi = pygame.Surface((WIDTH/4, HEIGHT))
         leftUiRect = leftUi.get_rect(topleft=(0, 0))
-
-        rightUi = pygame.Surface((WIDTH/4, HEIGHT))
-        rightUiRect = leftUi.get_rect(topright=(WIDTH, 0))
-
 
         # If we're not on the first round, draw the dices
         if self.nextHeatWave[0] != 0:
@@ -240,8 +243,6 @@ class Level:
                 leftUi.blit(self.diceFaces[num], (centerx - DICE_SIZE / 2, diceYStart + i * (DICE_SIZE + diceYOffset)))
 
         self.screen.blit(leftUi, leftUiRect)
-        self.screen.blit(rightUi, rightUiRect)
-        
 
 
 
