@@ -1,6 +1,7 @@
 import pygame
 from attack import Attack
-from constants import WIDTH, HEIGHT
+from constants import TARGET_FPS, WIDTH, HEIGHT
+from enemyMove import EnemyMove
 from sprites import Player
 from sprites.BackgroundObject import BackgroundObject
 from sprites.enemy import Enemy
@@ -36,20 +37,24 @@ class Level:
 
         # Prototypes
         basicAttack = Attack(projectileImg, 4, 5, numpy.pi/4, 0)
-        schnakePrototype = EnemyPrototype(schnakeImg, 10, basicAttack, self.playerProjectileGroup, self.enemyProjectileGroup)
+        moveSet = [EnemyMove(self.gameWorldSurf.get_width(), self.gameWorldSurf.get_height(), 5),
+                   EnemyMove(0, self.gameWorldSurf.get_height(), 10),
+                   EnemyMove(self.gameWorldSurf.get_width(), 0, 10),]
+        schnakePrototype = EnemyPrototype(schnakeImg, 10, basicAttack, moveSet, self.playerProjectileGroup, self.enemyProjectileGroup)
 
         # Setting up player
-        self.player = Player(playerImg, self.playerProjectileGroup, self.enemyProjectileGroup, self.gameWorldSurf.get_rect(), centerx=WIDTH / 2, bottom=HEIGHT)
+        self.player = Player(playerImg, self.playerProjectileGroup, self.enemyProjectileGroup, self.gameWorldSurf.get_rect(), centerx=0, bottom=HEIGHT)
 
-        # Generating some ennemies
-        for _ in range(5):
-            randomX = random.randint(schnakeImg.get_width(), self.gameWorldSurf.get_width() - schnakeImg.get_width())
-            randomY = random.randint(schnakeImg.get_height(), self.gameWorldSurf.get_height() - schnakeImg.get_height() - self.player.image.get_height())
-            enemy = Enemy(schnakePrototype, center=(randomX, randomY))
-
-            self.enemies.add(enemy)
-            self.enemyProjectileGroup.add(enemy) # Enemy will count as a projectile cuz if it collides with player it will kill him
+        enemy = Enemy(schnakePrototype, topleft=(0, 0))
+        self.enemies.add(enemy)
+        self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
         
+        # # Generating some ennemies
+        # for _ in range(5):
+        #     randomX = random.randint(schnakeImg.get_width(), self.gameWorldSurf.get_width() - schnakeImg.get_width())
+        #     randomY = random.randint(schnakeImg.get_height(), self.gameWorldSurf.get_height() - schnakeImg.get_height() - self.player.image.get_height())
+        #     enemy = Enemy(schnakePrototype, center=(randomX, randomY))
+
         for _ in range(CLOUDS):
             self.backgroundObjectsGroup.add(self.generateCloud(True))
 
