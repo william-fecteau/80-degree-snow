@@ -49,7 +49,8 @@ class Level:
         enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
         self.enemies.add(enemy)
         self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
-        
+        self.enemies.add(enemy2)
+        self.enemyProjectileGroup.add(enemy2)
         # # Generating some ennemies
         # for _ in range(5):
         #     randomX = random.randint(schnakeImg.get_width(), self.gameWorldSurf.get_width() - schnakeImg.get_width())
