@@ -28,26 +28,14 @@ class Player(pygame.sprite.Sprite):
 
 
     def shoot(self) -> None:
-        print("test")
-        projectile = Projectile(self.projectileSurface, pygame.Vector2(0, -20), bottom=(self.rect.top), centerx=self.rect.centerx)
-        self.playerProjectileGroup.add(projectile)
+        if self.canShoot:
+            projectile = Projectile(self.projectileSurface, pygame.Vector2(0, -20), bottom=(self.rect.top), centerx=self.rect.centerx)
+            self.playerProjectileGroup.add(projectile)
+            self.canShoot = False
 
 
     def update(self, events, keys) -> None:
         self.direction = pygame.Vector2(0, 0)
-
-        screen = pygame.display.get_surface()
-        # If player goes offscreen, dont lmao
-        if self.rect.left < 0:
-            self.rect.left = 0
-        elif self.rect.right > screen.get_width():
-            self.rect.right = screen.get_width()
-            
-        if self.rect.top < 0:
-            self.rect.top = 0
-        elif self.rect.bottom > screen.get_height():
-            self.rect.bottom = screen.get_height()
-
 
         # Check if player can shoot
         for event in events:
@@ -55,7 +43,6 @@ class Player(pygame.sprite.Sprite):
                 self.canShoot = True
         
         if (keys[pygame.K_SPACE] or keys[pygame.K_z]) and self.canShoot:
-            self.canShoot = False
             self.shoot()
 
 
@@ -71,3 +58,17 @@ class Player(pygame.sprite.Sprite):
             self.direction.x = -1
 
         self.rect.center += self.direction * self.speed
+
+
+        # If player goes offscreen, dont lmao
+        screen = pygame.display.get_surface()
+        if self.rect.left < 0:
+            self.rect.left = 0
+        elif self.rect.right > screen.get_width():
+            self.rect.right = screen.get_width()
+            
+        if self.rect.top < 0:
+            self.rect.top = 0
+        elif self.rect.bottom > screen.get_height():
+            self.rect.bottom = screen.get_height()
+
