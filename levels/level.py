@@ -1,5 +1,7 @@
+import numpy
 import pygame
-from constants import WIDTH, HEIGHT
+import pygame_menu
+from constants import BLACK, WIDTH, HEIGHT
 from sprites import Player
 from sprites.enemy import Enemy
 import random
@@ -12,6 +14,8 @@ class Level:
         self.gameWorldRect = pygame.Rect(
             (WIDTH/4, 0), (WIDTH/2, HEIGHT))
         self.background = background
+        self.time = pygame.time.get_ticks()
+        self.ui_font = pygame.font.Font(pygame_menu.font.FONT_MUNRO, 50)
 
         # Loading images
         playerImg = pygame.image.load("res/player.png")
@@ -74,9 +78,16 @@ class Level:
 
     def drawUI(self) -> None:
         # Draw left UI rectangle
-        pygame.draw.rect(self.screen, (0, 0, 0), (0, 0, WIDTH/4, HEIGHT))
-        pygame.draw.rect(self.screen, (255, 255, 255),
+        pygame.draw.rect(self.screen, BLACK, (0, 0, WIDTH/4, HEIGHT))
+        # Draw right UI rectangle
+        pygame.draw.rect(self.screen, BLACK,
                          (WIDTH/4 * 3, 0, WIDTH/4, HEIGHT))
+
+        # Draw time
+        time = numpy.floor(
+            (pygame.time.get_ticks() - self.time) / 1000)  # in seconds
+        self.screen.blit(self.ui_font.render("Time : " + str(time),
+                                             True, (255, 255, 255)), (50, 0))
 
 
 def loadLevel(screen: pygame.Surface, levelNum: int) -> Level:
