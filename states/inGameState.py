@@ -1,7 +1,7 @@
 from collections import namedtuple
 from re import T
 import pygame
-from states.payloads import InGameStatePayload
+from .payloads import InGameStatePayload
 from levels import loadLevel, Level
 
 from .state import State
@@ -26,7 +26,7 @@ class InGameState(State):
 
 
     def onEnterState(self, payload: InGameStatePayload) -> None:
-        self.level: Level = loadLevel(self.screen, payload.levelNum)
+        self.level: Level = loadLevel(self.game, self.screen, payload.levelNum)
 
 
     def onExitState(self) -> None:

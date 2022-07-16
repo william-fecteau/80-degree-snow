@@ -13,6 +13,8 @@ from sprites.enemyPrototype import EnemyPrototype
 import json
 import os
 
+from states.payloads import InGameStatePayload
+
 E_NEXT_SPAWN = pygame.USEREVENT + 5
 
 class Level:
@@ -31,7 +33,8 @@ class Level:
     SIZE_TILE = WIDTH/(2*NB_WIDTH_TILES)
     LOADING_TILES = False
 
-    def __init__(self, num: int, screen: pygame.Surface, gameWorldSurf: pygame.surface, dicEnemyPrototypes: dict, dicEnemySpawns: dict) -> None:
+    def __init__(self, game, num: int, screen: pygame.Surface, gameWorldSurf: pygame.surface, dicEnemyPrototypes: dict, dicEnemySpawns: dict) -> None:
+        self.game = game
         self.num = num
         self.screen = screen
         self.dicEnemyPrototypes = dicEnemyPrototypes
@@ -153,7 +156,9 @@ class Level:
 
 
     def pollInput(self, events, keys) -> None:
-        pass
+        for event in events:
+            if event.type == pygame.KEYUP and event.key == pygame.K_r:
+                self.game.switchState("InGameState", InGameStatePayload(self.num))
 
 
     def drawUI(self) -> None:
@@ -168,7 +173,7 @@ class Level:
 
 
 
-def loadLevel(screen: pygame.Surface, levelNum: int) -> Level:
+def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
     worldWidth = WIDTH / 2
     worldHeight = HEIGHT
     gameWorldSurf = pygame.Surface((worldWidth, worldHeight))
@@ -226,4 +231,4 @@ def loadLevel(screen: pygame.Surface, levelNum: int) -> Level:
             dicEnemySpawns[spawn['timeToSpawnMs']] = lstEnemiesSpawn
 
 
-    return Level(levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns)
+    return Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns)
