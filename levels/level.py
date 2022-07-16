@@ -1,9 +1,12 @@
 import pygame
+from attack import Attack
 from constants import WIDTH, HEIGHT
 from sprites import Player
 from sprites.enemy import Enemy
 import numpy
 import random
+
+from sprites.enemyPrototype import EnemyPrototype
 
 
 class Level:
@@ -16,11 +19,16 @@ class Level:
         # Loading images
         playerImg = pygame.image.load("res/player.png")
         schnakeImg = pygame.image.load("res/shnake.png")
+        projectileImg = pygame.image.load("res/intro_ball.gif")
 
         # Setting up groups
         self.playerProjectileGroup = pygame.sprite.Group()
         self.enemyProjectileGroup = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
+
+        # Prototypes
+        basicAttack = Attack(projectileImg, 4, 5, numpy.pi/4, 0)
+        schnakePrototype = EnemyPrototype(schnakeImg, 10, basicAttack, self.playerProjectileGroup, self.enemyProjectileGroup)
 
         # Setting up player
         self.player = Player(playerImg, self.playerProjectileGroup, self.enemyProjectileGroup, self.gameWorldSurf.get_rect(), centerx=WIDTH / 2, bottom=HEIGHT)
@@ -29,7 +37,7 @@ class Level:
         for _ in range(5):
             randomX = random.randint(schnakeImg.get_width(), self.gameWorldSurf.get_width() - schnakeImg.get_width())
             randomY = random.randint(schnakeImg.get_height(), self.gameWorldSurf.get_height() - schnakeImg.get_height() - self.player.image.get_height())
-            enemy = Enemy(schnakeImg, 5, self.playerProjectileGroup, self.enemyProjectileGroup, center=(randomX, randomY))
+            enemy = Enemy(schnakePrototype, center=(randomX, randomY))
 
             self.enemies.add(enemy)
             self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
