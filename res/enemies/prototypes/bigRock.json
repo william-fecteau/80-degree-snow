@@ -1,0 +1,74 @@
+{
+    "name": "bigRock",
+    "image": "basicEnemy",
+    "health": 100,
+    "attack": {
+        "projectileImage": "basic16projectile",
+        "nbProjectiles": 15,
+        "projectileSpeed": 1.5,
+        "rotateSpeedDeg": 24,
+        "initialRotationDeg": 90,
+        "shotCooldownMs": 5000
+    },
+    "moves": [
+        {
+            "delta": [0, 200], 
+            "durationSec": 4
+        },
+        {
+            "delta": [0,600],
+            "durationSec": 5
+        },
+        {
+            "delta": [400, 0], 
+            "durationSec": 5
+        },
+        {
+            "delta": [0,-600],
+            "durationSec": 5
+        },
+        {
+            "delta": [-400,0],
+            "durationSec": 5
+        },
+        {
+            "delta": [0,600],
+            "durationSec": 5
+        },
+        {
+            "delta": [400, 0], 
+            "durationSec": 5
+        },
+        {
+            "delta": [0,-600],
+            "durationSec": 5
+        },
+        {
+            "delta": [-400,0],
+            "durationSec": 5
+        },
+        {
+            "delta": [0,600],
+            "durationSec": 5
+        },
+        {
+            "delta": [400, 0], 
+            "durationSec": 5
+        },
+        {
+            "delta": [0,-600],
+            "durationSec": 5
+        },
+        {
+            "delta": [-400,0],
+            "durationSec": 5
+        },
+        {
+            "delta": [0,-300],
+            "durationSec": 5
+        }
+        
+        
+
+    ]
+}
