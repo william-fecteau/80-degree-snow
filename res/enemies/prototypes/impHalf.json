@@ -1,0 +1,23 @@
+{
+    "name": "impHalf",
+    "image": "basicEnemy",
+    "health": 5,
+    "attack": {
+        "projectileImage": "basic16projectile",
+        "nbProjectiles": 3,
+        "projectileSpeed": 5,
+        "rotateSpeedDeg": 30,
+        "initialRotationDeg": 60,
+        "shotCooldownMs": 700
+    },
+    "moves": [
+        {
+            "delta": [400, 300],
+            "durationSec": 5
+        },
+        {
+            "delta": [-400, 300],
+            "durationSec": 5
+        }
+    ]
+}

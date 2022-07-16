@@ -4,7 +4,7 @@
     "health": 5,
     "attack": {
         "projectileImage": "basic16projectile",
-        "nbProjectiles": 30,
+        "nbProjectiles": 500,
         "projectileSpeed": 3,
         "rotateSpeedDeg": 12,
         "initialRotationDeg": 90,
