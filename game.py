@@ -49,7 +49,7 @@ class Game:
             self.clock.tick(TARGET_FPS)
 
 
-    # ONLY A STATE OBJECT SHOULD BE ABLE TO SWITCH STATES IF WE WANT TO AVOIR SPAGHETT
+    # Lol its a hackthon fuck this ---> ONLY A STATE OBJECT SHOULD BE ABLE TO SWITCH STATES IF WE WANT TO AVOIR SPAGHETT
     def switchState(self, newStateStr: str, payload: NamedTuple = None) -> None:
         if self.nextState is None and newStateStr in self.dicStates:
             self.nextState = newStateStr

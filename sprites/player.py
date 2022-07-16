@@ -1,22 +1,23 @@
 import pygame
-
-from sprites.playerProjectileGroup import PlayerProjectileGroup
 from sprites.projectile import Projectile
 
 DEFAULT_SHOT_SPEED_MS = 300
 E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, image: pygame.Surface, playerProjectileGroup: PlayerProjectileGroup, **kwargs):
+    def __init__(self, image: pygame.Surface, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = image
         self.rect = self.image.get_rect(**kwargs)
         self.direction = pygame.math.Vector2()
         self.canShoot = True
+        self.isAlive = True
         self.speed = 10
 
         self.playerProjectileGroup = playerProjectileGroup
+        self.enemyProjectileGroup = enemyProjectileGroup
+
         self.projectileSurface = pygame.image.load("res/intro_ball.gif")
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, DEFAULT_SHOT_SPEED_MS)
 
@@ -36,6 +37,12 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, events, keys) -> None:
         self.direction = pygame.Vector2(0, 0)
+
+        # Check if player is dead
+        for enemy in self.enemyProjectileGroup.sprites():
+            if self.rect.colliderect(enemy.rect):
+                self.isAlive = False
+                return
 
         # Check if player can shoot
         for event in events:
