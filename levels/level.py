@@ -1,5 +1,6 @@
 import math
 import queue
+from ui import UI
 from math import ceil
 import pygame
 from attack import Attack
@@ -26,6 +27,7 @@ HEATWAVE_INTERVAL_SEC = 5
 NB_DICE = 3
 DICE_SIZE = 100
 
+
 class Level:
     CLOUDS = 20
     CLOUDSIMG = [
@@ -37,13 +39,14 @@ class Level:
     ]
 
     BG = pygame.image.load("res/sea-2.jpg")
-    NB_HEIGHT_TILES = 4 # note: must be higher than 1
+    NB_HEIGHT_TILES = 4  # note: must be higher than 1
     SIZE_TILE = int(HEIGHT/(NB_HEIGHT_TILES-1))
     NB_WIDTH_TILES = ceil(WIDTH/(2*SIZE_TILE))
     NB_TOT_TILES = NB_WIDTH_TILES * NB_HEIGHT_TILES
     LOADING_TILES = False
     BG_SPEED = 2
-    OFFSET = 2 # tweek if you see gaps in the textures (this shit is black magic)
+    # tweek if you see gaps in the textures (this shit is black magic)
+    OFFSET = 2
 
     def __init__(self, game, num: int, screen: pygame.Surface, gameWorldSurf: pygame.surface, dicEnemyPrototypes: dict, dicEnemySpawns: dict) -> None:
         self.game = game
@@ -54,9 +57,11 @@ class Level:
         self.dicEnemySpawns = dicEnemySpawns
         self.background = self.BG
 
-        self.diceFaces = [pygame.image.load(f"res/images/dice{i}.png") for i in range(1, 7)]
+        self.diceFaces = [pygame.image.load(
+            f"res/images/dice{i}.png") for i in range(1, 7)]
         for i in range(len(self.diceFaces)):
-            self.diceFaces[i] = pygame.transform.scale(self.diceFaces[i], (DICE_SIZE, DICE_SIZE))
+            self.diceFaces[i] = pygame.transform.scale(
+                self.diceFaces[i], (DICE_SIZE, DICE_SIZE))
 
         # Setting up groups
         self.playerProjectileGroup = pygame.sprite.Group()
@@ -80,7 +85,8 @@ class Level:
         for i in range(self.NB_WIDTH_TILES):
             for j in range(self.NB_HEIGHT_TILES):
                 self.backgroundTilesGroup.add(
-                    BackgroundObject(self.BG, pygame.Vector2(0, -self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.SIZE_TILE *j))
+                    BackgroundObject(self.BG, pygame.Vector2(
+                        0, -self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.SIZE_TILE * j))
                 )
 
         # Check for first enemy spawn
@@ -97,7 +103,6 @@ class Level:
         self.nextHeatWave = [0 for _ in range(NB_DICE)]
         pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
 
-
     def spawnEnemies(self):
         for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
             prototype = enemySpawn.enemyPrototype
@@ -112,7 +117,8 @@ class Level:
         if (len(self.dicEnemySpawns) > 0):
             oldSpawn = self.nextSpawnTimeMs
             self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
-            pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs - oldSpawn)
+            pygame.time.set_timer(
+                E_NEXT_SPAWN, self.nextSpawnTimeMs - oldSpawn)
         else:
             pygame.time.set_timer(E_NEXT_SPAWN, 0)
 
@@ -130,14 +136,20 @@ class Level:
         speed = pygame.Vector2(0, -(width*2.5 / WIDTH)*10)
         return BackgroundObject(img, speed, width, center=(randomX,  Y))
 
-    def generateCloud(self, randomY = False):
-            img = self.CLOUDSIMG[random.randint(0, len(self.CLOUDSIMG)-1)]                  # Pick a random sprite
-            width = random.randint(int(WIDTH/10), int(WIDTH))                               # Pick a random size 
-            randomX = random.randint(-int(width/2), WIDTH+int(width/2))                     # Pick a random X position
-            Y = random.randint(0 - HEIGHT/2, HEIGHT) if randomY else -img.get_height()*1.75   # Pick a randon Y position or top of the screen
-            speed =  pygame.Vector2(0, -(width*2.5 / WIDTH)*12)                             # Pick a speed calculated by size of image
-            return BackgroundObject(img, speed, width, topleft=(randomX,  Y))
-        
+    def generateCloud(self, randomY=False):
+        # Pick a random sprite
+        img = self.CLOUDSIMG[random.randint(0, len(self.CLOUDSIMG)-1)]
+        # Pick a random size
+        width = random.randint(int(WIDTH/10), int(WIDTH))
+        # Pick a random X position
+        randomX = random.randint(-int(width/2), WIDTH+int(width/2))
+        # Pick a randon Y position or top of the screen
+        Y = random.randint(
+            0 - HEIGHT/2, HEIGHT) if randomY else -img.get_height()*1.75
+        # Pick a speed calculated by size of image
+        speed = pygame.Vector2(0, -(width*2.5 / WIDTH)*12)
+        return BackgroundObject(img, speed, width, topleft=(randomX,  Y))
+
     def rollDices(self):
         for i in range(NB_DICE):
             self.nextHeatWave[i] = random.randint(1, 6)
@@ -148,13 +160,11 @@ class Level:
         if self.nextHeatWave[0] == 0:
             self.rollDices()
             return
-        
+
         # TODO: Actually apply heatwave effect
         self.ui.heatWave(sum(self.nextHeatWave))
 
         self.rollDices()  # Roll dices for next heatwave
-
-
 
     def update(self, game, events, keys) -> None:
         self.pollInput(events, keys)
@@ -171,7 +181,8 @@ class Level:
             # print(len(self.backgroundTilesGroup.sprites()))
             for i in range(self.NB_WIDTH_TILES):
                 self.backgroundTilesGroup.add(
-                    BackgroundObject(self.BG, pygame.Vector2(0, -self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
+                    BackgroundObject(self.BG, pygame.Vector2(
+                        0, -self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
                 )
                 # print("BG: " +  str(int(self.SIZE_TILE * i)) +", " + str(-self.SIZE_TILE))
 
@@ -240,15 +251,10 @@ class Level:
             centerx = leftUiRect.centerx
             for i in range(NB_DICE):
                 num = self.nextHeatWave[i] - 1
-                leftUi.blit(self.diceFaces[num], (centerx - DICE_SIZE / 2, diceYStart + i * (DICE_SIZE + diceYOffset)))
+                leftUi.blit(self.diceFaces[num], (centerx - DICE_SIZE /
+                            2, diceYStart + i * (DICE_SIZE + diceYOffset)))
 
         self.screen.blit(leftUi, leftUiRect)
-
-
-
-
-
-
 
 
 def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
@@ -276,14 +282,16 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             projectileImgName = attack['projectileImage']
             radianRotate = math.radians(attack['initialRotationDeg'])
             radianInitialRotationRad = math.radians(attack['rotateSpeedDeg'])
-            attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'], attack['projectileSpeed'], radianInitialRotationRad, radianRotate, attack['shotCooldownMs'])
+            attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'],
+                               attack['projectileSpeed'], radianInitialRotationRad, radianRotate, attack['shotCooldownMs'])
 
             # Load moves
             moves = prototypeData['moves']
             movesObj = []
             for move in moves:
                 delta = move['delta']
-                enemyMove = EnemyMove(pygame.Vector2(delta), move['durationSec'])
+                enemyMove = EnemyMove(
+                    pygame.Vector2(delta), move['durationSec'])
                 movesObj.append(enemyMove)
 
             # Load prototype
@@ -303,8 +311,9 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             lstEnemiesSpawn = []
             for enemy in enemies:
                 prototypeToSpawn = enemy['prototypeName']
-                
-                enemySpawn = EnemySpawn(dicEnemyPrototypes[prototypeToSpawn], pygame.Vector2(enemy['spawnPosition']))
+
+                enemySpawn = EnemySpawn(
+                    dicEnemyPrototypes[prototypeToSpawn], pygame.Vector2(enemy['spawnPosition']))
                 lstEnemiesSpawn.append(enemySpawn)
 
             dicEnemySpawns[spawn['timeToSpawnMs']] = lstEnemiesSpawn
