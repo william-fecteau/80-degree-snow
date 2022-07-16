@@ -28,6 +28,12 @@ class Enemy(pygame.sprite.Sprite):
         self.enemyPrototype.attack.removeShotTimer(self.shotEventId)
 
     def update(self, **kwargs) -> None:
+        # If it goes offscreen, die
+        screen = pygame.display.get_surface()
+        if self.rect.right < 0 or self.rect.bottom < 0 or self.rect.left > screen.get_width() or self.rect.top > screen.get_height():
+            self.kill()
+            return
+
         # Kill enemy if it's hit by a player projectile
         for projectile in self.playerProjectileGroup.sprites():
             if self.rect.colliderect(projectile.rect):
@@ -39,15 +45,13 @@ class Enemy(pygame.sprite.Sprite):
 
                 projectile.kill()
 
+
         # Shoot
         if "events" in kwargs:
             for event in kwargs["events"]:
                 if event.type == self.shotEventId:
                     self.enemyPrototype.attack.performAttack(self.rect, self.enemyProjectileGroup)
 
-
-
-        move = self.enemyPrototype.moves[self.curMoveIndex]
 
         # If move is completed
         if self.curDestionation.x == numpy.ceil(numpy.round(self.precisePos.x, 2)) and self.curDestionation.y == numpy.ceil(numpy.round(self.precisePos.y, 2)): # Floating point :)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
