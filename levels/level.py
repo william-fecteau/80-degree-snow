@@ -5,7 +5,7 @@ from sprites.BackgroundObject import BackgroundObject
 from sprites.enemy import Enemy
 import random
 
-CLOUDS = 10
+CLOUDS = 25
 CLOUDSIMG = [
     pygame.image.load("res/cloud-1.png"),
     pygame.image.load("res/cloud-2.png"),
@@ -46,11 +46,11 @@ class Level:
 
     def generateCloud(self, randomY = False):
             img = CLOUDSIMG[random.randint(0, len(CLOUDSIMG)-1)]
-            width = random.randint(int(WIDTH/10), int(WIDTH/2))
-            randomX = random.randint(0, WIDTH)
+            width = random.randint(int(WIDTH/10), int(WIDTH))
+            randomX = random.randint(-int(width/2), WIDTH+int(width/2))
             Y = random.randint(0 - HEIGHT/2, HEIGHT) if randomY else 0 - img.get_height()
-            # randomY = random.randint(0, HEIGHT)
-            speed =  pygame.Vector2(0, -10) #-(width / WIDTH)
+            print(-(width / WIDTH)*10)
+            speed =  pygame.Vector2(0, -(width*2.5 / WIDTH)*10)
             return BackgroundObject(img, speed, width, center=(randomX,  Y))
         
     def update(self, game, events, keys) -> None:

@@ -8,6 +8,7 @@ class BackgroundObject(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(**kwargs)
         self.speed = speed
         if(width != None): self.image = pygame.transform.scale(self.image, (width, self.image.get_height() * (width / self.image.get_width())))
+        self.image = pygame.Surface.convert_alpha(self.image);
 
 
     def update(self) -> None:

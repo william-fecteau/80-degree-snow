@@ -4,7 +4,7 @@ class Projectile(pygame.sprite.Sprite):
     def __init__(self, image: pygame.Surface, speed: pygame.math.Vector2(), **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = image
+        self.image = pygame.Surface.convert_alpha(image)
         self.rect = self.image.get_rect(**kwargs)
         self.speed = speed
 
