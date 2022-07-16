@@ -1,5 +1,5 @@
 {
-    "name": "impHalf",
+    "name": "impHalfReverse",
     "image": "basicEnemy",
     "health": 5,
     "attack": {
@@ -12,11 +12,11 @@
     },
     "moves": [
         {
-            "delta": [400, 300],
+            "delta": [-400, 300],
             "durationSec": 5
         },
         {
-            "delta": [-400, 300],
+            "delta": [400, 300],
             "durationSec": 5
         }
     ]

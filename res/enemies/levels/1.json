@@ -4,21 +4,31 @@
         "enemies": [
             {"prototypeName": "shnakeHalf", "spawnPosition": [450, 0]},
             {"prototypeName": "shnakeHalfReverse", "spawnPosition": [450, 0]},
-            {"prototypeName": "impHalf", "spawnPosition": [0, 0]}
+            {"prototypeName": "impHalf", "spawnPosition": [100, 0]},
+            {"prototypeName": "impHalfReverse", "spawnPosition": [700, 0]}
         ]
     },
     {
         "timeToSpawnMs": 350,
         "enemies": [
-            {"prototypeName": "shnakeHalf", "spawnPosition": [450, 0]},
-            {"prototypeName": "shnakeHalfReverse", "spawnPosition": [450, 0]}
+            {"prototypeName": "shnakeHalf", "spawnPosition": [350, 0]},
+            {"prototypeName": "shnakeHalfReverse", "spawnPosition": [459, 0]}
         ]
     },
     {
         "timeToSpawnMs": 700,
         "enemies": [
             {"prototypeName": "shnakeHalf", "spawnPosition": [450, 0]},
-            {"prototypeName": "shnakeHalfReverse", "spawnPosition": [450, 0]}
+            {"prototypeName": "shnakeHalfReverse", "spawnPosition": [450, 0]},
+            {"prototypeName": "impHalf", "spawnPosition": [50, 0]},
+            {"prototypeName": "impHalfReverse", "spawnPosition": [750, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 750,
+        "enemies": [
+            {"prototypeName": "holdStraight", "spawnPosition": [50, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [750, 50]}
         ]
     },
     {
