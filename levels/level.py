@@ -45,8 +45,8 @@ class Level:
         self.enemies = pygame.sprite.Group()
 
         # Prototypes
-        basicAttack = Attack(projectileImg, 4, 5, numpy.pi/4, 0)
-        moveSet = [EnemyMove(self.gameWorldSurf.get_width(), self.gameWorldSurf.get_height(), 5),
+        basicAttack = Attack(projectileImg, 4, 5, numpy.pi/4, 0, 1000)
+        moveSet = [EnemyMove(self.gameWorldSurf.get_width(), self.gameWorldSurf.get_height(), 60),
                    EnemyMove(0, self.gameWorldSurf.get_height(), 10),
                    EnemyMove(self.gameWorldSurf.get_width(), 0, 10)]
         schnakePrototype = EnemyPrototype(schnakeImg, 10, basicAttack, moveSet, self.playerProjectileGroup, self.enemyProjectileGroup)
@@ -83,7 +83,7 @@ class Level:
         
     def update(self, game, events, keys) -> None:
         self.pollInput(events, keys)
-        self.enemies.update()
+        self.enemies.update(events=events, keys=keys)
         self.enemyProjectileGroup.update()
         self.playerProjectileGroup.update()
         self.player.update(events, keys)

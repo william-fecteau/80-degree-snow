@@ -6,10 +6,6 @@ from sprites.enemyPrototype import EnemyPrototype
 from sprites.projectile import Projectile
 from constants import TARGET_FPS
 
-
-DEFAULT_SHOT_SPEED_MS = 300
-E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
-
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, enemyPrototype: EnemyPrototype, **kwargs):
         pygame.sprite.Sprite.__init__(self)
@@ -22,23 +18,31 @@ class Enemy(pygame.sprite.Sprite):
         self.precisePos = pygame.Vector2(0, 0) # This is needed for the enemy to move because pygame.Rect does not take into account floating point precision
         self.speed = self.computeSpeed()
 
+        self.shotEventId = self.enemyPrototype.attack.createShotTimer()
 
-    def update(self) -> None:
+
+    def die(self):
+        self.kill()
+        self.enemyPrototype.attack.removeShotTimer(self.shotEventId)
+
+    def update(self, **kwargs) -> None:
         # Kill enemy if it's hit by a player projectile
         for projectile in self.enemyPrototype.playerProjectileGroup.sprites():
             if self.rect.colliderect(projectile.rect):
                 self.enemyPrototype.health -= 1
 
                 if self.enemyPrototype.health <= 0:
-                    self.kill()
+                    self.die()
                     return
 
                 projectile.kill()
 
         # Shoot
-        shouldShoot = random.randint(0, 1000)
-        if shouldShoot > 998:
-            self.enemyPrototype.attack.performAttack(self.rect, self.enemyPrototype.enemyProjectileGroup)
+        if "events" in kwargs:
+            for event in kwargs["events"]:
+                if event.type == self.shotEventId:
+                    self.enemyPrototype.attack.performAttack(self.rect, self.enemyPrototype.enemyProjectileGroup)
+
 
 
         move = self.enemyPrototype.moves[self.curMoveIndex]
@@ -49,7 +53,7 @@ class Enemy(pygame.sprite.Sprite):
 
             # If there are no more moves, kill the sprite
             if self.curMoveIndex >= len(self.enemyPrototype.moves):
-                self.kill()
+                self.die()
                 return
 
             # Compute speed for next move

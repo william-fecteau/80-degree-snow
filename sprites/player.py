@@ -1,7 +1,7 @@
 import pygame
 from sprites.projectile import Projectile
 
-DEFAULT_SHOT_SPEED_MS = 300
+DEFAULT_SHOT_SPEED_MS = 100
 E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
 
 
