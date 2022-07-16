@@ -1,6 +1,6 @@
 {
-    "name": "shnakeReverse",
-    "image": "basicEnemyReverse",
+    "name": "shnakeHalf",
+    "image": "basicEnemy",
     "health": 5,
     "attack": {
         "projectileImage": "basic16projectile",
@@ -8,12 +8,12 @@
         "projectileSpeed": 3,
         "rotateSpeedDeg": 0,
         "initialRotationDeg": 90,
-        "shotCooldownMs": 500
+        "shotCooldownMs": 400
     },
     "moves": [
         {
-            "delta": [-800, 300], 
-            "durationSec": 5
+            "delta": [400, 300],
+            "durationSec": 2.5
         }
     ]
 }

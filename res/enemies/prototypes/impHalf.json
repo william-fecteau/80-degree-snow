@@ -1,5 +1,5 @@
 {
-    "name": "wisp",
+    "name": "impHalf",
     "image": "basicEnemy",
     "health": 5,
     "attack": {
@@ -12,15 +12,11 @@
     },
     "moves": [
         {
-            "delta": [800, 300], 
+            "delta": [400, 300],
             "durationSec": 5
         },
         {
-            "delta": [-800, 300], 
-            "durationSec": 5
-        },
-        {
-            "delta": [800, 300], 
+            "delta": [-400, 300],
             "durationSec": 5
         }
     ]
