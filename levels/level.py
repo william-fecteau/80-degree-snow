@@ -43,7 +43,7 @@ class Level:
         basicAttack = Attack(projectileImg, 4, 5, numpy.pi/4, 0)
         moveSet = [EnemyMove(self.gameWorldSurf.get_width(), self.gameWorldSurf.get_height(), 5),
                    EnemyMove(0, self.gameWorldSurf.get_height(), 10),
-                   EnemyMove(self.gameWorldSurf.get_width(), 0, 10),]
+                   EnemyMove(self.gameWorldSurf.get_width(), 0, 10)]
         schnakePrototype = EnemyPrototype(schnakeImg, 10, basicAttack, moveSet, self.playerProjectileGroup, self.enemyProjectileGroup)
 
         # Setting up player
