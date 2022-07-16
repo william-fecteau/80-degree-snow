@@ -1,3 +1,4 @@
+import math
 import queue
 from math import ceil
 import pygame
@@ -272,8 +273,8 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             # Load attack
             attack = prototypeData['attack']
             projectileImgName = attack['projectileImage']
-            radianRotate = numpy.radians(attack['initialRotationRad'])
-            radianInitialRotationRad = numpy.radians(attack['rotateSpeedRad'])
+            radianRotate = math.radians(attack['initialRotationDeg'])
+            radianInitialRotationRad = math.radians(attack['rotateSpeedDeg'])
             attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'], attack['projectileSpeed'], radianInitialRotationRad, radianRotate, attack['shotCooldownMs'])
 
             # Load moves
