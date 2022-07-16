@@ -1,19 +1,23 @@
 {
-    "name": "shnakeHalf",
+    "name": "holdStraight",
     "image": "basicEnemy",
     "health": 5,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 1,
-        "projectileSpeed": 2,
+        "projectileSpeed": 4,
         "rotateSpeedDeg": 0,
         "initialRotationDeg": 90,
-        "shotCooldownMs": 400
+        "shotCooldownMs": 500
     },
     "moves": [
         {
-            "delta": [400, 300],
-            "durationSec": 2.5
+            "delta": [0, 10],
+            "durationSec": 2
+        },
+        {
+            "delta": [0, -300],
+            "durationSec": 2
         }
     ]
 }
