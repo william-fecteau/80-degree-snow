@@ -13,7 +13,7 @@
     "moves": [
         {
             "delta": [-800, 0],
-            "durationSec": 10000000000
+            "durationSec": 5
         }
     ]
 }
