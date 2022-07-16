@@ -8,7 +8,7 @@ E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, image: pygame.Surface, health: int, playerProjectileGroup: pygame.sprite.Group,
-     enemyProjectileGroup: pygame.sprite.Group, projectile_speed: int, number_of_projectile: int = 1, rotate_speed: float =0, 
+     enemyProjectileGroup: pygame.sprite.Group, projectile_speed: int=5, number_of_projectile: int = 1, rotate_speed: float =0, 
     rotation: float = 0, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
