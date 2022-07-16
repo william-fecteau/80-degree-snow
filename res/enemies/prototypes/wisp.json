@@ -6,8 +6,8 @@
         "projectileImage": "basic16projectile",
         "nbProjectiles": 3,
         "projectileSpeed": 5,
-        "rotateSpeedRad": 30,
-        "initialRotationRad": 60,
+        "rotateSpeedDeg": 30,
+        "initialRotationDeg": 60,
         "shotCooldownMs": 700
     },
     "moves": [
