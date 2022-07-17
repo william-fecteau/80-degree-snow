@@ -1,0 +1,1 @@
+pyinstaller -n 80DegreeSnow --onefile --add-data="res/*;res/" .\game.py
