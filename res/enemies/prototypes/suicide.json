@@ -1,7 +1,7 @@
 {
     "name": "suicide",
     "image": "basicEnemy",
-    "health": 31,
+    "health": 21,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 0,

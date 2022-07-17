@@ -1,7 +1,7 @@
 {
     "name": "suicide2ThirdReverse",
     "image": "basicEnemy",
-    "health": 41,
+    "health": 21,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 0,

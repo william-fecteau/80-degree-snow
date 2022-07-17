@@ -164,7 +164,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 10375,
+            "timeToSpawnMs": 10500,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [280, 0]},
@@ -178,7 +178,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 11500,
+            "timeToSpawnMs": 12000,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [280, 0]},
@@ -192,7 +192,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 12625,
+            "timeToSpawnMs": 13150,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -206,7 +206,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 13750,
+            "timeToSpawnMs": 14300,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -220,7 +220,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 14900,
+            "timeToSpawnMs": 15450,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -234,7 +234,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 16050,
+            "timeToSpawnMs": 16550,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -245,6 +245,20 @@
                 {"prototypeName": "wall", "spawnPosition": [680, 0]},
                 {"prototypeName": "wall", "spawnPosition": [760, 0]}
     
+            ]
+        },
+        {
+            "timeToSpawnMs": 20000,
+            "enemies": [
+                {"prototypeName": "wisp", "spawnPosition": [0, 0]},
+                {"prototypeName": "wispReverse", "spawnPosition": [800, 0]}    
+            ]
+        },
+        {
+            "timeToSpawnMs": 21000,
+            "enemies": [
+                {"prototypeName": "impHalfReverse", "spawnPosition": [200, 0]},
+                {"prototypeName": "wispReverse", "spawnPosition": [400, 0]}    
             ]
         }
     ]
