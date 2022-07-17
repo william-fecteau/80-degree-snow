@@ -1,5 +1,5 @@
 {
-    "endTimeMs": 10000,
+    "endTimeMs": 102000,
     "bgOptions": {
         "img_location": "res/sea-1.jpg",
         "NB_HEIGHT_TILES" : 4,
