@@ -1,7 +1,8 @@
 {
     "name": "holdStraight",
-    "image": "basicEnemy",
+    "image": "cannon",
     "health": 50,
+    "width" : 80,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 1,

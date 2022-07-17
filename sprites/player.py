@@ -2,10 +2,10 @@ import math
 import pygame
 from anim.spritesheet import SpriteSheet
 from sprites.projectile import Projectile
+from constants import PLAYER_LIVES
 
 DEFAULT_SHOT_SPEED_MS = 100
 E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
-PLAYER_LIVES = 3
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, gameWorldSurf: pygame.Surface, **kwargs):
