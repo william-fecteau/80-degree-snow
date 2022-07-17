@@ -24,6 +24,7 @@ E_NEXT_SPAWN = pygame.USEREVENT + 5
 E_HEATWAVE = pygame.USEREVENT + 6
 E_INVINCIBILITY_FRAME = pygame.USEREVENT + 7
 E_INVINCIBILITY_FLASH = pygame.USEREVENT + 8
+E_END_LEVEL = pygame.USEREVENT + 9
 
 INVINCIBLE_TIME_MS = 2000
 INVINCIBLE_FLASH_MS = 100
@@ -85,7 +86,7 @@ class Level:
 
     MAX_FROST = 10
 
-    def __init__(self, game, num: int, screen: pygame.Surface, gameWorldSurf: pygame.surface, dicEnemyPrototypes: dict, dicEnemySpawns: dict) -> None:
+    def __init__(self, game, num: int, screen: pygame.Surface, gameWorldSurf: pygame.surface, dicEnemyPrototypes: dict, dicEnemySpawns: dict, levelEndMs: int) -> None:
         self.game = game
         self.num = num
         self.screen = screen
@@ -141,6 +142,10 @@ class Level:
         self.nextHeatWave = [0 for _ in range(self.diceCount)]
         pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
         self.lastHeatwaveTime = pygame.time.get_ticks()
+
+        # End level timer
+        pygame.time.set_timer(E_END_LEVEL, levelEndMs)
+
 
     def spawnEnemies(self):
         for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
@@ -256,7 +261,9 @@ class Level:
                 self.drawPlayer = True
                 pygame.time.set_timer(E_INVINCIBILITY_FRAME, 0)
                 pygame.time.set_timer(E_INVINCIBILITY_FLASH, 0)
-                break
+            elif event.type == E_END_LEVEL:
+                print("END")
+                self.game.switchState("InGameState", InGameStatePayload(self.num + 1))
 
 
     def draw(self) -> None:
@@ -380,9 +387,11 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
     # Loading enemy spawns
     dicEnemySpawns = {}
-    with open(f'res/enemies/levels/{levelNum}.json') as file:
-        spawnData = jstyleson.loads(file.read())
-        for spawn in spawnData:
+    endTimeMs = None
+    with open(f'res/levels/{levelNum}.json') as file:
+        levelData = jstyleson.loads(file.read())
+        endTimeMs = levelData['endTimeMs']
+        for spawn in levelData['spawns']:
             enemies = spawn['enemies']
             lstEnemiesSpawn = []
             for enemy in enemies:
@@ -394,4 +403,4 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
             dicEnemySpawns[spawn['timeToSpawnMs']] = lstEnemiesSpawn
 
-    return Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns)
+    return Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns, endTimeMs)
