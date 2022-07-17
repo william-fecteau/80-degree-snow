@@ -69,7 +69,7 @@ class MenuState (State):
 
     def menuAction(self) -> None:
         pygame.mixer.Sound.play(self.menuBoop)
-        self.game.switchState("InGameState", InGameStatePayload(1))
+        self.game.switchState("InGameState", InGameStatePayload(0))
 
     def creditsAction(self) -> None:
         pygame.mixer.Sound.play(self.menuBoop)
