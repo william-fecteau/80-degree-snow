@@ -135,8 +135,8 @@ class Level:
             self.rollDices(self.diceCount)
             return
 
-        frostLeft = self.frostLevel - sum(self.nextHeatWave)
-
+        frostLeft = self.frostLevel - sum(self.nextHeatWave) if self.player.isAlive else self.frostLevel # This does not apply the heat wave on the player if he is on invincibility frames
+            
         if (frostLeft <= 0):
             # ur dead lol remove a life here
             self.player.die()
@@ -201,8 +201,7 @@ class Level:
             if event.type == E_NEXT_SPAWN:
                 self.spawnEnemies()
             elif event.type == E_HEATWAVE:
-                if self.player.isAlive:
-                    self.applyHeatwave()
+                self.applyHeatwave()
             elif event.type == E_END_LEVEL:
                 pygame.mixer.Sound.play(self.levelEnd)
                 self.game.switchState(
