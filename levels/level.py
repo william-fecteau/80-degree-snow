@@ -42,6 +42,7 @@ class Level:
         self.gameWorldSurf = gameWorldSurf
         self.dicEnemySpawns = dicEnemySpawns
         self.frostLevel = self.MAX_FROST/2
+        self.framesHeld = 0
 
         self.tutorialStep = -1
         self.tutorialPhase = 0 if num == 0 else 999
@@ -234,6 +235,10 @@ class Level:
                 pygame.mixer.Sound.play(self.levelEnd)
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num + 1))
+        if (keys[pygame.K_x] or keys[pygame.K_j]): 
+            self.framesHeld %= 5
+            if self.frostLevel > 0 and self.framesHeld == 0: self.addFrost(-1) # remove frost levels yourself
+            self.framesHeld += 1
 
     def tutorialUpdate(self, events) -> None:
         # On the first frame just start a timer for the wasd + space section
@@ -324,9 +329,12 @@ class Level:
 
     def pollInput(self, events, keys) -> None:
         for event in events:
-            if event.type == pygame.KEYUP and event.key == pygame.K_r:
-                self.game.switchState(
-                    "InGameState", InGameStatePayload(self.num))
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_r:
+                    self.game.switchState(
+                        "InGameState", InGameStatePayload(self.num))
+                if event.key == pygame.K_x or event.key == pygame.K_j:
+                    self.framesHeld = 0
 
     def addFrost(self, amount: int) -> None:
         if self.frostLevel + amount <= self.MAX_FROST:
