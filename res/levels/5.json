@@ -112,6 +112,48 @@
                 {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]},
                 {"prototypeName": "suicideReverse", "spawnPosition": [300, 0]}
             ]
+        },
+        {
+            "timeToSpawnMs": 7500,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [200, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [700, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 8250,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [150, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [750, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 9000,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [100, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 9750,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [50, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [850, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 10500,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [900, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 11750,
+            "enemies": [
+                {"prototypeName": "wisp", "spawnPosition": [0, 0]},
+                {"prototypeName": "wisp", "spawnPosition": [450, 0]}
+            ]
         }
     ]
 }
