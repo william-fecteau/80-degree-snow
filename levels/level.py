@@ -44,6 +44,11 @@ class Level:
         self.frostLevel = self.MAX_FROST/2
         self.framesHeld = 0
 
+        self.tutorialTextTop = ""
+        self.tutorialTextBot = ""
+        self.tutorialFont = pygame.font.Font(
+            "res/fonts/PressStart2P.ttf", 16)
+
         self.tutorialStep = -1
         self.tutorialPhase = 0 if num == 0 else 999
         # 0 - wasd + space
@@ -95,7 +100,7 @@ class Level:
             self.diceCount = 1
             self.nextHeatWave = [0]
             self.lastHeatwaveTime = 9999999
-        else: 
+        else:
             self.diceCount = self.num if self.num <= 3 else 3
             self.nextHeatWave = [0 for _ in range(self.diceCount)]
             pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
@@ -151,7 +156,6 @@ class Level:
         elif (self.tutorialPhase == 2 and self.tutorialStep == 1) or self.tutorialPhase > 2:
             self.lastHeatwaveTime = pygame.time.get_ticks()
 
-
     def applyHeatwave(self):
 
         # If its the first heatwave, just roll dice
@@ -174,6 +178,7 @@ class Level:
 
     def update(self, game, events, keys) -> None:
         self.pollInput(events, keys)
+
         if self.num == 0:
             self.tutorialUpdate(events)
 
@@ -243,6 +248,7 @@ class Level:
     def tutorialUpdate(self, events) -> None:
         # On the first frame just start a timer for the wasd + space section
         if self.tutorialPhase == 0 and self.tutorialStep == -1:
+            self.tutorialTextTop = "Press WASD to move, SPACE to shoot"
             self.tutorialStep = 0
             pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 10000, 1) # First tutorial phase duration
 
@@ -258,6 +264,8 @@ class Level:
                     # 2 frost = 9
                     # 3 frost = 8
                     # 4 frost = ...
+                    self.tutorialTextTop = "Frost-o-meter determines your size and damage"
+                    self.tutorialTextBot = "Bigger you are, more damage you do"
                     pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 5000, 1)
                 if self.tutorialPhase == 2:
                     # Phase 2 has 3 steps:
@@ -282,7 +290,8 @@ class Level:
                     elif self.frostLevel > 1:
                         self.frostLevel -= 1
                     else:
-                        pygame.event.post(pygame.event.Event(E_NEXT_TUTORIAL_PHASE))
+                        pygame.event.post(
+                            pygame.event.Event(E_NEXT_TUTORIAL_PHASE))
                 # PHASE 2
                 if self.tutorialPhase == 2:
                     if self.tutorialStep == 0:
@@ -292,9 +301,6 @@ class Level:
                         self.applyHeatwave()
                         pygame.event.post(pygame.event.Event(E_NEXT_TUTORIAL_PHASE))
                     self.tutorialStep += 1
-
-
-
 
     def draw(self) -> None:
         # Background tiles
@@ -331,6 +337,19 @@ class Level:
 
         self.ui.draw(self.screen, self.frostLevel,
                      self.nextHeatWave, self.lastHeatwaveTime, self.player.lives, self.tutorialPhase, self.tutorialStep, self.num)
+
+        if (self.num == 0):
+            tutoTextTop = self.tutorialFont.render(
+                self.tutorialTextTop, True, (255, 255, 255))
+            tutoTextRect = tutoTextTop.get_rect()
+            tutoTextRect.center = (WIDTH/2, HEIGHT - 100)
+            self.screen.blit(tutoTextTop, tutoTextRect)
+
+            tutoTextBot = self.tutorialFont.render(
+                self.tutorialTextBot, True, (255, 255, 255))
+            tutoTextRectBot = tutoTextBot.get_rect()
+            tutoTextRectBot.center = (WIDTH/2, HEIGHT - 50)
+            self.screen.blit(tutoTextBot, tutoTextRectBot)
 
     def pollInput(self, events, keys) -> None:
         for event in events:
