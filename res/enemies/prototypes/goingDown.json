@@ -1,7 +1,8 @@
 {
     "name": "goingDown",
-    "image": "basicEnemy",
+    "image": "cannon",
     "health": 41,
+    "width" : 80,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 1,
