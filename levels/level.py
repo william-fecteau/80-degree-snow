@@ -105,24 +105,25 @@ class Level:
         pygame.time.set_timer(E_END_LEVEL, levelEndMs)
 
     def spawnEnemies(self):
-        for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
-            prototype = enemySpawn.enemyPrototype
-            spawn = enemySpawn.spawnPosition
-            width = prototype.width if(hasattr(prototype, "width")) else None
-            enemy = Enemy(self.gameWorldSurf, prototype, self.playerProjectileGroup,
-                          self.enemyProjectileGroup, self.iceCubes, center=(spawn.x, spawn.y), width=width)
-            self.enemies.add(enemy)
-            self.enemyProjectileGroup.add(enemy)
+        if self.num != 0:
+            for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
+                prototype = enemySpawn.enemyPrototype
+                spawn = enemySpawn.spawnPosition
+                width = prototype.width if(hasattr(prototype, "width")) else None
+                enemy = Enemy(self.gameWorldSurf, prototype, self.playerProjectileGroup,
+                            self.enemyProjectileGroup, self.iceCubes, center=(spawn.x, spawn.y), width=width)
+                self.enemies.add(enemy)
+                self.enemyProjectileGroup.add(enemy)
 
-        del self.dicEnemySpawns[self.nextSpawnTimeMs]
+            del self.dicEnemySpawns[self.nextSpawnTimeMs]
 
-        if (len(self.dicEnemySpawns) > 0):
-            oldSpawn = self.nextSpawnTimeMs
-            self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
-            pygame.time.set_timer(
-                E_NEXT_SPAWN, self.nextSpawnTimeMs - oldSpawn)
-        else:
-            pygame.time.set_timer(E_NEXT_SPAWN, 0)
+            if (len(self.dicEnemySpawns) > 0):
+                oldSpawn = self.nextSpawnTimeMs
+                self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
+                pygame.time.set_timer(
+                    E_NEXT_SPAWN, self.nextSpawnTimeMs - oldSpawn)
+            else:
+                pygame.time.set_timer(E_NEXT_SPAWN, 0)
 
     def generateCloud(self, randomY=False):
         # Pick a random sprite
