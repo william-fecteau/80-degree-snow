@@ -23,73 +23,12 @@ from utils import resource_path
 
 E_NEXT_SPAWN = pygame.USEREVENT + 5
 E_HEATWAVE = pygame.USEREVENT + 6
-E_INVINCIBILITY_FRAME = pygame.USEREVENT + 7
-E_INVINCIBILITY_FLASH = pygame.USEREVENT + 8
 E_END_LEVEL = pygame.USEREVENT + 9
 
-INVINCIBLE_TIME_MS = 2000
-INVINCIBLE_FLASH_MS = 100
+INVINCIBILITY_FLASH = 300
+INVINCIBILITY_TIME = 2000
 
 class Level:
-    CLOUDSIMG = [
-        pygame.image.load(resource_path(os.path.join('res', f'cloud-{i}.png'))) for i in range(1, 6)
-    ]
-
-    LVL_VALS = {
-        "grass1": {
-            "img_location": resource_path("res/grass-1.jpg"),
-            "NB_HEIGHT_TILES" : 3,
-            "BG_SPEED" : 3,
-            "OFFSET" : 3,
-            "CLOUDS" : 2,
-            "CLOUD_SPEED": 5
-        },
-        "grass2": {
-            "img_location": resource_path("res/grass-2.jpg"),
-            "NB_HEIGHT_TILES" : 3,
-            "BG_SPEED" : 10,
-            "OFFSET" : 3,
-            "CLOUDS" : 2,
-            "CLOUD_SPEED": 5
-        },
-        "grass3": {
-            "img_location": resource_path("res/grass-3.jpg"),
-            "NB_HEIGHT_TILES" : 3,
-            "BG_SPEED" : 10,
-            "OFFSET" : 3,
-            "CLOUDS" : 2,
-            "CLOUD_SPEED": 5
-        },
-        "sea1": {
-            "img_location": resource_path("res/sea-1.jpg"),
-            "NB_HEIGHT_TILES" : 4,
-            "BG_SPEED" : 2,
-            "OFFSET" : 5,
-            "CLOUDS" : 40,
-            "CLOUD_SPEED": 2
-        },
-        "sea2": {
-            "img_location": resource_path("res/sea-2.jpg"),
-            "NB_HEIGHT_TILES" : 4,
-            "BG_SPEED" : 2,
-            "OFFSET" : 2,
-            "CLOUDS" : 50,
-            "CLOUD_SPEED": 10
-        }
-    }
-    LEVEL = "grass1"
-    CLOUDS = LVL_VALS[LEVEL]["CLOUDS"]
-    CLOUD_SPEED = LVL_VALS[LEVEL]["CLOUD_SPEED"]
-    NB_HEIGHT_TILES = LVL_VALS[LEVEL]["NB_HEIGHT_TILES"]     # note: must be higher than 1
-    BG_SPEED = LVL_VALS[LEVEL]["BG_SPEED"]
-    OFFSET = LVL_VALS[LEVEL]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
-    BG = pygame.image.load(resource_path(LVL_VALS[LEVEL]["img_location"]))
-    SIZE_TILE = int(HEIGHT/(NB_HEIGHT_TILES-1))
-    NB_WIDTH_TILES = ceil(WIDTH/(2*SIZE_TILE))
-    NB_TOT_TILES = NB_WIDTH_TILES * NB_HEIGHT_TILES
-    LOADING_TILES = False
-    
-
     MAX_FROST = 10
 
     def __init__(self, game, num: int, screen: pygame.Surface, gameWorldSurf: pygame.surface, dicEnemyPrototypes: dict, dicEnemySpawns: dict, levelEndMs: int) -> None:
@@ -99,8 +38,6 @@ class Level:
         self.dicEnemyPrototypes = dicEnemyPrototypes
         self.gameWorldSurf = gameWorldSurf
         self.dicEnemySpawns = dicEnemySpawns
-        self.background = self.BG
-
         self.frostLevel = self.MAX_FROST/2
 
         # Setup sounds
@@ -130,7 +67,7 @@ class Level:
         # self.enemies.add(enemy)
         # self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
 
-        self.playerInvincible = False
+        self.invincibilityFrameStart = None
 
         # Check for first enemy spawn
         self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
@@ -200,8 +137,8 @@ class Level:
             self.rollDices(self.diceCount)
             return
 
-        frostLeft = self.frostLevel - sum(self.nextHeatWave)
-
+        frostLeft = self.frostLevel - sum(self.nextHeatWave) if self.player.isAlive else self.frostLevel # This does not apply the heat wave on the player if he is on invincibility frames
+            
         if (frostLeft <= 0):
             # ur dead lol remove a life here
             self.player.die()
@@ -239,9 +176,16 @@ class Level:
                         0, self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
                 )
 
-        if not self.player.isAlive and not self.playerInvincible:
-            self.playerInvincible = True
-            
+        if self.invincibilityFrameStart is not None:
+            delta = pygame.time.get_ticks() - self.invincibilityFrameStart
+            if delta % INVINCIBILITY_FLASH > 100:
+                self.drawPlayer = not self.drawPlayer
+            if delta > INVINCIBILITY_TIME:
+                self.drawPlayer = True
+                self.player.isAlive = True
+                self.invincibilityFrameStart = None
+
+        if not self.player.isAlive and self.invincibilityFrameStart is None:            
             if self.player.lives <= 0:
                 pygame.mixer.Sound.play(self.dieScrub)
                 self.game.switchState("InGameState", InGameStatePayload(self.num))
@@ -252,8 +196,8 @@ class Level:
                 pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
                 self.frostLevel = 5 
             
-            pygame.time.set_timer(E_INVINCIBILITY_FRAME, INVINCIBLE_TIME_MS)
-            pygame.time.set_timer(E_INVINCIBILITY_FLASH, INVINCIBLE_FLASH_MS)
+            self.invincibilityFrameStart = pygame.time.get_ticks()
+
 
         # Spawn enemies
         for event in events:
@@ -261,14 +205,6 @@ class Level:
                 self.spawnEnemies()
             elif event.type == E_HEATWAVE:
                 self.applyHeatwave()
-            elif event.type == E_INVINCIBILITY_FLASH:
-                self.drawPlayer = not self.drawPlayer
-            elif event.type == E_INVINCIBILITY_FRAME:
-                self.player.isAlive = True
-                self.playerInvincible = False
-                self.drawPlayer = True
-                pygame.time.set_timer(E_INVINCIBILITY_FRAME, 0)
-                pygame.time.set_timer(E_INVINCIBILITY_FLASH, 0)
             elif event.type == E_END_LEVEL:
                 pygame.mixer.Sound.play(self.levelEnd)
                 self.game.switchState(
@@ -373,7 +309,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             radianRotate = math.radians(attack['initialRotationDeg'])
             radianInitialRotation = math.radians(attack['rotateSpeedDeg'])
             attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'],
-                               attack['projectileSpeed'], radianInitialRotation, radianRotate, attack['shotCooldownMs'])
+                               attack['projectileSpeed'], radianInitialRotation, radianRotate, attack['shotCooldownMs'], projectileWidth=20)
 
             # Load moves
             moves = prototypeData['moves']
@@ -424,10 +360,16 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
         level.NB_HEIGHT_TILES = levelData["bgOptions"]["NB_HEIGHT_TILES"]     # note: must be higher than 1
         level.BG_SPEED = levelData["bgOptions"]["BG_SPEED"]
         level.OFFSET = levelData["bgOptions"]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
-        level.BG = pygame.image.load(levelData["bgOptions"]["img_location"],)
+        level.BG = pygame.image.load(resource_path(levelData["bgOptions"]["img_location"]))
+        level.CLOUD_TYPE = "-" + levelData["bgOptions"]["CLOUD_TYPE"] if "CLOUD_TYPE" in levelData["bgOptions"] else ""
         level.SIZE_TILE = int(HEIGHT/(level.NB_HEIGHT_TILES-1))
         level.NB_WIDTH_TILES = ceil(WIDTH/(2*level.SIZE_TILE))
         level.NB_TOT_TILES = level.NB_WIDTH_TILES * level.NB_HEIGHT_TILES
+
+        level.background = level.BG
+        level.CLOUDSIMG = [
+                pygame.image.load(resource_path(os.path.join('res', f'cloud-{i}{level.CLOUD_TYPE}.png'))) for i in range(1, 6)
+        ]
 
         # Generate initial clouds
         for _ in range(level.CLOUDS):

@@ -7,13 +7,14 @@ from sprites.projectile import Projectile
 class Attack:
     eventCounter = 0
 
-    def __init__(self, projectileImg: pygame.Surface, nbProjectiles: int, projectileSpeed: int, rotateSpeed: float, initialRotation: float, shotCooldownMs: int):
+    def __init__(self, projectileImg: pygame.Surface, nbProjectiles: int, projectileSpeed: int, rotateSpeed: float, initialRotation: float, shotCooldownMs: int, projectileWidth = None):
         self.projectileImg = projectileImg
         self.nbProjectiles = nbProjectiles
         self.projectileSpeed = projectileSpeed
         self.rotateSpeed = rotateSpeed
         self.initialRotation = initialRotation
         self.shotCooldownMs = shotCooldownMs
+        self.projectileWidth = projectileWidth
 
 
     def createShotTimer(self) -> int:
@@ -39,7 +40,7 @@ class Attack:
             projectileSpeed.x = projectileSpeed.x
             projectileSpeed.y = projectileSpeed.y
 
-            projectile = Projectile(gameWorldSurf, self.projectileImg, projectileSpeed, centerx=casterRect.centerx, bottom=casterRect.bottom)
+            projectile = Projectile(gameWorldSurf, self.projectileImg, projectileSpeed, centerx=casterRect.centerx, bottom=casterRect.bottom, width=self.projectileWidth)
             projectileGroup.add(projectile)
 
             rotation += self.rotateSpeed
