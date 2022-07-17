@@ -364,7 +364,7 @@ class Level:
         if self.drawPlayer:
             self.gameWorldSurf.blit(self.player.image, self.player.rect)
 
-        pygame.draw.rect(self.gameWorldSurf, "red", self.player.hitbox, 1)
+        # pygame.draw.rect(self.gameWorldSurf, "red", self.player.hitbox, 1)
 
         self.screen.blit(self.gameWorldSurf, (WIDTH/4, 0))
 
