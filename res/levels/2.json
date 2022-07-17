@@ -118,6 +118,66 @@
             ]
         },
         {
+            "timeToSpawnMs": 36000,
+            "enemies": [
+                {"prototypeName": "imp", "spawnPosition": [0, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 37000,
+            "enemies": [
+                {"prototypeName": "impReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 39000,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 39100,
+            "enemies": [
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 39200,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 39300,
+            "enemies": [
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 39400,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 39500,
+            "enemies": [
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 39600,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 39700,
+            "enemies": [
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
             "timeToSpawnMs": 40000,
             "enemies": [
                 {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
@@ -211,7 +271,6 @@
             "timeToSpawnMs": 56000,
             "enemies": [
                 {"prototypeName": "impHalf", "spawnPosition": [100, 0]},
-                {"prototypeName": "impHalf", "spawnPosition": [500, 0]}
             ]
         }
     ]
