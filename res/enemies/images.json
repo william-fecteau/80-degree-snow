@@ -4,7 +4,7 @@
     "basicEnemyReverse": "res/wisp-reversed.png",
     "basic16projectile": "res/enemyProjectile.png",
     "wisp": "res/wisp.png",
-    "imp": "res/imp.png",
+    "imp": "res/tripleWisp.png",
     "scie": "res/scie.png",
     "cannon": "res/cannon.png",
     "mine": "res/mine.png"

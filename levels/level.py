@@ -5,7 +5,7 @@ from math import ceil
 import pygame
 from attack import Attack
 import pygame_menu
-from constants import BLACK, WIDTH, HEIGHT, HEATWAVE_INTERVAL_SEC, GREEN_COLOR, HONEYDEW, MINT_GREEN, EMERALD, ZOMP, EGGPLANT, WHITE, RED, DARK_BLUE, BLUE
+from constants import BLACK, WIDTH, HEIGHT, HEATWAVE_INTERVAL_SEC
 from enemyMove import EnemyMove
 from enemySpawn import EnemySpawn
 from sprites import Player
@@ -270,8 +270,8 @@ class Level:
                 pygame.time.set_timer(E_INVINCIBILITY_FRAME, 0)
                 pygame.time.set_timer(E_INVINCIBILITY_FLASH, 0)
             elif event.type == E_END_LEVEL:
-                print("END")
-                self.game.switchState("InGameState", InGameStatePayload(self.num + 1))
+                self.game.switchState(
+                    "InGameState", InGameStatePayload(self.num + 1))
 
 
     def draw(self) -> None:

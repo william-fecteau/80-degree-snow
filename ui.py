@@ -3,7 +3,7 @@ import pygame_menu
 import os
 from math import floor
 from anim.spritesheet import SpriteSheet
-from constants import HEATWAVE_INTERVAL_SEC, WIDTH, HEIGHT, RED, PLAYER_LIVES
+from constants import HEATWAVE_INTERVAL_SEC, WHITE, WIDTH, HEIGHT, RED, PLAYER_LIVES
 
 
 class UI:
@@ -14,9 +14,7 @@ class UI:
         self.timerSprite = SpriteSheet("res/timer.png", 128, 128)
         self.frostMeterSprite = SpriteSheet("res/frostometer.png", 64, 512)
         self.warningSprite = SpriteSheet("res/warning.png", 32, 32)
-
-        self.fullHeartImg = pygame.image.load('res/images/hearth-full.png')
-        self.emptyHeartImg = pygame.image.load('res/images/hearth-empty.png')
+        self.heartSprite = SpriteSheet("res/iceHeart.png", 128, 128)
 
     def draw(self, surface: pygame.Surface, frostAmount: int, heatwave: list, lastHeatwave: int, playerLives: int) -> None:
         # Draw right UI
@@ -39,7 +37,7 @@ class UI:
                        timeNextHeatwave,
                        heatwave)
 
-        if (timeNextHeatwave < 2000):
+        if (timeNextHeatwave < 2000) and (sum(heatwave) > 0):
             # Gamescreen surface
             heatwaveSurf = pygame.Surface((WIDTH/2, HEIGHT))
             heatwaveRect = heatwaveSurf.get_rect(center=(WIDTH/2, HEIGHT/2))
@@ -54,11 +52,13 @@ class UI:
         surface.blit(self.rightUi, self.rightUiRect)
         surface.blit(self.leftUi, self.leftUiRect)
 
+        self.drawBorder(surface)
+
     def drawFrostOMeter(self,  frostAmount) -> None:
         frostMeter = self.frostMeterSprite.image_at(frostAmount - 1, 0, -1)
         frostMeterRect = frostMeter.get_rect()
         frostMeterRect.centery = self.rightUiRect.centery
-        frostMeterRect.left += 25
+        frostMeterRect.left += 50
 
         frostText = self.pixelFont.render(
             str(int(frostAmount)), True, (255, 255, 255))
@@ -128,19 +128,38 @@ class UI:
         self.leftUi.blit(timerText, timerTextRect)
         self.leftUi.blit(timerImage, timerRect)
 
-
     def drawLives(self, nbLives):
-        offsetHeart = 20
-        hearthWidth = self.fullHeartImg.get_width()
-        hearthHeight = self.fullHeartImg.get_height()
-
-        hearthSurf = pygame.Surface((hearthWidth, hearthHeight * PLAYER_LIVES * offsetHeart))
+        offsetHeart = 25
+        heartSize = 128
+        surfHeight = (heartSize + offsetHeart)*PLAYER_LIVES
+        heartSurface = pygame.Surface((heartSize, surfHeight))
 
         for i in range(PLAYER_LIVES):
+
+            y_offset = int(i * (heartSize + offsetHeart))
+
             if nbLives >= 1:
-                hearthSurf.blit(self.fullHeartImg, (0, i * (hearthHeight + offsetHeart)))
+                heartSurface.blit(self.heartSprite.image_at(
+                    0, 0, -1), (0, y_offset))
                 nbLives -= 1
             else:
-                hearthSurf.blit(self.emptyHeartImg, (0, i * (hearthHeight + offsetHeart)))
+                heartSurface.blit(self.heartSprite.image_at(
+                    1, 0, -1), (0, y_offset))
 
-        self.rightUi.blit(hearthSurf, (200, 0))
+        heartRect = heartSurface.get_rect()
+        heartRect.centerx = self.leftUiRect.centerx + 50
+        heartRect.centery = self.rightUiRect.centery
+
+        self.rightUi.blit(heartSurface, heartRect)
+
+    def drawBorder(self, surface: pygame.Surface) -> None:
+        borderSurface = pygame.Surface((32, HEIGHT))
+        borderSurface.fill(WHITE)
+
+        borderRect = borderSurface.get_rect()
+        borderRect.left = self.rightUiRect.left - 10
+
+        surface.blit(borderSurface, borderRect)
+
+        borderRect.right = self.leftUiRect.right + 10
+        surface.blit(borderSurface, borderRect)

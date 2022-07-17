@@ -192,7 +192,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 13150,
+            "timeToSpawnMs": 13250,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -206,7 +206,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 14300,
+            "timeToSpawnMs": 14500,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -220,7 +220,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 15450,
+            "timeToSpawnMs": 15750,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -234,7 +234,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 16550,
+            "timeToSpawnMs": 17000,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -322,6 +322,27 @@
                 {"prototypeName": "goingDown", "spawnPosition": [560, 0]},
                 {"prototypeName": "goingDown", "spawnPosition": [640, 0]},
                 {"prototypeName": "goingDown", "spawnPosition": [720, 0]} 
+            ]
+        },
+        {
+            "timeToSpawnMs": 35000,
+            "enemies": [
+                {"prototypeName": "impHalf", "spawnPosition": [0, 0]},
+                {"prototypeName": "impReverse", "spawnPosition": [800, 0]}    
+            ]
+        },
+        {
+            "timeToSpawnMs": 35500,
+            "enemies": [
+                {"prototypeName": "impHalf", "spawnPosition": [200, 0]},
+                {"prototypeName": "impHalfReverse", "spawnPosition": [600, 0]}    
+            ]
+        },
+        {
+            "timeToSpawnMs": 37000,
+            "enemies": [
+                {"prototypeName": "impHalfReverse", "spawnPosition": [200, 0]},
+                {"prototypeName": "impReverse", "spawnPosition": [400, 0]}    
             ]
         }
     ]

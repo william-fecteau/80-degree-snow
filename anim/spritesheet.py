@@ -1,5 +1,7 @@
 import pygame
 import os
+import sys
+from utils import resource_path
 
 
 class SpriteSheet:
@@ -25,7 +27,7 @@ class SpriteSheet:
     def load_img(self, name):
         fullname = name
         try:
-            image = pygame.image.load(fullname)
+            image = pygame.image.load(resource_path(fullname))
             if image.get_alpha() is None:
                 image = image.convert()
             else:
