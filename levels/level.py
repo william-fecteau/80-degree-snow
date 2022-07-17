@@ -61,6 +61,14 @@ class Level:
         self.levelEnd = pygame.mixer.Sound(resource_path("res/levelEnd.mp3"))
         self.dieScrub = pygame.mixer.Sound(resource_path("res/explosion1.mp3"))
 
+        # Death anims
+        self.deathAnims = [
+            pygame.image.load(resource_path('res/explosion-1.png')),
+            pygame.image.load(resource_path('res/explosion-2.png')),
+            pygame.image.load(resource_path('res/explosion-3.png')),
+            pygame.image.load(resource_path('res/explosion-4.png')),
+        ]
+
         # Sound volumes
         pygame.mixer.Sound.set_volume(self.diceRoll, 0.5)
 
@@ -117,7 +125,7 @@ class Level:
                 width = prototype.width if(
                     hasattr(prototype, "width")) else None
                 enemy = Enemy(self.gameWorldSurf, prototype, self.playerProjectileGroup,
-                              self.enemyProjectileGroup, self.iceCubes, center=(spawn.x, spawn.y), width=width)
+                            self.enemyProjectileGroup, self.iceCubes, center=(spawn.x, spawn.y), width=width,  deathAnimsDic = self.deathAnims)
                 self.enemies.add(enemy)
                 self.enemyProjectileGroup.add(enemy)
 
