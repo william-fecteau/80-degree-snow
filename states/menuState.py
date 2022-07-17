@@ -50,6 +50,9 @@ class MenuState (State):
     def menuAction(self) -> None:
         self.game.switchState("InGameState", InGameStatePayload(1))
 
+    def creditsAction(self) -> None:
+        self.game.switchState("CreditsState")
+
     def setupMenu(self) -> None:
         cool_theme = pygame_menu.themes.THEME_GREEN.copy()
         cool_theme.background_color = BLACK
@@ -64,4 +67,5 @@ class MenuState (State):
         self.menu.get_menubar().hide()
 
         self.menu.add.button('Play', self.menuAction)
+        self.menu.add.button('Credits', self.creditsAction)
         self.menu.add.button('Quit', pygame_menu.events.EXIT)
