@@ -244,7 +244,7 @@ class Level:
         # On the first frame just start a timer for the wasd + space section
         if self.tutorialPhase == 0 and self.tutorialStep == -1:
             self.tutorialStep = 0
-            pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 100, 1) # First tutorial phase duration
+            pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 10000, 1) # First tutorial phase duration
 
         for event in events:
             if event.type == E_NEXT_TUTORIAL_PHASE:
@@ -258,7 +258,7 @@ class Level:
                     # 2 frost = 9
                     # 3 frost = 8
                     # 4 frost = ...
-                    pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 100)
+                    pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 5000, 1)
                 if self.tutorialPhase == 2:
                     # Phase 2 has 3 steps:
                     # 0 Rolling dice
@@ -267,13 +267,18 @@ class Level:
                     self.rollDices(self.diceCount)
                     self.nextHeatWave = [2]
                     pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 5000, 1)
+                if self.tutorialPhase == 3:
+                    # Phase 3 is the final step, just a wait before real level 1:
+                    pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 4000, 1)
+                if self.tutorialPhase == 4:
+                    self.game.switchState("InGameState", InGameStatePayload(1))
             if event.type == E_NEXT_TUTORIAL_STEP:
                 # PHASE 1
                 if self.tutorialPhase == 1:
                     if self.tutorialStep == 0:
                         self.tutorialStep += 1
                         self.frostLevel = 10
-                        pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 100, 10)
+                        pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 1000, 10)
                     elif self.frostLevel > 1:
                         self.frostLevel -= 1
                     else:
@@ -282,9 +287,9 @@ class Level:
                 if self.tutorialPhase == 2:
                     if self.tutorialStep == 0:
                         self.lastHeatwaveTime = pygame.time.get_ticks() # start timer
-                        pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
+                        pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, HEATWAVE_INTERVAL_SEC * 1000, 1)
                     if self.tutorialStep == 1:
-                        print("TEST")
+                        self.applyHeatwave()
                         pygame.event.post(pygame.event.Event(E_NEXT_TUTORIAL_PHASE))
                     self.tutorialStep += 1
 
