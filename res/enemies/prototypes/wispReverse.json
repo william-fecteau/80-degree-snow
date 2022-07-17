@@ -1,26 +1,30 @@
 {
-    "name": "impHalfReverse",
+    "name": "wispReverse",
     "image": "basicEnemy",
-    "health": 90,
+    "health": 50,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 3,
-        "projectileSpeed": 2,
+        "projectileSpeed": 3.25,
         "rotateSpeedDeg": 30,
         "initialRotationDeg": 60,
-        "shotCooldownMs": 1000
+        "shotCooldownMs": 700
     },
     "moves": [
         {
-            "delta": [-400, 300],
+            "delta": [-800, 300], 
             "durationSec": 5
         },
         {
-            "delta": [400, 300],
+            "delta": [800, 300], 
             "durationSec": 5
         },
         {
-            "delta": [400, 300],
+            "delta": [-800, 300], 
+            "durationSec": 5
+        },
+        {
+            "delta": [800, 300], 
             "durationSec": 5
         }
     ]

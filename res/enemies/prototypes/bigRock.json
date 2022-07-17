@@ -1,7 +1,7 @@
 {
     "name": "bigRock",
     "image": "basicEnemy",
-    "health": 100,
+    "health": 3000,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 15,

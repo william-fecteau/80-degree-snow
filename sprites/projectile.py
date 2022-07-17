@@ -1,7 +1,7 @@
 import pygame
 
 class Projectile(pygame.sprite.Sprite):
-    def __init__(self, gameWorldSurf: pygame.Surface, image: pygame.Surface, speed: pygame.math.Vector2(), **kwargs):
+    def __init__(self, gameWorldSurf: pygame.Surface, image: pygame.Surface, speed: pygame.math.Vector2(), damage: int = 1, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
         self.gameWorldSurf = gameWorldSurf
@@ -9,6 +9,7 @@ class Projectile(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(**kwargs)
         self.precisePos = pygame.Vector2(self.rect.center)
         self.speed = speed
+        self.damage = damage
                 
     def update(self) -> None:
         self.precisePos += self.speed

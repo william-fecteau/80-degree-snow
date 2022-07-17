@@ -72,6 +72,7 @@
         "enemies": [
             {"prototypeName": "impHalf", "spawnPosition": [200, 0]},
             {"prototypeName": "impHalfReverse", "spawnPosition": [600, 0]}
+
         ]
     },
     {
@@ -95,48 +96,48 @@
         ]
     },
     {
-        "timeToSpawnMs": 40000,
+        "timeToSpawnMs": 35000,
         "enemies": [
             {"prototypeName": "bigRock", "spawnPosition": [200, 0]}
         ]
     },
     {
+        "timeToSpawnMs": 40000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 41000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 42000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 43000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 44000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+        ]
+    },
+    {
         "timeToSpawnMs": 45000,
-        "enemies": [
-            {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
-            {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
-        ]
-    },
-    {
-        "timeToSpawnMs": 46000,
-        "enemies": [
-            {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
-            {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
-        ]
-    },
-    {
-        "timeToSpawnMs": 47000,
-        "enemies": [
-            {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
-            {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
-        ]
-    },
-    {
-        "timeToSpawnMs": 48000,
-        "enemies": [
-            {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
-            {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
-        ]
-    },
-    {
-        "timeToSpawnMs": 49000,
-        "enemies": [
-            {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
-            {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
-        ]
-    },
-    {
-        "timeToSpawnMs": 50000,
         "enemies": [
             {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
             {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
