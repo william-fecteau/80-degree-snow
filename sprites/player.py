@@ -52,10 +52,20 @@ class Player(pygame.sprite.Sprite):
         # Hitbox
         self.resetHitbox()
 
+    def die(self):
+        self.lives -= 1
+        # self.rect.centerx = self.gameWorldSurf.get_width() / 2
+        # self.rect.bottom = self.gameWorldSurf.get_height()
+        self.resetHitbox()
+        self.isAlive = False
+        pygame.mixer.Sound.play(self.dieSound)
+
+
     def resetHitbox(self):
         self.hitbox = pygame.Rect(
             self.rect.left, self.rect.top, self.rect.width / 2, self.rect.height)
         self.hitbox.center = self.rect.center
+
 
     def setShotCooldown(self, shotSpeedMs: int) -> None:
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, 0)
@@ -78,12 +88,7 @@ class Player(pygame.sprite.Sprite):
         if self.isAlive:
             for enemy in self.enemyProjectileGroup.sprites():
                 if self.hitbox.colliderect(enemy.rect):
-                    self.lives -= 1
-                    # self.rect.centerx = self.gameWorldSurf.get_width() / 2
-                    # self.rect.bottom = self.gameWorldSurf.get_height()
-                    self.resetHitbox()
-                    self.isAlive = False
-                    pygame.mixer.Sound.play(self.dieSound)
+                    self.die()
                     return
 
         # Check if player can shoot
