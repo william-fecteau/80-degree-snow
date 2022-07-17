@@ -106,7 +106,7 @@ class Level:
 
         # Setting up player
         self.player = Player(self.playerProjectileGroup, self.enemyProjectileGroup,
-                             self.gameWorldSurf, centerx=0, bottom=HEIGHT)
+                             self.gameWorldSurf, centerx=self.gameWorldSurf.get_width() / 2, bottom=HEIGHT)
         self.drawPlayer = True
 
         # enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
@@ -231,7 +231,7 @@ class Level:
             self.playerInvincible = True
             
             if self.player.lives <= 0:
-                self.game.switchState("MenuState")
+                self.game.switchState("InGameState", InGameStatePayload(self.num))
 
             # Frost loss, reset frost to 5
             if self.frostLevel <= 0:
