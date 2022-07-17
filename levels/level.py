@@ -22,6 +22,9 @@ from states.payloads import InGameStatePayload
 
 E_NEXT_SPAWN = pygame.USEREVENT + 5
 E_HEATWAVE = pygame.USEREVENT + 6
+E_INVINCIBILITY_FRAME = pygame.USEREVENT + 7
+
+INVINCIBLE_TIME_MS = 2000
 
 
 class Level:
@@ -119,6 +122,8 @@ class Level:
                         0, self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.SIZE_TILE * j))
                 )
 
+        self.playerInvincible = False
+
         # Check for first enemy spawn
         self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
         if (self.nextSpawnTimeMs == 0):
@@ -202,12 +207,14 @@ class Level:
         self.backgroundObjectsGroup.update()
         self.backgroundTilesGroup.update()
 
-        # Check if player collects ice cube
-        for iceCube in self.iceCubes:
-            if self.player.rect.colliderect(iceCube.rect):
-                self.addFrost(iceCube.nbIce)
-                iceCube.kill()
-                break
+
+        if self.player.isAlive:
+            # Check if player collects ice cube
+            for iceCube in self.iceCubes:
+                if self.player.rect.colliderect(iceCube.rect):
+                    self.addFrost(iceCube.nbIce)
+                    iceCube.kill()
+                    break
 
         if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
             self.backgroundObjectsGroup.add(self.generateCloud())
@@ -218,8 +225,17 @@ class Level:
                         0, self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
                 )
 
-        if not self.player.isAlive:
-            game.switchState("MenuState")
+        if not self.player.isAlive and not self.playerInvincible:
+            self.playerInvincible = True
+            
+            if self.player.lives <= 0:
+                self.game.switchState("MenuState")
+
+            # Frost loss, reset frost to 5
+            if self.frostLevel <= 0:
+                self.frostLevel = 5 
+            
+            pygame.time.set_timer(E_INVINCIBILITY_FRAME, INVINCIBLE_TIME_MS)
 
         # Spawn enemies
         for event in events:
@@ -229,6 +245,11 @@ class Level:
             elif event.type == E_HEATWAVE:
                 self.applyHeatwave()
                 break
+            elif event.type == E_INVINCIBILITY_FRAME:
+                print("ALIVE")
+                self.player.isAlive = True
+                self.playerInvincible = False
+
 
     def draw(self) -> None:
         # Background tiles

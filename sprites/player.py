@@ -5,7 +5,7 @@ from sprites.projectile import Projectile
 
 DEFAULT_SHOT_SPEED_MS = 100
 E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
-
+PLAYER_LIVES = 3
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, gameWorldSurf: pygame.Surface, **kwargs):
@@ -35,6 +35,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.math.Vector2()
 
         self.isAlive = True
+        self.lives = PLAYER_LIVES
         self.speed = 10
 
         # Frost setup
@@ -74,11 +75,16 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.Vector2(0, 0)
 
         # Check if player is dead
-        for enemy in self.enemyProjectileGroup.sprites():
-            if self.hitbox.colliderect(enemy.rect):
-                self.isAlive = False
-                pygame.mixer.Sound.play(self.dieSound)
-                return
+        if self.isAlive:
+            for enemy in self.enemyProjectileGroup.sprites():
+                if self.hitbox.colliderect(enemy.rect):
+                    self.lives -= 1
+                    # self.rect.centerx = self.gameWorldSurf.get_width() / 2
+                    # self.rect.bottom = self.gameWorldSurf.get_height()
+                    self.resetHitbox()
+                    self.isAlive = False
+                    pygame.mixer.Sound.play(self.dieSound)
+                    return
 
         # Check if player can shoot
         for event in events:
