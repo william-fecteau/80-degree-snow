@@ -1,0 +1,157 @@
+{
+    "endTimeMs": 102000,
+    "spawns": [
+        {
+            "timeToSpawnMs": 5000,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 5500,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 6000,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 6500,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+            ]
+        },
+            {
+            "timeToSpawnMs": 9000,
+            "enemies": [
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 9500,
+            "enemies": [
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 10000,
+            "enemies": [
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 10500,
+            "enemies": [
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 13500,
+            "enemies": [
+                {"prototypeName": "holdStraight", "spawnPosition": [800, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [720, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [640, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [560, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [480, 50]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 15500,
+            "enemies": [
+                {"prototypeName": "holdStraight", "spawnPosition": [0, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [80, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [160, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [240, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [320, 50]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 20000,
+            "enemies": [
+                {"prototypeName": "impHalf", "spawnPosition": [200, 0]},
+                {"prototypeName": "impHalfReverse", "spawnPosition": [600, 0]}
+
+            ]
+        },
+        {
+            "timeToSpawnMs": 25000,
+            "enemies": [
+                {"prototypeName": "holdStraight", "spawnPosition": [0, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [80, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [160, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [640, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [720, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [800, 50]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 27000,
+            "enemies": [
+                {"prototypeName": "holdStraight", "spawnPosition": [240, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [320, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [400, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [480, 50]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 35000,
+            "enemies": [
+                {"prototypeName": "bigRock", "spawnPosition": [200, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 40000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 41000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 42000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 43000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 44000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 45000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+
+        {
+            "timeToSpawnMs": 56000,
+            "enemies": [
+                {"prototypeName": "impHalf", "spawnPosition": [100, 0]},
+                {"prototypeName": "impHalf", "spawnPosition": [500, 0]}
+            ]
+        }
+    ]
+}
