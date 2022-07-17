@@ -3,6 +3,7 @@ import pygame
 from anim.spritesheet import SpriteSheet
 from sprites.projectile import Projectile
 from constants import PLAYER_LIVES
+from utils import resource_path
 
 DEFAULT_SHOT_SPEED_MS = 100
 E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
@@ -16,8 +17,8 @@ class Player(pygame.sprite.Sprite):
         self.gameWorldSurf = gameWorldSurf
 
         # Setup sounds
-        self.pewSound = pygame.mixer.Sound("res/pew1.mp3")
-        self.dieSound = pygame.mixer.Sound("res/playerHit1.mp3")
+        self.pewSound = pygame.mixer.Sound(resource_path("res/pew1.mp3"))
+        self.dieSound = pygame.mixer.Sound(resource_path("res/playerHit1.mp3"))
 
         # Setup images
         self.spritesheet = SpriteSheet("res/frosto.png", 64, 64)
@@ -45,8 +46,7 @@ class Player(pygame.sprite.Sprite):
         self.resetHitbox()
         # Shooting
         self.canShoot = True
-        self.projectileSurface = pygame.image.load(
-            "res/frostBullet.png")
+        self.projectileSurface = pygame.image.load(resource_path("res/frostBullet.png"))
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, DEFAULT_SHOT_SPEED_MS)
 
         # Hitbox

@@ -4,12 +4,12 @@ import os
 from math import floor
 from anim.spritesheet import SpriteSheet
 from constants import HEATWAVE_INTERVAL_SEC, WHITE, WIDTH, HEIGHT, RED, PLAYER_LIVES
+from utils import resource_path
 
 
 class UI:
     def __init__(self) -> None:
-        self.pixelFont = pygame.font.Font(
-            os.path.join("res", "fonts", 'PressStart2P.ttf'), 36)
+        self.pixelFont = pygame.font.Font(resource_path(os.path.join("res", "fonts", 'PressStart2P.ttf')), 36)
         self.diceSprite = SpriteSheet("res/dice.png", 128, 128)
         self.timerSprite = SpriteSheet("res/timer.png", 128, 128)
         self.frostMeterSprite = SpriteSheet("res/frostometer.png", 64, 512)
