@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< HEAD
         "timeToSpawnMs": 1000,
         "enemies": [
             {"prototypeName": "goingDown", "spawnPosition": [800, 0]},
@@ -67,4 +68,27 @@
             {"prototypeName": "goingDown", "spawnPosition": [400, 0]}
         ]
     }
+=======
+        "timeToSpawnMs": 3000,
+        "enemies": [
+            {"prototypeName": "wisp", "spawnPosition": [0, 0]},
+            {"prototypeName": "wisp", "spawnPosition": [450, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 3250,
+        "enemies": [
+            {"prototypeName": "wisp", "spawnPosition": [450, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 3750,
+        "enemies": [
+            {"prototypeName": "wisp", "spawnPosition": [200, 0]},
+            {"prototypeName": "wisp", "spawnPosition": [450, 0]}
+        ]
+    }
+
+
+>>>>>>> 7efddc1d49888dd9a7260b7b88e1d1d240516494
 ]
