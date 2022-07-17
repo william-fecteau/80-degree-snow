@@ -20,9 +20,8 @@ class MenuState (State):
         super().__init__(game, renderer)
         self.surf = pygame.Surface(SURFACE_SIZE)
         self.playerSpritesheet = SpriteSheet(
-            os.path.join('res', 'frosto.png'), 64, 64)
+            os.path.join('res', 'frosto-idle.png'), 128, 128)
         self.frosto = self.playerSpritesheet.image_at(0, 0, -1)
-        self.frosto = pygame.transform.scale(self.frosto, (512, 512))
         self.frostoRect = self.frosto.get_rect()
         self.frostoRect.centerx = WIDTH/6
         self.frostoRect.centery = HEIGHT/2
@@ -53,14 +52,18 @@ class MenuState (State):
 
     def draw(self) -> None:
         self.menu.draw(self.surf)
-        logo = pygame.image.load(resource_path(os.path.join('res', 'title.png')))
+        logo = pygame.image.load(resource_path(
+            os.path.join('res', 'title.png')))
         logoRect = logo.get_rect()
         logoRect.centerx = WIDTH/2
         logoRect.centery = 150
 
         self.surf.blit(logo, logoRect)
 
-        self.surf.blit(self.frosto, self.frostoRect)
+        frame = int(pygame.time.get_ticks() / 250 % 4)
+
+        self.surf.blit(self.playerSpritesheet.image_at(
+            frame, 0, -1), self.frostoRect)
 
         self.screen.blit(self.surf, (0, 0))
 
