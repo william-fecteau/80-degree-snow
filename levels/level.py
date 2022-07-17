@@ -72,7 +72,7 @@ class Level:
             "CLOUD_SPEED": 10
         }
     }
-    LEVEL = "grass1"
+    LEVEL = "sea1"
     CLOUDS = LVL_VALS[LEVEL]["CLOUDS"]
     CLOUD_SPEED = LVL_VALS[LEVEL]["CLOUD_SPEED"]
     NB_HEIGHT_TILES = LVL_VALS[LEVEL]["NB_HEIGHT_TILES"]     # note: must be higher than 1
