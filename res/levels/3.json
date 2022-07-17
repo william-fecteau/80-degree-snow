@@ -1,13 +1,12 @@
 {
     "endTimeMs": 45000,
     "bgOptions": {
-        "img_location": "res/grass-2.jpg",
+        "img_location": "res/sea-1.jpg",
         "NB_HEIGHT_TILES" : 3,
         "BG_SPEED" : 10,
         "OFFSET" : 3,
         "CLOUDS" : 2,
-        "CLOUD_SPEED": 5,
-        "CLOUD_TYPE": "set"
+        "CLOUD_SPEED": 5
     },
     "spawns": [
         {
