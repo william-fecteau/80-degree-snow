@@ -12,6 +12,8 @@ from .payloads import InGameStatePayload
 from .state import State
 
 
+
+
 class MenuState (State):
 
     def __init__(self, game, renderer: pygame.Surface):
@@ -39,10 +41,13 @@ class MenuState (State):
         # Sound volumes
 
         # Setup Music
-        self.pourquoiPapillon = pygame.mixer.music.load("res\songs\everythingGoesToShitAgain.mp3")
+        
+        
+        self.pourquoiPapillon = pygame.mixer.music.load(resource_path("res\songs\soundtrack.mp3"))
+        #self.pourquoiPapillon = pygame.mixer.music.load(resource_path("res\songs\everythingGoesToShitAgain.mp3"))
         pygame.mixer.music.set_volume(0.22)
-        pygame.mixer.music.play(0,0,1000)
-        pygame.mixer.music.queue("res\songs\pourquoiYaUnPapillon.mp3")
+        pygame.mixer.music.play(-1,0,1000)
+        
         
         
 
