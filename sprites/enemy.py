@@ -2,17 +2,21 @@ from pickle import FRAME
 import pygame
 import random
 import numpy
+from iceCube import IceCube
 from sprites.enemyPrototype import EnemyPrototype
 from sprites.projectile import Projectile
 from constants import TARGET_FPS
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, gameWorldSurf: pygame.Surface, enemyPrototype: EnemyPrototype, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, **kwargs):
+    def __init__(self, gameWorldSurf: pygame.Surface, enemyPrototype: EnemyPrototype, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, iceCubes: pygame.sprite.Group, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
         self.gameWorldSurf = gameWorldSurf
+
         self.playerProjectileGroup = playerProjectileGroup
         self.enemyProjectileGroup = enemyProjectileGroup
+        self.iceCubes = iceCubes
+
         self.enemyPrototype = enemyPrototype
         self.image = enemyPrototype.image
         self.rect = self.image.get_rect(**kwargs)
@@ -28,6 +32,8 @@ class Enemy(pygame.sprite.Sprite):
     def die(self):
         self.kill()
         self.enemyPrototype.attack.removeShotTimer(self.shotEventId)
+        cube = IceCube(self.enemyPrototype.iceDrop, center=self.rect.center)
+        self.iceCubes.add(cube)
 
     def update(self, **kwargs) -> None:
         # If it goes offscreen, die
