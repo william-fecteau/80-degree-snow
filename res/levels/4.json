@@ -1,8 +1,5 @@
 {
-<<<<<<< HEAD
     "endTimeMs": 42000,
-=======
-    "endTimeMs": 102000,
     "bgOptions": {
         "img_location": "res/sea-2.jpg",
         "NB_HEIGHT_TILES" : 4,
@@ -11,7 +8,6 @@
         "CLOUDS" : 50,
         "CLOUD_SPEED": 10
     },
->>>>>>> 9ed4e349924cd7abe35fdf544d841fecf5bdbc14
     "spawns": [ //lvl de wave de mob a repetition, servent a fournir le joueur en frost abondament
         {//wave1
             "timeToSpawnMs": 1000,

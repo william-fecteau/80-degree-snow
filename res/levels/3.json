@@ -1,8 +1,5 @@
 {
-<<<<<<< HEAD
-    "endTimeMs": 8000,
-=======
-    "endTimeMs": 102000,
+    "endTimeMs": 10000,
     "bgOptions": {
         "img_location": "res/sea-1.jpg",
         "NB_HEIGHT_TILES" : 4,
@@ -11,7 +8,6 @@
         "CLOUDS" : 40,
         "CLOUD_SPEED": 2
     },
->>>>>>> 9ed4e349924cd7abe35fdf544d841fecf5bdbc14
     "spawns": [
         {
             "timeToSpawnMs": 750,
