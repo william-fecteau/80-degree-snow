@@ -1,8 +1,78 @@
 [
     {
-        "timeToSpawnMs": 0,
+        "timeToSpawnMs": 3000,
         "enemies": [
-            {"prototypeName": "shnake", "spawnPosition": [450, 0]}
+            {"prototypeName": "wisp", "spawnPosition": [0, 0]},
+            {"prototypeName": "wisp", "spawnPosition": [450, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 3250,
+        "enemies": [
+            {"prototypeName": "wispReverse", "spawnPosition": [800, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 3750,
+        "enemies": [
+            {"prototypeName": "wisp", "spawnPosition": [200, 0]},
+            {"prototypeName": "wispReverse", "spawnPosition": [450, 0]}
+        ]
+    },
+    /*{
+        "timeToSpawnMs": 7000,//serpent wall
+        "enemies": [
+            {"prototypeName": "wall", "spawnPosition": [40, 0]},
+            {"prototypeName": "wall", "spawnPosition": [120, 0]},
+            {"prototypeName": "wall", "spawnPosition": [200, 0]},
+            {"prototypeName": "wall", "spawnPosition": [280, 0]},
+            {"prototypeName": "wall", "spawnPosition": [360, 0]},
+            {"prototypeName": "wall", "spawnPosition": [440, 0]},
+            {"prototypeName": "wall", "spawnPosition": [520, 0]},
+            {"prototypeName": "wall", "spawnPosition": [600, 0]},
+            {"prototypeName": "wall", "spawnPosition": [680, 0]},
+            {"prototypeName": "wall", "spawnPosition": [760, 0]}
+
+        ]
+    },*/
+    {
+        "timeToSpawnMs": 7000,
+        "enemies": [
+            {"prototypeName": "wall", "spawnPosition": [40, 0]},
+            {"prototypeName": "wall", "spawnPosition": [120, 0]},
+            {"prototypeName": "wall", "spawnPosition": [200, 0]},
+            {"prototypeName": "wall", "spawnPosition": [280, 0]},
+            {"prototypeName": "wall", "spawnPosition": [520, 0]},
+            {"prototypeName": "wall", "spawnPosition": [600, 0]},
+            {"prototypeName": "wall", "spawnPosition": [680, 0]},
+            {"prototypeName": "wall", "spawnPosition": [760, 0]}
+
+        ]
+    },
+    {
+        "timeToSpawnMs": 8250,
+        "enemies": [
+            {"prototypeName": "wall", "spawnPosition": [40, 0]},
+            {"prototypeName": "wall", "spawnPosition": [120, 0]},
+            {"prototypeName": "wall", "spawnPosition": [200, 0]},
+            {"prototypeName": "wall", "spawnPosition": [280, 0]},
+            {"prototypeName": "wall", "spawnPosition": [520, 0]},
+            {"prototypeName": "wall", "spawnPosition": [600, 0]},
+            {"prototypeName": "wall", "spawnPosition": [680, 0]},
+            {"prototypeName": "wall", "spawnPosition": [760, 0]}
+
+        ]
+    },
+    {
+        "timeToSpawnMs": 25000,
+        "enemies": [
+            {"prototypeName": "holdStraight", "spawnPosition": [0, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [80, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [160, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [640, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [720, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [800, 50]}
         ]
     }
+    
 ]

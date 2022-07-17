@@ -15,7 +15,7 @@ from sprites.enemy import Enemy
 import numpy
 import random
 from sprites.enemyPrototype import EnemyPrototype
-import json
+import jstyleson
 import os
 
 from states.payloads import InGameStatePayload
@@ -73,6 +73,7 @@ class Level:
         self.enemyProjectileGroup = pygame.sprite.Group()
         self.backgroundObjectsGroup = pygame.sprite.Group()
         self.backgroundTilesGroup = pygame.sprite.Group()
+        self.iceCubes = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
 
         # Setting up player
@@ -113,7 +114,7 @@ class Level:
             prototype = enemySpawn.enemyPrototype
             spawn = enemySpawn.spawnPosition
             enemy = Enemy(self.gameWorldSurf, prototype, self.playerProjectileGroup,
-                          self.enemyProjectileGroup, center=(spawn.x, spawn.y))
+                          self.enemyProjectileGroup, self.iceCubes, center=(spawn.x, spawn.y))
             self.enemies.add(enemy)
             self.enemyProjectileGroup.add(enemy)
 
@@ -181,11 +182,20 @@ class Level:
     def update(self, game, events, keys) -> None:
         self.pollInput(events, keys)
         self.enemies.update(events=events, keys=keys)
+        self.iceCubes.update()
         self.enemyProjectileGroup.update()
         self.playerProjectileGroup.update()
         self.player.update(events, keys, self.frostLevel)
         self.backgroundObjectsGroup.update()
         self.backgroundTilesGroup.update()
+
+        # Check if player collects ice cube
+        for iceCube in self.iceCubes:
+            if self.player.rect.colliderect(iceCube.rect):
+                self.addFrost(iceCube.nbIce)
+                iceCube.kill()
+                break
+
         if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
             self.backgroundObjectsGroup.add(self.generateCloud())
         if(len(self.backgroundTilesGroup.sprites()) < self.NB_TOT_TILES):
@@ -222,6 +232,10 @@ class Level:
 
         # Player projectiles
         for sprite in self.playerProjectileGroup.sprites():
+            self.gameWorldSurf.blit(sprite.image, sprite.rect)
+
+        # Ice cubes
+        for sprite in self.iceCubes.sprites():
             self.gameWorldSurf.blit(sprite.image, sprite.rect)
 
         # Enemy projectiles
@@ -287,7 +301,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
     # Loading images
     dicImages = {}
     with open('res/enemies/images.json', 'r') as file:
-        data = json.load(file)
+        data = jstyleson.loads(file.read())
         for key in data.keys():
             dicImages[key] = pygame.image.load(data[key])
 
@@ -297,7 +311,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
     for filename in os.listdir(directory):
         filePath = os.path.join(directory, filename)
         with open(filePath, 'r') as file:
-            prototypeData = json.load(file)
+            prototypeData = jstyleson.loads(file.read())
 
             # Load attack
             attack = prototypeData['attack']
@@ -318,8 +332,9 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
             # Load prototype
             imageName = prototypeData['image']
+            iceDrop = prototypeData['iceDrop'] if 'iceDrop' in prototypeData else 1
             prototypeObj = EnemyPrototype(
-                dicImages[imageName], prototypeData['health'], attackObj, movesObj)
+                dicImages[imageName], prototypeData['health'], attackObj, movesObj, iceDrop)
 
             prototypeName = prototypeData['name']
             dicEnemyPrototypes[prototypeName] = prototypeObj
@@ -327,7 +342,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
     # Loading enemy spawns
     dicEnemySpawns = {}
     with open(f'res/enemies/levels/{levelNum}.json') as file:
-        spawnData = json.load(file)
+        spawnData = jstyleson.loads(file.read())
         for spawn in spawnData:
             enemies = spawn['enemies']
             lstEnemiesSpawn = []
