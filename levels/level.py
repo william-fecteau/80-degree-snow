@@ -167,14 +167,14 @@ class Level:
                 iceCube.kill()
                 break
 
-        if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
-            self.backgroundObjectsGroup.add(self.generateCloud())
-        if(len(self.backgroundTilesGroup.sprites()) < self.NB_TOT_TILES):
-            for i in range(self.NB_WIDTH_TILES):
-                self.backgroundTilesGroup.add(
-                    BackgroundObject(self.BG, pygame.Vector2(
-                        0, self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
-                )
+        # if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
+        #     self.backgroundObjectsGroup.add(self.generateCloud())
+        # if(len(self.backgroundTilesGroup.sprites()) < self.NB_TOT_TILES):
+        #     for i in range(self.NB_WIDTH_TILES):
+        #         self.backgroundTilesGroup.add(
+        #             BackgroundObject(self.BG, pygame.Vector2(
+        #                 0, self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
+        #        )
 
         if self.invincibilityFrameStart is not None:
             delta = pygame.time.get_ticks() - self.invincibilityFrameStart
@@ -380,7 +380,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             for j in range(level.NB_HEIGHT_TILES):
                 level.backgroundTilesGroup.add(
                     BackgroundObject(level.BG, pygame.Vector2(
-                        0, level.BG_SPEED), level.SIZE_TILE, topleft=(level.SIZE_TILE * i, level.SIZE_TILE * j))
+                        0, level.BG_SPEED), level.SIZE_TILE, topleft=(level.SIZE_TILE * i, level.SIZE_TILE * j), randomPos=False, OFFSET = level.OFFSET)
                 )
     
     return level
