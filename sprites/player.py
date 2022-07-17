@@ -42,27 +42,24 @@ class Player(pygame.sprite.Sprite):
         self.scaleDamage(self.oldFrost)
 
         self.resetHitbox()
-
-
         # Shooting
         self.canShoot = True
-        self.projectileSurface = pygame.image.load("res/templateProjectile.png")
+        self.projectileSurface = pygame.image.load(
+            "res/templateProjectile.png")
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, DEFAULT_SHOT_SPEED_MS)
 
         # Hitbox
         self.resetHitbox()
 
-
     def resetHitbox(self):
-        self.hitbox = pygame.Rect(self.rect.left, self.rect.top, self.rect.width / 2, self.rect.height)
+        self.hitbox = pygame.Rect(
+            self.rect.left, self.rect.top, self.rect.width / 2, self.rect.height)
         self.hitbox.center = self.rect.center
-
 
     def setShotCooldown(self, shotSpeedMs: int) -> None:
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, 0)
         self.canShoot = True
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, shotSpeedMs)
-
 
     def shoot(self) -> None:
         if self.canShoot:
@@ -72,7 +69,6 @@ class Player(pygame.sprite.Sprite):
                 0, -20), self.projectileDamage, bottom=(self.rect.top), centerx=self.rect.centerx)
             self.playerProjectileGroup.add(projectile)
             self.canShoot = False
-
 
     def update(self, events, keys, frostLevel: int) -> None:
         self.direction = pygame.Vector2(0, 0)
@@ -133,12 +129,10 @@ class Player(pygame.sprite.Sprite):
 
         self.hitbox.center = self.rect.center
 
-        
     def scaleDamage(self, frostLevel) -> None:
         # frost 1 => 30 damage
         # frost 10 => 10 damage
-        self.projectileDamage =  math.floor((20/9) * frostLevel + (70/9))
-        
+        self.projectileDamage = math.floor((20/9) * frostLevel + (70/9))
 
     def scalePlayer(self, frostLevel: int) -> None:
         frostFactor = frostLevel if frostLevel > 3 else 3
@@ -146,7 +140,8 @@ class Player(pygame.sprite.Sprite):
         factor = frostFactor/5
         curPos = self.rect.center
 
-        self.image = pygame.transform.scale(self.states[self.curState].copy(), (self.initialSize[0] * factor, self.initialSize[1] * factor))
+        self.image = pygame.transform.scale(self.states[self.curState].copy(
+        ), (self.initialSize[0] * factor, self.initialSize[1] * factor))
         self.rect = self.image.get_rect(center=curPos)
 
         self.resetHitbox()
