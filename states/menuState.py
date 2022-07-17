@@ -33,7 +33,7 @@ class MenuState (State):
 
         # Add other sprite to the right, maybe animate it NTH
 
-        self.bigSnakeFont = pygame.font.Font(
+        self.bigPixelFont = pygame.font.Font(
             resource_path(os.path.join("res", "fonts", 'PressStart2P.ttf')), 36)
 
         self.pixelFont = pygame.font.Font(
@@ -96,7 +96,7 @@ class MenuState (State):
     def setupMenu(self) -> None:
         cool_theme = pygame_menu.themes.THEME_GREEN.copy()
         cool_theme.background_color = BLACK
-        cool_theme.widget_font = self.bigSnakeFont
+        cool_theme.widget_font = self.bigPixelFont
         cool_theme.widget_font_color = WHITE
         cool_theme.selection_color = DARK_BLUE
         cool_theme.widget_font_size = 36

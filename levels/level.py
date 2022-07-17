@@ -30,6 +30,7 @@ E_NEXT_TUTORIAL_STEP = pygame.USEREVENT + 11
 INVINCIBILITY_FLASH = 300
 INVINCIBILITY_TIME = 2000
 
+
 class Level:
     MAX_FROST = 10
 
@@ -54,10 +55,9 @@ class Level:
         self.diceRoll = pygame.mixer.Sound(resource_path("res/diceroll1.mp3"))
         self.levelEnd = pygame.mixer.Sound(resource_path("res/levelEnd.mp3"))
         self.dieScrub = pygame.mixer.Sound(resource_path("res/explosion1.mp3"))
-        
 
         # Sound volumes
-        pygame.mixer.Sound.set_volume(self.diceRoll,0.5)
+        pygame.mixer.Sound.set_volume(self.diceRoll, 0.5)
 
         # Setting up groups
         self.playerProjectileGroup = pygame.sprite.Group()
@@ -78,7 +78,7 @@ class Level:
 
         self.invincibilityFrameStart = None
 
-        if self.num > 0: # No enemy to spawn on tutorial
+        if self.num > 0:  # No enemy to spawn on tutorial
             # Check for first enemy spawn
             self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
             if (self.nextSpawnTimeMs == 0):
@@ -90,7 +90,7 @@ class Level:
         self.ui = UI()
 
         # Heatwave setup
-        if self.num == 0: # Dont start heatwave on start of tutorial
+        if self.num == 0:  # Dont start heatwave on start of tutorial
             self.diceCount = 1
             self.nextHeatWave = [0]
             self.lastHeatwaveTime = 9999999
@@ -103,7 +103,6 @@ class Level:
 
         # End level timer
         pygame.time.set_timer(E_END_LEVEL, levelEndMs)
-
 
     def spawnEnemies(self):
         for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
@@ -136,7 +135,8 @@ class Level:
         Y = random.randint(
             0 - HEIGHT/2, HEIGHT) if randomY else -img.get_height()*1.75
         # Pick a speed calculated by size of image
-        speed = pygame.Vector2(0, self.BG_SPEED + (width*2.5 / WIDTH) * self.CLOUD_SPEED)
+        speed = pygame.Vector2(
+            0, self.BG_SPEED + (width*2.5 / WIDTH) * self.CLOUD_SPEED)
         return BackgroundObject(img, speed, width, topleft=(randomX,  Y))
 
     def rollDices(self, diceCount: int):
@@ -157,8 +157,10 @@ class Level:
             self.rollDices(self.diceCount)
             return
 
-        frostLeft = self.frostLevel - sum(self.nextHeatWave) if self.player.isAlive else self.frostLevel # This does not apply the heat wave on the player if he is on invincibility frames
-            
+        # This does not apply the heat wave on the player if he is on invincibility frames
+        frostLeft = self.frostLevel - \
+            sum(self.nextHeatWave) if self.player.isAlive else self.frostLevel
+
         if (frostLeft <= 0):
             # ur dead lol remove a life here
             self.player.die()
@@ -180,7 +182,6 @@ class Level:
         self.player.update(events, keys, self.frostLevel)
         self.backgroundObjectsGroup.update()
         self.backgroundTilesGroup.update()
-
 
         # Check if player collects ice cube
         for iceCube in self.iceCubes:
@@ -208,19 +209,19 @@ class Level:
                 self.player.isAlive = True
                 self.invincibilityFrameStart = None
 
-        if not self.player.isAlive and self.invincibilityFrameStart is None:            
+        if not self.player.isAlive and self.invincibilityFrameStart is None:
             if self.player.lives <= 0:
                 pygame.mixer.Sound.play(self.dieScrub)
-                self.game.switchState("InGameState", InGameStatePayload(self.num))
+                self.game.switchState(
+                    "InGameState", InGameStatePayload(self.num))
 
             # Frost loss, reset frost to 5
             if self.frostLevel <= 0:
                 pygame.time.set_timer(E_HEATWAVE, 0)
                 pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
-                self.frostLevel = 5 
-            
-            self.invincibilityFrameStart = pygame.time.get_ticks()
+                self.frostLevel = 5
 
+            self.invincibilityFrameStart = pygame.time.get_ticks()
 
         # Spawn enemies
         for event in events:
@@ -233,9 +234,9 @@ class Level:
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num + 1))
 
-
     def tutorialUpdate(self, events) -> None:
-        if self.tutorialPhase == 0 and self.tutorialStep == -1:  # On the first frame just start a timer for the wasd + space section
+        # On the first frame just start a timer for the wasd + space section
+        if self.tutorialPhase == 0 and self.tutorialStep == -1:
             self.tutorialStep = 0
             pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 100, 1) # First tutorial phase duration
 
@@ -326,7 +327,6 @@ class Level:
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num))
 
-
     def addFrost(self, amount: int) -> None:
         if self.frostLevel + amount <= self.MAX_FROST:
             self.frostLevel += amount
@@ -403,7 +403,6 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             prototypeName = prototypeData['name']
             dicEnemyPrototypes[prototypeName] = prototypeObj
 
-
     # Loading enemy spawns
     dicEnemySpawns = {}
     endTimeMs = None
@@ -423,7 +422,8 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
             dicEnemySpawns[spawn['timeToSpawnMs']] = lstEnemiesSpawn
 
-    level = Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns, endTimeMs)
+    level = Level(game, levelNum, screen, gameWorldSurf,
+                  dicEnemyPrototypes, dicEnemySpawns, endTimeMs)
 
     with open(f'res/levels/{levelNum}.json') as file:
         levelData = jstyleson.loads(file.read())
@@ -431,18 +431,22 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
         # Load Bg elems
         level.CLOUDS = levelData["bgOptions"]["CLOUDS"]
         level.CLOUD_SPEED = levelData["bgOptions"]["CLOUD_SPEED"]
-        level.NB_HEIGHT_TILES = levelData["bgOptions"]["NB_HEIGHT_TILES"]     # note: must be higher than 1
+        # note: must be higher than 1
+        level.NB_HEIGHT_TILES = levelData["bgOptions"]["NB_HEIGHT_TILES"]
         level.BG_SPEED = levelData["bgOptions"]["BG_SPEED"]
-        level.OFFSET = levelData["bgOptions"]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
-        level.BG = pygame.image.load(resource_path(levelData["bgOptions"]["img_location"]))
-        level.CLOUD_TYPE = "-" + levelData["bgOptions"]["CLOUD_TYPE"] if "CLOUD_TYPE" in levelData["bgOptions"] else ""
+        # tweek if you see gaps in the textures (this shit is black magic)
+        level.OFFSET = levelData["bgOptions"]["OFFSET"]
+        level.BG = pygame.image.load(resource_path(
+            levelData["bgOptions"]["img_location"]))
+        level.CLOUD_TYPE = "-" + \
+            levelData["bgOptions"]["CLOUD_TYPE"] if "CLOUD_TYPE" in levelData["bgOptions"] else ""
         level.SIZE_TILE = int(HEIGHT/(level.NB_HEIGHT_TILES-1))
         level.NB_WIDTH_TILES = ceil(WIDTH/(2*level.SIZE_TILE))
         level.NB_TOT_TILES = level.NB_WIDTH_TILES * level.NB_HEIGHT_TILES
 
         level.background = level.BG
         level.CLOUDSIMG = [
-                pygame.image.load(resource_path(os.path.join('res', f'cloud-{i}{level.CLOUD_TYPE}.png'))) for i in range(1, 6)
+            pygame.image.load(resource_path(os.path.join('res', f'cloud-{i}{level.CLOUD_TYPE}.png'))) for i in range(1, 6)
         ]
 
         # Generate initial clouds
@@ -454,7 +458,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             for j in range(level.NB_HEIGHT_TILES):
                 level.backgroundTilesGroup.add(
                     BackgroundObject(level.BG, pygame.Vector2(
-                        0, level.BG_SPEED), level.SIZE_TILE, topleft=(level.SIZE_TILE * i, level.SIZE_TILE * j), randomPos=False, OFFSET = level.OFFSET)
+                        0, level.BG_SPEED), level.SIZE_TILE, topleft=(level.SIZE_TILE * i, level.SIZE_TILE * j), randomPos=False, OFFSET=level.OFFSET)
                 )
-    
+
     return level
