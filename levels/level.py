@@ -484,7 +484,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
     level = Level(game, levelNum, screen, gameWorldSurf,
                   dicEnemyPrototypes, dicEnemySpawns, endTimeMs)
 
-    with open(f'res/levels/{levelNum}.json') as file:
+    with open(resource_path(f'res/levels/{levelNum}.json')) as file:
         levelData = jstyleson.loads(file.read())
 
         # Load Bg elems

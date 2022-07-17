@@ -1,1 +1,1 @@
-pyinstaller -n 80DegreeSnow --onefile --add-data="res/*;res/" --add-data="res/fonts/*;res/fonts/" --add-data="res/enemies/*;res/enemies/" --add-data="res/enemies/prototypes/*;res/enemies/prototypes/" --add-data="res/levels/*;res/levels/" .\game.py
+pyinstaller -n "80 Degree Snow" --onefile --add-data="res/*;res/" --add-data="res/fonts/*;res/fonts/" --add-data="res/enemies/*;res/enemies/" --add-data="res/enemies/prototypes/*;res/enemies/prototypes/" --add-data="res/levels/*;res/levels/" --add-data="res/songs/*;res/songs/" --icon="res/frostoLogo.ico" --noconsole .\game.py
