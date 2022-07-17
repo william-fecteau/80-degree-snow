@@ -136,7 +136,6 @@ class Player(pygame.sprite.Sprite):
         # frost 1 => 30 damage
         # frost 10 => 10 damage
         self.projectileDamage =  math.floor((20/9) * frostLevel + (70/9))
-        print(self.projectileDamage)
         
 
     def scalePlayer(self, frostLevel: int) -> None:

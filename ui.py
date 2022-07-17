@@ -2,7 +2,7 @@ import pygame
 import pygame_menu
 import os
 from anim.spritesheet import SpriteSheet
-from constants import WIDTH, HEIGHT
+from constants import HEATWAVE_INTERVAL_SEC, WIDTH, HEIGHT
 
 
 class UI:
@@ -10,11 +10,10 @@ class UI:
         self.pixelFont = pygame.font.Font(
             os.path.join("res", "fonts", 'PressStart2P.ttf'), 36)
         self.diceSprite = SpriteSheet("res/dice.png", 128, 128)
+        self.timerSprite = SpriteSheet("res/timer.png", 64, 64)
         self.frostMeterSprite = SpriteSheet("res/frostometer.png", 64, 512)
-        # get dices
-        pass
 
-    def draw(self, surface: pygame.Surface, frostAmount: int, heatwave: list) -> None:
+    def draw(self, surface: pygame.Surface, frostAmount: int, heatwave: list, lastHeatwave: int) -> None:
         # Draw right UI
         self.rightUi = pygame.Surface((WIDTH/4, HEIGHT))
         self.rightUiRect = self.rightUi.get_rect(topright=(WIDTH, 0))
@@ -26,6 +25,8 @@ class UI:
         self.drawFrostOMeter(frostAmount)
 
         self.drawDice(heatwave)
+
+        self.drawTimer(self.timeUntilNextHeatwave(lastHeatwave))
 
         surface.blit(self.rightUi, self.rightUiRect)
         surface.blit(self.leftUi, self.leftUiRect)
@@ -59,3 +60,23 @@ class UI:
             self.leftUi.blit(diceImage, diceRect)
 
         pass
+
+    # Returns the time left until the next heatwave in seconds
+    def timeUntilNextHeatwave(self, lastHeatwave: int) -> int:
+        return int((HEATWAVE_INTERVAL_SEC * 1000 + lastHeatwave - pygame.time.get_ticks()) / 1000)
+
+    def drawTimer(self, timeLeft: int) -> None:
+        timerImage = self.timerSprite.image_at(
+            timeLeft % 8, 0, -1)
+        timerRect = timerImage.get_rect()
+        timerRect.right = self.leftUiRect.right - 50
+        timerRect.top = 100
+
+        timerText = self.pixelFont.render(
+            str(int(timeLeft)), True, (255, 255, 255))
+        timerTextRect = timerText.get_rect()
+        timerTextRect.centerx = timerRect.centerx
+        timerTextRect.top = timerRect.bottom + 25
+
+        self.leftUi.blit(timerText, timerTextRect)
+        self.leftUi.blit(timerImage, timerRect)
