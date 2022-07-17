@@ -1,5 +1,5 @@
 {
-    "name": "shnake",
+    "name": "shnakeImpHalf",
     "image": "basicEnemy",
     "health": 5,
     "attack": {
@@ -7,12 +7,16 @@
         "nbProjectiles": 1,
         "projectileSpeed": 2,
         "rotateSpeedDeg": 0,
-        "initialRotationDeg": 90,
+        "initialRotationDeg": 60,
         "shotCooldownMs": 500
     },
     "moves": [
         {
-            "delta": [800, 300],
+            "delta": [400, 300],
+            "durationSec": 5
+        },
+        {
+            "delta": [-400, 300],
             "durationSec": 5
         }
     ]
