@@ -361,7 +361,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
     directory = resource_path('res/enemies/prototypes')
     for filename in os.listdir(directory):
         filePath = os.path.join(directory, filename)
-        with open(filePath, 'r') as file:
+        with open(resource_path(filePath), 'r') as file:
             prototypeData = jstyleson.loads(file.read())
 
             # Load attack
@@ -412,7 +412,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
     level = Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns, endTimeMs)
 
-    with open(f'res/levels/{levelNum}.json') as file:
+    with open(resource_path(f'res/levels/{levelNum}.json')) as file:
         levelData = jstyleson.loads(file.read())
 
         # Load Bg elems
@@ -421,7 +421,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
         level.NB_HEIGHT_TILES = levelData["bgOptions"]["NB_HEIGHT_TILES"]     # note: must be higher than 1
         level.BG_SPEED = levelData["bgOptions"]["BG_SPEED"]
         level.OFFSET = levelData["bgOptions"]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
-        level.BG = pygame.image.load(levelData["bgOptions"]["img_location"],)
+        level.BG = pygame.image.load(resource_path(levelData["bgOptions"]["img_location"]))
         level.SIZE_TILE = int(HEIGHT/(level.NB_HEIGHT_TILES-1))
         level.NB_WIDTH_TILES = ceil(WIDTH/(2*level.SIZE_TILE))
         level.NB_TOT_TILES = level.NB_WIDTH_TILES * level.NB_HEIGHT_TILES
