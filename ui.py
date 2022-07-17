@@ -4,17 +4,25 @@ import os
 from math import floor
 from anim.spritesheet import SpriteSheet
 from constants import HEATWAVE_INTERVAL_SEC, WHITE, WIDTH, HEIGHT, RED, PLAYER_LIVES
+from utils import resource_path
 
 
 class UI:
     def __init__(self) -> None:
-        self.pixelFont = pygame.font.Font(
-            os.path.join("res", "fonts", 'PressStart2P.ttf'), 36)
+        self.pixelFont = pygame.font.Font(resource_path(os.path.join("res", "fonts", 'PressStart2P.ttf')), 36)
         self.diceSprite = SpriteSheet("res/dice.png", 128, 128)
         self.timerSprite = SpriteSheet("res/timer.png", 128, 128)
         self.frostMeterSprite = SpriteSheet("res/frostometer.png", 64, 512)
         self.warningSprite = SpriteSheet("res/warning.png", 32, 32)
         self.heartSprite = SpriteSheet("res/iceHeart.png", 128, 128)
+
+
+        # Setup sounds
+        self.heatwaveSound = pygame.mixer.Sound(resource_path("res/heatwave1.mp3"))
+        self.dieSound = pygame.mixer.Sound(resource_path("res/playerHit1.mp3"))
+
+        # Sound volumes
+        pygame.mixer.Sound.set_volume(self.heatwaveSound,0.35)
 
     def draw(self, surface: pygame.Surface, frostAmount: int, heatwave: list, lastHeatwave: int, playerLives: int) -> None:
         # Draw right UI
@@ -37,12 +45,18 @@ class UI:
                        timeNextHeatwave,
                        heatwave)
 
+
+        if (timeNextHeatwave < 2000) and (sum(heatwave) > 0) and (timeNextHeatwave > 1975):
+            pygame.mixer.Sound.play(self.heatwaveSound)
+
         if (timeNextHeatwave < 2000) and (sum(heatwave) > 0):
             # Gamescreen surface
             heatwaveSurf = pygame.Surface((WIDTH/2, HEIGHT))
             heatwaveRect = heatwaveSurf.get_rect(center=(WIDTH/2, HEIGHT/2))
 
             heatwaveSurf.fill(RED)
+
+            
 
             # Set greater opacity the closer you get to 0
             max_opacity = 100  # Solid block is 255

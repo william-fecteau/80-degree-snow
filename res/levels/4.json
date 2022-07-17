@@ -1,5 +1,5 @@
 {
-    "endTimeMs": 102000,
+    "endTimeMs": 42000,
     "bgOptions": {
         "img_location": "res/sea-2.jpg",
         "NB_HEIGHT_TILES" : 3,
@@ -300,6 +300,12 @@
             "enemies": [
                 {"prototypeName": "goingDown", "spawnPosition": [500, 0]},
                 {"prototypeName": "goingDown", "spawnPosition": [300, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 20700,
+            "enemies": [
+                {"prototypeName": "lemurian", "spawnPosition": [630, 0]}
             ]
         },
         {

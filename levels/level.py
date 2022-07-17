@@ -19,6 +19,7 @@ import jstyleson
 import os
 
 from states.payloads import InGameStatePayload
+from utils import resource_path
 
 E_NEXT_SPAWN = pygame.USEREVENT + 5
 E_HEATWAVE = pygame.USEREVENT + 6
@@ -40,6 +41,14 @@ class Level:
         self.gameWorldSurf = gameWorldSurf
         self.dicEnemySpawns = dicEnemySpawns
         self.frostLevel = self.MAX_FROST/2
+
+        # Setup sounds
+        self.icePickup = pygame.mixer.Sound(resource_path("res/pickup.mp3"))
+        self.diceRoll = pygame.mixer.Sound(resource_path("res/diceroll1.mp3"))
+        self.levelEnd = pygame.mixer.Sound(resource_path("res/levelEnd.mp3"))
+
+        # Sound volumes
+        pygame.mixer.Sound.set_volume(self.diceRoll,0.5)
 
         # Setting up groups
         self.playerProjectileGroup = pygame.sprite.Group()
@@ -115,6 +124,7 @@ class Level:
         return BackgroundObject(img, speed, width, topleft=(randomX,  Y))
 
     def rollDices(self, diceCount: int):
+        pygame.mixer.Sound.play(self.diceRoll)
         for i in range(diceCount):
             self.nextHeatWave[i] = random.randint(1, 6)
 
@@ -153,6 +163,7 @@ class Level:
         for iceCube in self.iceCubes:
             if self.player.rect.colliderect(iceCube.rect):
                 self.addFrost(iceCube.nbIce)
+                pygame.mixer.Sound.play(self.icePickup)
                 iceCube.kill()
                 break
 
@@ -195,6 +206,7 @@ class Level:
                 pygame.time.set_timer(E_INVINCIBILITY_FRAME, 0)
                 pygame.time.set_timer(E_INVINCIBILITY_FLASH, 0)
             elif event.type == E_END_LEVEL:
+                pygame.mixer.Sound.play(self.levelEnd)
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num + 1))
 
@@ -278,17 +290,17 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
     # Loading images
     dicImages = {}
-    with open('res/enemies/images.json', 'r') as file:
+    with open(resource_path('res/enemies/images.json'), 'r') as file:
         data = jstyleson.loads(file.read())
         for key in data.keys():
-            dicImages[key] = pygame.image.load(data[key])
+            dicImages[key] = pygame.image.load(resource_path(data[key]))
 
     # Loading prototypes
     dicEnemyPrototypes = {}
-    directory = 'res/enemies/prototypes'
+    directory = resource_path('res/enemies/prototypes')
     for filename in os.listdir(directory):
         filePath = os.path.join(directory, filename)
-        with open(filePath, 'r') as file:
+        with open(resource_path(filePath), 'r') as file:
             prototypeData = jstyleson.loads(file.read())
 
             # Load attack
@@ -321,7 +333,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
     # Loading enemy spawns
     dicEnemySpawns = {}
     endTimeMs = None
-    with open(f'res/levels/{levelNum}.json') as file:
+    with open(resource_path(f'res/levels/{levelNum}.json')) as file:
         levelData = jstyleson.loads(file.read())
         endTimeMs = levelData['endTimeMs']
 
@@ -339,7 +351,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
     level = Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns, endTimeMs)
 
-    with open(f'res/levels/{levelNum}.json') as file:
+    with open(resource_path(f'res/levels/{levelNum}.json')) as file:
         levelData = jstyleson.loads(file.read())
 
         # Load Bg elems
@@ -348,25 +360,16 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
         level.NB_HEIGHT_TILES = levelData["bgOptions"]["NB_HEIGHT_TILES"]     # note: must be higher than 1
         level.BG_SPEED = levelData["bgOptions"]["BG_SPEED"]
         level.OFFSET = levelData["bgOptions"]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
-        level.BG = pygame.image.load(levelData["bgOptions"]["img_location"],)
-        level.CLOUD_TYPE = levelData["bgOptions"]["CLOUD_TYPE"] if "CLOUD_TYPE" in levelData["bgOptions"] else "normal"
+        level.BG = pygame.image.load(resource_path(levelData["bgOptions"]["img_location"]))
+        level.CLOUD_TYPE = "-" + levelData["bgOptions"]["CLOUD_TYPE"] if "CLOUD_TYPE" in levelData["bgOptions"] else ""
         level.SIZE_TILE = int(HEIGHT/(level.NB_HEIGHT_TILES-1))
         level.NB_WIDTH_TILES = ceil(WIDTH/(2*level.SIZE_TILE))
         level.NB_TOT_TILES = level.NB_WIDTH_TILES * level.NB_HEIGHT_TILES
 
         level.background = level.BG
-        if level.CLOUD_TYPE == "sunset":
-            level.CLOUDSIMG = [
-                pygame.image.load("res/cloud-1-set.png"),
-            ]
-        else:
-            level.CLOUDSIMG = [
-                pygame.image.load("res/cloud-1.png"),
-                pygame.image.load("res/cloud-2.png"),
-                pygame.image.load("res/cloud-3.png"),
-                pygame.image.load("res/cloud-4.png"),
-                pygame.image.load("res/cloud-5.png"),
-            ]
+        level.CLOUDSIMG = [
+                pygame.image.load(resource_path(os.path.join('res', f'cloud-{i}{level.CLOUD_TYPE}.png'))) for i in range(1, 6)
+        ]
 
         # Generate initial clouds
         for _ in range(level.CLOUDS):

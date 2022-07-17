@@ -3,6 +3,7 @@ import os
 from anim.spritesheet import SpriteSheet
 
 from constants import WIDTH, BLACK, HEIGHT, WHITE
+from utils import resource_path
 from .state import State
 
 
@@ -10,26 +11,26 @@ class CreditsState(State):
     def __init__(self, game, renderer: pygame.Surface):
         super().__init__(game, renderer)
         self.pixelFontBig = pygame.font.Font(
-            os.path.join("res", "fonts", 'PressStart2P.ttf'), 72)
+            resource_path(os.path.join("res", "fonts", 'PressStart2P.ttf')), 72)
         self.pixelFont = pygame.font.Font(
-            os.path.join("res", "fonts", 'PressStart2P.ttf'), 36)
+            resource_path(os.path.join("res", "fonts", 'PressStart2P.ttf')), 36)
         self.pixelFontSmall = pygame.font.Font(
-            os.path.join("res", "fonts", 'PressStart2P.ttf'), 18)
+            resource_path(os.path.join("res", "fonts", 'PressStart2P.ttf')), 18)
 
         self.jordanSpriteSheet = SpriteSheet(
-            os.path.join('res', 'tt.png'), 128, 128)
+            resource_path(os.path.join('res', 'tt.png')), 128, 128)
 
         self.nathanSpritesheet = SpriteSheet(
-            os.path.join('res', 'saurus.png'), 128, 128)
+            resource_path(os.path.join('res', 'saurus.png')), 128, 128)
 
         self.alexSpritesheet = SpriteSheet(
-            os.path.join('res', 'wiisp.png'), 128, 128)
+            resource_path(os.path.join('res', 'wiisp.png')), 128, 128)
 
         self.williamSpritesheet = SpriteSheet(
-            os.path.join('res', 'schhnake.png'), 128, 128)
+            resource_path(os.path.join('res', 'schhnake.png')), 128, 128)
 
         self.lambertSpritesheet = SpriteSheet(
-            os.path.join('res', 'headphones.png'), 128, 128)
+            resource_path(os.path.join('res', 'headphones.png')), 128, 128)
 
     def update(self, events, keys) -> None:
         for event in events:
