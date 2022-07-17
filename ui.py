@@ -1,8 +1,9 @@
 import pygame
 import pygame_menu
 import os
+from math import floor
 from anim.spritesheet import SpriteSheet
-from constants import HEATWAVE_INTERVAL_SEC, WIDTH, HEIGHT
+from constants import HEATWAVE_INTERVAL_SEC, WIDTH, HEIGHT, RED
 
 
 class UI:
@@ -12,6 +13,7 @@ class UI:
         self.diceSprite = SpriteSheet("res/dice.png", 128, 128)
         self.timerSprite = SpriteSheet("res/timer.png", 64, 64)
         self.frostMeterSprite = SpriteSheet("res/frostometer.png", 64, 512)
+        self.warningSprite = SpriteSheet("res/warning.png", 32, 32)
 
     def draw(self, surface: pygame.Surface, frostAmount: int, heatwave: list, lastHeatwave: int) -> None:
         # Draw right UI
@@ -26,7 +28,9 @@ class UI:
 
         self.drawDice(heatwave)
 
-        self.drawTimer(self.timeUntilNextHeatwave(lastHeatwave))
+        self.drawTimer(surface,
+                       self.timeUntilNextHeatwave(lastHeatwave),
+                       heatwave)
 
         surface.blit(self.rightUi, self.rightUiRect)
         surface.blit(self.leftUi, self.leftUiRect)
@@ -61,22 +65,46 @@ class UI:
 
         pass
 
-    # Returns the time left until the next heatwave in seconds
+    # Returns the time left until the next heatwave in ms
     def timeUntilNextHeatwave(self, lastHeatwave: int) -> int:
-        return int((HEATWAVE_INTERVAL_SEC * 1000 + lastHeatwave - pygame.time.get_ticks()) / 1000)
+        return HEATWAVE_INTERVAL_SEC * 1000 + lastHeatwave - pygame.time.get_ticks()
 
-    def drawTimer(self, timeLeft: int) -> None:
+    def drawTimer(self, screen: pygame.surface, timeLeft: int, heatwave: list) -> None:
+        secondsLeft = int(timeLeft / 1000)
         timerImage = self.timerSprite.image_at(
-            timeLeft % 8, 0, -1)
+            secondsLeft % 8, 0, -1)
         timerRect = timerImage.get_rect()
         timerRect.right = self.leftUiRect.right - 50
         timerRect.top = 100
 
         timerText = self.pixelFont.render(
-            str(int(timeLeft)), True, (255, 255, 255))
+            str(int(secondsLeft)), True, (255, 255, 255))
         timerTextRect = timerText.get_rect()
         timerTextRect.centerx = timerRect.centerx
         timerTextRect.top = timerRect.bottom + 25
+
+        if (secondsLeft < 4 and sum(heatwave) > 0):
+            warningText = self.pixelFont.render(
+                'HEATWAVE INCOMING', True, RED)
+            warningTextRect = warningText.get_rect()
+            warningTextRect.centerx = WIDTH/2
+            warningTextRect.top = 100
+
+            screen.blit(warningText, warningTextRect)
+
+            if (floor(timeLeft / 500 % 2) == 0):
+                warningIcon = self.warningSprite.image_at(0, 0, -1)
+                leftWarningRect = warningIcon.get_rect()
+                rightWarningRect = warningIcon.get_rect()
+
+                leftWarningRect.centery = warningTextRect.centery
+                rightWarningRect.centery = warningTextRect.centery
+
+                leftWarningRect.right = warningTextRect.left - 25
+                rightWarningRect.left = warningTextRect.right + 25
+
+                screen.blit(warningIcon, leftWarningRect)
+                screen.blit(warningIcon, rightWarningRect)
 
         self.leftUi.blit(timerText, timerTextRect)
         self.leftUi.blit(timerImage, timerRect)
