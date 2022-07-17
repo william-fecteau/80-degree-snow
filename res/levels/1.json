@@ -199,7 +199,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 302750,
+            "timeToSpawnMs": 32750,
             "enemies": [
                 {"prototypeName": "lemurian", "spawnPosition": [300, 0]},
                 {"prototypeName": "suicide", "spawnPosition": [0, 0]},

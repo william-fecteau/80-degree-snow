@@ -173,7 +173,40 @@
                 {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
             ]
         },
+        {
+            "timeToSpawnMs": 49000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 50000,
+            "enemies": [
+                {"prototypeName": "impHalf", "spawnPosition": [400, 0]},
+                {"prototypeName": "impHalf", "spawnPosition": [500, 0]}
+            ]
+        },
 
+        {
+            "timeToSpawnMs": 51000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 54000,
+            "enemies": [
+                {"prototypeName": "wisp", "spawnPosition": [0, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 55000,
+            "enemies": [
+                {"prototypeName": "wispReverse", "spawnPosition": [800, 0]}
+            ]
+        },
         {
             "timeToSpawnMs": 56000,
             "enemies": [
