@@ -5,7 +5,7 @@ from math import ceil
 import pygame
 from attack import Attack
 import pygame_menu
-from constants import BLACK, WIDTH, HEIGHT, DEFAULT_DICE_COUNT, HEATWAVE_INTERVAL_SEC, GREEN_COLOR, HONEYDEW, MINT_GREEN, EMERALD, ZOMP, EGGPLANT, WHITE, RED, DARK_BLUE, BLUE
+from constants import BLACK, WIDTH, HEIGHT, HEATWAVE_INTERVAL_SEC, GREEN_COLOR, HONEYDEW, MINT_GREEN, EMERALD, ZOMP, EGGPLANT, WHITE, RED, DARK_BLUE, BLUE
 from enemyMove import EnemyMove
 from enemySpawn import EnemySpawn
 from sprites import Player
@@ -106,7 +106,7 @@ class Level:
 
         # Setting up player
         self.player = Player(self.playerProjectileGroup, self.enemyProjectileGroup,
-                             self.gameWorldSurf, centerx=0, bottom=HEIGHT)
+                             self.gameWorldSurf, centerx=self.gameWorldSurf.get_width() / 2, bottom=HEIGHT)
         self.drawPlayer = True
 
         # enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
@@ -137,7 +137,8 @@ class Level:
         self.ui = UI()
 
         # Heatwave setup
-        self.nextHeatWave = [0 for _ in range(DEFAULT_DICE_COUNT)]
+        self.diceCount = self.num if self.num <= 3 else 3
+        self.nextHeatWave = [0 for _ in range(self.diceCount)]
         pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
         self.lastHeatwaveTime = pygame.time.get_ticks()
 
@@ -185,7 +186,7 @@ class Level:
 
         # If its the first heatwave, just roll dice
         if self.nextHeatWave[0] == 0:
-            self.rollDices(DEFAULT_DICE_COUNT)
+            self.rollDices(self.diceCount)
             return
 
         frostLeft = self.frostLevel - sum(self.nextHeatWave)
@@ -197,7 +198,7 @@ class Level:
         else:
             self.frostLevel = frostLeft
 
-        self.rollDices(DEFAULT_DICE_COUNT)  # Roll dices for next heatwave
+        self.rollDices(self.diceCount)  # Roll dices for next heatwave
 
     def update(self, game, events, keys) -> None:
         self.pollInput(events, keys)
@@ -210,13 +211,12 @@ class Level:
         self.backgroundTilesGroup.update()
 
 
-        if self.player.isAlive:
-            # Check if player collects ice cube
-            for iceCube in self.iceCubes:
-                if self.player.rect.colliderect(iceCube.rect):
-                    self.addFrost(iceCube.nbIce)
-                    iceCube.kill()
-                    break
+        # Check if player collects ice cube
+        for iceCube in self.iceCubes:
+            if self.player.rect.colliderect(iceCube.rect):
+                self.addFrost(iceCube.nbIce)
+                iceCube.kill()
+                break
 
         if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
             self.backgroundObjectsGroup.add(self.generateCloud())
@@ -231,10 +231,12 @@ class Level:
             self.playerInvincible = True
             
             if self.player.lives <= 0:
-                self.game.switchState("MenuState")
+                self.game.switchState("InGameState", InGameStatePayload(self.num))
 
             # Frost loss, reset frost to 5
             if self.frostLevel <= 0:
+                pygame.time.set_timer(E_HEATWAVE, 0)
+                pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
                 self.frostLevel = 5 
             
             pygame.time.set_timer(E_INVINCIBILITY_FRAME, INVINCIBLE_TIME_MS)
@@ -311,7 +313,7 @@ class Level:
 
     def overFrostDice(self, overFrost: int) -> None:
         # Get last dice thats not 0
-        lastDiceIndex = DEFAULT_DICE_COUNT - 1
+        lastDiceIndex = self.diceCount - 1
         while lastDiceIndex >= 0 and self.nextHeatWave[lastDiceIndex] == 0:
             lastDiceIndex -= 1
 
