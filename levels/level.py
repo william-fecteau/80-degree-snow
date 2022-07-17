@@ -30,68 +30,6 @@ INVINCIBLE_TIME_MS = 2000
 INVINCIBLE_FLASH_MS = 100
 
 class Level:
-    CLOUDSIMG = [
-        pygame.image.load("res/cloud-1.png"),
-        pygame.image.load("res/cloud-2.png"),
-        pygame.image.load("res/cloud-3.png"),
-        pygame.image.load("res/cloud-4.png"),
-        pygame.image.load("res/cloud-5.png"),
-    ]
-
-    LVL_VALS = {
-        "grass1": {
-            "img_location": "res/grass-1.jpg",
-            "NB_HEIGHT_TILES" : 3,
-            "BG_SPEED" : 3,
-            "OFFSET" : 3,
-            "CLOUDS" : 2,
-            "CLOUD_SPEED": 5
-        },
-        "grass2": {
-            "img_location": "res/grass-2.jpg",
-            "NB_HEIGHT_TILES" : 3,
-            "BG_SPEED" : 10,
-            "OFFSET" : 3,
-            "CLOUDS" : 2,
-            "CLOUD_SPEED": 5
-        },
-        "grass3": {
-            "img_location": "res/grass-3.jpg",
-            "NB_HEIGHT_TILES" : 3,
-            "BG_SPEED" : 10,
-            "OFFSET" : 3,
-            "CLOUDS" : 2,
-            "CLOUD_SPEED": 5
-        },
-        "sea1": {
-            "img_location": "res/sea-1.jpg",
-            "NB_HEIGHT_TILES" : 4,
-            "BG_SPEED" : 2,
-            "OFFSET" : 5,
-            "CLOUDS" : 40,
-            "CLOUD_SPEED": 2
-        },
-        "sea2": {
-            "img_location": "res/sea-2.jpg",
-            "NB_HEIGHT_TILES" : 4,
-            "BG_SPEED" : 2,
-            "OFFSET" : 2,
-            "CLOUDS" : 50,
-            "CLOUD_SPEED": 10
-        }
-    }
-    LEVEL = "grass1"
-    CLOUDS = LVL_VALS[LEVEL]["CLOUDS"]
-    CLOUD_SPEED = LVL_VALS[LEVEL]["CLOUD_SPEED"]
-    NB_HEIGHT_TILES = LVL_VALS[LEVEL]["NB_HEIGHT_TILES"]     # note: must be higher than 1
-    BG_SPEED = LVL_VALS[LEVEL]["BG_SPEED"]
-    OFFSET = LVL_VALS[LEVEL]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
-    BG = pygame.image.load(LVL_VALS[LEVEL]["img_location"],)
-    SIZE_TILE = int(HEIGHT/(NB_HEIGHT_TILES-1))
-    NB_WIDTH_TILES = ceil(WIDTH/(2*SIZE_TILE))
-    NB_TOT_TILES = NB_WIDTH_TILES * NB_HEIGHT_TILES
-    LOADING_TILES = False
-
     MAX_FROST = 10
 
     def __init__(self, game, num: int, screen: pygame.Surface, gameWorldSurf: pygame.surface, dicEnemyPrototypes: dict, dicEnemySpawns: dict, levelEndMs: int) -> None:
@@ -101,8 +39,6 @@ class Level:
         self.dicEnemyPrototypes = dicEnemyPrototypes
         self.gameWorldSurf = gameWorldSurf
         self.dicEnemySpawns = dicEnemySpawns
-        self.background = self.BG
-
         self.frostLevel = self.MAX_FROST/2
 
         # Setting up groups
@@ -413,9 +349,24 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
         level.BG_SPEED = levelData["bgOptions"]["BG_SPEED"]
         level.OFFSET = levelData["bgOptions"]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
         level.BG = pygame.image.load(levelData["bgOptions"]["img_location"],)
+        level.CLOUD_TYPE = levelData["bgOptions"]["CLOUD_TYPE"] if "CLOUD_TYPE" in levelData["bgOptions"] else "normal"
         level.SIZE_TILE = int(HEIGHT/(level.NB_HEIGHT_TILES-1))
         level.NB_WIDTH_TILES = ceil(WIDTH/(2*level.SIZE_TILE))
         level.NB_TOT_TILES = level.NB_WIDTH_TILES * level.NB_HEIGHT_TILES
+
+        level.background = level.BG
+        if level.CLOUD_TYPE == "sunset":
+            level.CLOUDSIMG = [
+                pygame.image.load("res/cloud-1-set.png"),
+            ]
+        else:
+            level.CLOUDSIMG = [
+                pygame.image.load("res/cloud-1.png"),
+                pygame.image.load("res/cloud-2.png"),
+                pygame.image.load("res/cloud-3.png"),
+                pygame.image.load("res/cloud-4.png"),
+                pygame.image.load("res/cloud-5.png"),
+            ]
 
         # Generate initial clouds
         for _ in range(level.CLOUDS):

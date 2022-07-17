@@ -6,7 +6,8 @@
         "BG_SPEED" : 10,
         "OFFSET" : 3,
         "CLOUDS" : 2,
-        "CLOUD_SPEED": 5
+        "CLOUD_SPEED": 5,
+        "CLOUD_TYPE": "sunset"
     },
     "spawns": [
         {
