@@ -1,4 +1,3 @@
-import pygame
 
 # Display
 WIDTH = 1600
@@ -6,6 +5,10 @@ HEIGHT = 900
 SURFACE_SIZE = (WIDTH, HEIGHT)
 
 TARGET_FPS = 60
+
+# Gameplay
+DEFAULT_DICE_COUNT = 2
+HEATWAVE_INTERVAL_SEC = 14
 
 # Colors
 GREEN_COLOR = 0, 146, 32
