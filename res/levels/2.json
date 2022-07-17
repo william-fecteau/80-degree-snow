@@ -1,414 +1,184 @@
 {
-    "endTimeMs": 45000,
+    "endTimeMs": 60000,
     "bgOptions": {
-        "img_location": "res/grass-2.jpg",
+        "img_location": "res/grass-1.jpg",
         "NB_HEIGHT_TILES" : 3,
-        "BG_SPEED" : 10,
+        "BG_SPEED" : 5,
         "OFFSET" : 3,
         "CLOUDS" : 2,
-        "CLOUD_SPEED": 5,
-        "CLOUD_TYPE": "set"
+        "CLOUD_SPEED": 5
     },
     "spawns": [
         {
-            "timeToSpawnMs": 500,
+            "timeToSpawnMs": 5000,
             "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
-    
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]}
             ]
         },
         {
-            "timeToSpawnMs": 700,
+            "timeToSpawnMs": 5500,
             "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]}
             ]
         },
         {
-            "timeToSpawnMs": 900,
+            "timeToSpawnMs": 6000,
             "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]}
             ]
         },
         {
-            "timeToSpawnMs": 1100,
+            "timeToSpawnMs": 6500,
             "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]}
             ]
         },
-        {
-            "timeToSpawnMs": 1300,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 1500,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
-            ]
-        },
-        
-        {
-            "timeToSpawnMs": 7000,
-            "enemies": [
-                {"prototypeName": "wall", "spawnPosition": [40, 0]},
-                {"prototypeName": "wall", "spawnPosition": [120, 0]},
-                {"prototypeName": "wall", "spawnPosition": [200, 0]},
-                {"prototypeName": "wall", "spawnPosition": [280, 0]},
-                {"prototypeName": "wall", "spawnPosition": [520, 0]},
-                {"prototypeName": "wall", "spawnPosition": [600, 0]},
-                {"prototypeName": "wall", "spawnPosition": [680, 0]},
-                {"prototypeName": "wall", "spawnPosition": [760, 0]}
-    
-            ]
-        },
-        {
-            "timeToSpawnMs": 7300,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 7400,
-            "enemies": [
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 8000,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 8100,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
-   
-            ]
-        },
-        {
-            "timeToSpawnMs": 8125,
-            "enemies": [
-                {"prototypeName": "wall", "spawnPosition": [40, 0]},
-                {"prototypeName": "wall", "spawnPosition": [120, 0]},
-                {"prototypeName": "wall", "spawnPosition": [200, 0]},
-                {"prototypeName": "wall", "spawnPosition": [280, 0]},
-                {"prototypeName": "wall", "spawnPosition": [360, 0]},
-                {"prototypeName": "wall", "spawnPosition": [440, 0]},
-                {"prototypeName": "wall", "spawnPosition": [680, 0]},
-                {"prototypeName": "wall", "spawnPosition": [760, 0]}
-    
-            ]
-        },
-        {
-            "timeToSpawnMs": 8300,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 8450,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicideHalf", "spawnPosition": [0, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 8600,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 8700,
-            "enemies": [
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 8800,
-            "enemies": [
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 8900,
-            "enemies": [
-                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
-            ]
-        },
-        {
+            {
             "timeToSpawnMs": 9000,
             "enemies": [
-                {"prototypeName": "suicideReverse", "spawnPosition": [0, 0]}
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
             ]
         },
         {
-            "timeToSpawnMs": 9125,
+            "timeToSpawnMs": 9500,
             "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
             ]
         },
         {
-            "timeToSpawnMs": 9250,
+            "timeToSpawnMs": 10000,
             "enemies": [
-                {"prototypeName": "wall", "spawnPosition": [40, 0]},
-                {"prototypeName": "wall", "spawnPosition": [120, 0]},
-                {"prototypeName": "wall", "spawnPosition": [360, 0]},
-                {"prototypeName": "wall", "spawnPosition": [440, 0]},
-                {"prototypeName": "wall", "spawnPosition": [520, 0]},
-                {"prototypeName": "wall", "spawnPosition": [600, 0]},
-                {"prototypeName": "wall", "spawnPosition": [680, 0]},
-                {"prototypeName": "wall", "spawnPosition": [760, 0]}
-    
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
             ]
         },
         {
             "timeToSpawnMs": 10500,
             "enemies": [
-                {"prototypeName": "wall", "spawnPosition": [40, 0]},
-                {"prototypeName": "wall", "spawnPosition": [280, 0]},
-                {"prototypeName": "wall", "spawnPosition": [360, 0]},
-                {"prototypeName": "wall", "spawnPosition": [440, 0]},
-                {"prototypeName": "wall", "spawnPosition": [520, 0]},
-                {"prototypeName": "wall", "spawnPosition": [600, 0]},
-                {"prototypeName": "wall", "spawnPosition": [680, 0]},
-                {"prototypeName": "wall", "spawnPosition": [760, 0]}
-    
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
             ]
         },
         {
-            "timeToSpawnMs": 12000,
+            "timeToSpawnMs": 13500,
             "enemies": [
-                {"prototypeName": "wall", "spawnPosition": [40, 0]},
-                {"prototypeName": "wall", "spawnPosition": [280, 0]},
-                {"prototypeName": "wall", "spawnPosition": [360, 0]},
-                {"prototypeName": "wall", "spawnPosition": [440, 0]},
-                {"prototypeName": "wall", "spawnPosition": [520, 0]},
-                {"prototypeName": "wall", "spawnPosition": [600, 0]},
-                {"prototypeName": "wall", "spawnPosition": [680, 0]},
-                {"prototypeName": "wall", "spawnPosition": [760, 0]}
-    
+                {"prototypeName": "holdStraight", "spawnPosition": [800, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [720, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [640, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [560, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [480, 50]}
             ]
         },
         {
-            "timeToSpawnMs": 12225,
+            "timeToSpawnMs": 15500,
             "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 12350,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
-            ]
-        },
-        {    
-            "timeToSpawnMs": 12475,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 12600,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 12725,
-            "enemies": [
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 13250,
-            "enemies": [
-                {"prototypeName": "wall", "spawnPosition": [40, 0]},
-                {"prototypeName": "wall", "spawnPosition": [120, 0]},
-                {"prototypeName": "wall", "spawnPosition": [200, 0]},
-                {"prototypeName": "wall", "spawnPosition": [280, 0]},
-                {"prototypeName": "wall", "spawnPosition": [360, 0]},
-                {"prototypeName": "wall", "spawnPosition": [440, 0]},
-                {"prototypeName": "wall", "spawnPosition": [520, 0]},
-                {"prototypeName": "wall", "spawnPosition": [600, 0]}
-    
-            ]
-        },
-        {
-            "timeToSpawnMs": 13400,
-            "enemies": [
-                {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 0]},
-                {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 100]},
-                {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 200]},
-                {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 300]},
-                {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 400]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 14500,
-            "enemies": [
-                {"prototypeName": "wall", "spawnPosition": [40, 0]},
-                {"prototypeName": "wall", "spawnPosition": [120, 0]},
-                {"prototypeName": "wall", "spawnPosition": [200, 0]},
-                {"prototypeName": "wall", "spawnPosition": [440, 0]},
-                {"prototypeName": "wall", "spawnPosition": [520, 0]},
-                {"prototypeName": "wall", "spawnPosition": [600, 0]},
-                {"prototypeName": "wall", "spawnPosition": [680, 0]},
-                {"prototypeName": "wall", "spawnPosition": [760, 0]}
-    
-            ]
-        },
-        {
-            "timeToSpawnMs": 15750,
-            "enemies": [
-                {"prototypeName": "wall", "spawnPosition": [40, 0]},
-                {"prototypeName": "wall", "spawnPosition": [120, 0]},
-                {"prototypeName": "wall", "spawnPosition": [200, 0]},
-                {"prototypeName": "wall", "spawnPosition": [280, 0]},
-                {"prototypeName": "wall", "spawnPosition": [360, 0]},
-                {"prototypeName": "wall", "spawnPosition": [440, 0]},
-                {"prototypeName": "wall", "spawnPosition": [520, 0]},
-                {"prototypeName": "wall", "spawnPosition": [760, 0]}
-    
-            ]
-        },
-        {
-            "timeToSpawnMs": 16000,
-            "enemies": [
-                {"prototypeName": "suicideHalf", "spawnPosition": [800, 0]},
-                {"prototypeName": "suicideHalf", "spawnPosition": [800, 100]},
-                {"prototypeName": "suicideHalf", "spawnPosition": [800, 200]},
-                {"prototypeName": "suicideHalf", "spawnPosition": [800, 300]},
-                {"prototypeName": "suicideHalf", "spawnPosition": [800, 400]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 17000,
-            "enemies": [
-                {"prototypeName": "wall", "spawnPosition": [40, 0]},
-                {"prototypeName": "wall", "spawnPosition": [120, 0]},
-                {"prototypeName": "wall", "spawnPosition": [200, 0]},
-                {"prototypeName": "wall", "spawnPosition": [280, 0]},
-                {"prototypeName": "wall", "spawnPosition": [520, 0]},
-                {"prototypeName": "wall", "spawnPosition": [600, 0]},
-                {"prototypeName": "wall", "spawnPosition": [680, 0]},
-                {"prototypeName": "wall", "spawnPosition": [760, 0]}
-    
+                {"prototypeName": "holdStraight", "spawnPosition": [0, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [80, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [160, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [240, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [320, 50]}
             ]
         },
         {
             "timeToSpawnMs": 20000,
             "enemies": [
-                {"prototypeName": "wisp", "spawnPosition": [0, 0]},
-                {"prototypeName": "wispReverse", "spawnPosition": [800, 0]}    
-            ]
-        },
-        {
-            "timeToSpawnMs": 21000,
-            "enemies": [
-                {"prototypeName": "impHalfReverse", "spawnPosition": [200, 0]},
-                {"prototypeName": "wispReverse", "spawnPosition": [400, 0]}    
+                {"prototypeName": "impHalf", "spawnPosition": [200, 0]},
+                {"prototypeName": "impHalfReverse", "spawnPosition": [600, 0]}
+
             ]
         },
         {
             "timeToSpawnMs": 25000,
             "enemies": [
-                {"prototypeName": "goingDown", "spawnPosition": [80, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [160, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [240, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [320, 0]},  
-                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [480, 0]},  
-                {"prototypeName": "goingDown", "spawnPosition": [560, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [640, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [720, 0]} 
+                {"prototypeName": "holdStraight", "spawnPosition": [0, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [80, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [160, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [640, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [720, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [800, 50]}
             ]
         },
         {
             "timeToSpawnMs": 27000,
             "enemies": [
-                {"prototypeName": "goingDown", "spawnPosition": [80, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [160, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [240, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [320, 0]},  
-                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [480, 0]},  
-                {"prototypeName": "goingDown", "spawnPosition": [560, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [640, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [720, 0]} 
-            ]
-        },
-        {
-            "timeToSpawnMs": 28000,
-            "enemies": [
-                {"prototypeName": "holdStraight", "spawnPosition": [40, 0]},
-                {"prototypeName": "holdStraight", "spawnPosition": [760, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 29000,
-            "enemies": [
-                {"prototypeName": "goingDown", "spawnPosition": [80, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [160, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [240, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [320, 0]},  
-                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [480, 0]},  
-                {"prototypeName": "goingDown", "spawnPosition": [560, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [640, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [720, 0]} 
-            ]
-        },
-        {
-            "timeToSpawnMs": 31000,
-            "enemies": [
-                {"prototypeName": "goingDown", "spawnPosition": [80, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [160, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [240, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [320, 0]},  
-                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [480, 0]},  
-                {"prototypeName": "goingDown", "spawnPosition": [560, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [640, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [720, 0]} 
-            ]
-        },
-        {
-            "timeToSpawnMs": 33000,
-            "enemies": [
-                {"prototypeName": "lemurian", "spawnPosition": [200, 0]},
-                {"prototypeName": "lemurian", "spawnPosition": [600, 0]}    
+                {"prototypeName": "holdStraight", "spawnPosition": [240, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [320, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [400, 50]},
+                {"prototypeName": "holdStraight", "spawnPosition": [480, 50]}
             ]
         },
         {
             "timeToSpawnMs": 35000,
             "enemies": [
-                {"prototypeName": "impHalf", "spawnPosition": [0, 0]},
-                {"prototypeName": "impReverse", "spawnPosition": [800, 0]}    
+                {"prototypeName": "bigRock", "spawnPosition": [200, 0]}
             ]
         },
         {
-            "timeToSpawnMs": 35500,
+            "timeToSpawnMs": 36000,
             "enemies": [
-                {"prototypeName": "impHalf", "spawnPosition": [200, 0]},
-                {"prototypeName": "impHalfReverse", "spawnPosition": [600, 0]}    
+                {"prototypeName": "suicide", "spawnPosition": [200, 0]}
             ]
         },
         {
-            "timeToSpawnMs": 37000,
+            "timeToSpawnMs": 40000,
             "enemies": [
-                {"prototypeName": "impHalfReverse", "spawnPosition": [200, 0]},
-                {"prototypeName": "impReverse", "spawnPosition": [400, 0]}    
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 42000,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [400, 0]},
+                {"prototypeName": "suicideReverse", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 43000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 44000,
+            "enemies": [
+                {"prototypeName": "suicideHalf", "spawnPosition": [400, 0]},
+                {"prototypeName": "suicideHalfReverse", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 44150,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [400, 0]},
+                {"prototypeName": "suicideReverse", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 44300,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [400, 0]},
+                {"prototypeName": "suicideReverse", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 45000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 47000,
+            "enemies": [
+                {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
+                {"prototypeName": "goingDown", "spawnPosition": [500, 0]}
+            ]
+        },
+
+        {
+            "timeToSpawnMs": 56000,
+            "enemies": [
+                {"prototypeName": "impHalf", "spawnPosition": [100, 0]},
+                {"prototypeName": "impHalf", "spawnPosition": [500, 0]}
             ]
         }
     ]
