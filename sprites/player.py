@@ -20,13 +20,10 @@ class Player(pygame.sprite.Sprite):
         # Setup sounds
         self.pewSound = pygame.mixer.Sound(resource_path("res/pew1.mp3"))
         self.dieSound = pygame.mixer.Sound(resource_path("res/playerHit1.mp3"))
-<<<<<<< HEAD
 
         # Sound volumes
         pygame.mixer.Sound.set_volume(self.pewSound,0.5)
         pygame.mixer.Sound.set_volume(self.dieSound,0.6)
-=======
->>>>>>> 9ed4e349924cd7abe35fdf544d841fecf5bdbc14
 
         # Setup images
         self.spritesheet = SpriteSheet("res/frosto.png", 64, 64)
