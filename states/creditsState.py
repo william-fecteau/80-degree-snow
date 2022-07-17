@@ -52,8 +52,15 @@ class CreditsState(State):
             'Press ESC to return to the menu', True, WHITE)
         creditsEscapeRect = creditsEscape.get_rect()
         creditsEscapeRect.centerx = WIDTH / 2
-        creditsEscapeRect.centery = HEIGHT - 100
+        creditsEscapeRect.centery = HEIGHT - 50
         self.screen.blit(creditsEscape, creditsEscapeRect)
+
+        gmtkText = self.pixelFontSmall.render(
+            "Game made for the GMTK 2022 Game Jam : Roll of the Dice", True, WHITE)
+        gmtkTextRect = gmtkText.get_rect()
+        gmtkTextRect.centerx = WIDTH / 2
+        gmtkTextRect.centery = creditsEscapeRect.top - 25
+        self.screen.blit(gmtkText, gmtkTextRect)
 
         # Jordan
         jordanIcon = self.jordanSpriteSheet.image_at(animationFrame, 0, -1)

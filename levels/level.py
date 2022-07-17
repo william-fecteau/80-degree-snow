@@ -263,7 +263,7 @@ class Level:
                 pygame.time.set_timer(E_INVINCIBILITY_FLASH, 0)
             elif event.type == E_END_LEVEL:
                 self.game.switchState(
-                self.game.switchState("InGameState", InGameStatePayload(self.num + 1))
+                    "InGameState", InGameStatePayload(self.num + 1))
 
 
     def draw(self) -> None:
