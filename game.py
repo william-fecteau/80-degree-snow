@@ -3,6 +3,8 @@ import pygame
 from typing import NamedTuple
 from constants import TARGET_FPS, SURFACE_SIZE
 from states import InGameState, MenuState, CreditsState, State
+from utils import resource_path
+from states.endGameState import EndGameState
 
 
 class Game:
@@ -16,11 +18,16 @@ class Game:
         self.screen = pygame.display.set_mode(
             SURFACE_SIZE, pygame.HWSURFACE | pygame.DOUBLEBUF)
 
+        icon = pygame.image.load(resource_path("res/frostoLogo.png")).convert_alpha()
+        pygame.display.set_caption('80 Degree Snow')
+        pygame.display.set_icon(icon)
+
         # States
         self.dicStates = {
             InGameState.__name__: InGameState(self, self.screen),
             MenuState.__name__: MenuState(self, self.screen),
-            CreditsState.__name__: CreditsState(self, self.screen)
+            CreditsState.__name__: CreditsState(self, self.screen),
+            EndGameState.__name__: EndGameState(self, self.screen)
         }
         self.curState = MenuState.__name__
         self.nextState = None

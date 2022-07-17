@@ -259,7 +259,7 @@
         {
             "timeToSpawnMs": 55000,
             "enemies": [
-                {"prototypeName": "wispReverse", "spawnPosition": [800, 0]}
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
             ]
         },
         {

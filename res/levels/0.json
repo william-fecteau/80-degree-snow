@@ -2,11 +2,11 @@
     "endTimeMs": 1000000,
     "bgOptions": {
         "img_location": "res/grass-1.jpg",
-        "NB_HEIGHT_TILES" : 3,
-        "BG_SPEED" : 5,
-        "OFFSET" : 3,
-        "CLOUDS" : 2,
-        "CLOUD_SPEED": 5
+        "NB_HEIGHT_TILES": 3,
+        "BG_SPEED": 5,
+        "OFFSET": 3,
+        "CLOUDS": 0,
+        "CLOUD_SPEED": 0
     },
     "spawns": []
 }
