@@ -192,7 +192,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 13150,
+            "timeToSpawnMs": 13250,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -206,7 +206,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 14300,
+            "timeToSpawnMs": 14500,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -220,7 +220,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 15450,
+            "timeToSpawnMs": 15750,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
@@ -234,7 +234,7 @@
             ]
         },
         {
-            "timeToSpawnMs": 16550,
+            "timeToSpawnMs": 17000,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
                 {"prototypeName": "wall", "spawnPosition": [120, 0]},
