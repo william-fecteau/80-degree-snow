@@ -7,5 +7,6 @@
     "imp": "res/tripleWisp.png",
     "scie": "res/scie.png",
     "cannon": "res/cannon.png",
-    "mine": "res/mine.png"
+    "mine": "res/mine.png",
+    "lemurian": "res/pixelWisp.png"
 }
