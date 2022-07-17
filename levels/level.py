@@ -188,6 +188,14 @@ class Level:
         self.player.update(events, keys, self.frostLevel)
         self.backgroundObjectsGroup.update()
         self.backgroundTilesGroup.update()
+
+        # Check if player collects ice cube
+        for iceCube in self.iceCubes:
+            if self.player.rect.colliderect(iceCube.rect):
+                self.addFrost(iceCube.nbIce)
+                iceCube.kill()
+                break
+
         if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
             self.backgroundObjectsGroup.add(self.generateCloud())
         if(len(self.backgroundTilesGroup.sprites()) < self.NB_TOT_TILES):
