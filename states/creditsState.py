@@ -39,7 +39,7 @@ class CreditsState(State):
     def draw(self) -> None:
         self.screen.fill(BLACK)
 
-        animationFrame = int(pygame.time.get_ticks() / 1000 % 2)
+        animationFrame = int(pygame.time.get_ticks() / 500 % 2)
 
         creditsTitle = self.pixelFontBig.render(
             "Credits", True, WHITE)

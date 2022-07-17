@@ -3,7 +3,7 @@ import pygame_menu
 import os
 from math import floor
 from anim.spritesheet import SpriteSheet
-from constants import HEATWAVE_INTERVAL_SEC, WIDTH, HEIGHT, RED, PLAYER_LIVES
+from constants import HEATWAVE_INTERVAL_SEC, WHITE, WIDTH, HEIGHT, RED, PLAYER_LIVES
 
 
 class UI:
@@ -52,11 +52,13 @@ class UI:
         surface.blit(self.rightUi, self.rightUiRect)
         surface.blit(self.leftUi, self.leftUiRect)
 
+        self.drawBorder(surface)
+
     def drawFrostOMeter(self,  frostAmount) -> None:
         frostMeter = self.frostMeterSprite.image_at(frostAmount - 1, 0, -1)
         frostMeterRect = frostMeter.get_rect()
         frostMeterRect.centery = self.rightUiRect.centery
-        frostMeterRect.left += 25
+        frostMeterRect.left += 50
 
         frostText = self.pixelFont.render(
             str(int(frostAmount)), True, (255, 255, 255))
@@ -149,3 +151,15 @@ class UI:
         heartRect.centery = self.rightUiRect.centery
 
         self.rightUi.blit(heartSurface, heartRect)
+
+    def drawBorder(self, surface: pygame.Surface) -> None:
+        borderSurface = pygame.Surface((32, HEIGHT))
+        borderSurface.fill(WHITE)
+
+        borderRect = borderSurface.get_rect()
+        borderRect.left = self.rightUiRect.left - 10
+
+        surface.blit(borderSurface, borderRect)
+
+        borderRect.right = self.leftUiRect.right + 10
+        surface.blit(borderSurface, borderRect)
