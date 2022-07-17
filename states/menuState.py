@@ -48,7 +48,6 @@ class MenuState (State):
         self.menu.update(events)
 
     def menuAction(self) -> None:
-        print('called')
         self.game.switchState("InGameState", InGameStatePayload(1))
 
     def setupMenu(self) -> None:
