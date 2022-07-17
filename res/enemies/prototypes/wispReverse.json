@@ -1,5 +1,5 @@
 {
-    "name": "wisp",
+    "name": "wispReverse",
     "image": "basicEnemy",
     "health": 50,
     "attack": {
@@ -12,10 +12,6 @@
     },
     "moves": [
         {
-            "delta": [800, 300], 
-            "durationSec": 5
-        },
-        {
             "delta": [-800, 300], 
             "durationSec": 5
         },
@@ -25,6 +21,10 @@
         },
         {
             "delta": [-800, 300], 
+            "durationSec": 5
+        },
+        {
+            "delta": [800, 300], 
             "durationSec": 5
         }
     ]
