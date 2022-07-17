@@ -40,15 +40,23 @@ class Level:
 
     LVL_VALS = {
         "grass1": {
-            "img_location": "res/grass-3.jpg",
+            "img_location": "res/grass-1.jpg",
             "NB_HEIGHT_TILES" : 3,
-            "BG_SPEED" : 10,
+            "BG_SPEED" : 3,
             "OFFSET" : 3,
             "CLOUDS" : 2,
             "CLOUD_SPEED": 5
         },
         "grass2": {
             "img_location": "res/grass-2.jpg",
+            "NB_HEIGHT_TILES" : 3,
+            "BG_SPEED" : 10,
+            "OFFSET" : 3,
+            "CLOUDS" : 2,
+            "CLOUD_SPEED": 5
+        },
+        "grass3": {
+            "img_location": "res/grass-3.jpg",
             "NB_HEIGHT_TILES" : 3,
             "BG_SPEED" : 10,
             "OFFSET" : 3,
@@ -72,7 +80,7 @@ class Level:
             "CLOUD_SPEED": 10
         }
     }
-    LEVEL = "sea1"
+    LEVEL = "grass1"
     CLOUDS = LVL_VALS[LEVEL]["CLOUDS"]
     CLOUD_SPEED = LVL_VALS[LEVEL]["CLOUD_SPEED"]
     NB_HEIGHT_TILES = LVL_VALS[LEVEL]["NB_HEIGHT_TILES"]     # note: must be higher than 1
