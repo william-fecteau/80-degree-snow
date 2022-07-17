@@ -18,9 +18,13 @@ class InGameState(State):
             elif event.type == pygame.KEYUP and event.key == pygame.K_n:
                 if (self.level.num + 1 == 5):
                     self.game.switchState("EndGameState")
+                    return
                 else:
                     self.game.switchState(
                         "InGameState", InGameStatePayload(self.level.num + 1))
+
+        if (self.level.num + 1 == 5):
+             self.game.switchState("EndGameState")
 
         self.level.update(self.game, events, keys)
 
