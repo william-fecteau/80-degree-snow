@@ -24,7 +24,7 @@ class UI:
         # Sound volumes
         pygame.mixer.Sound.set_volume(self.heatwaveSound,0.35)
 
-    def draw(self, surface: pygame.Surface, frostAmount: int, heatwave: list, lastHeatwave: int, playerLives: int, tutorialPhase: int) -> None:
+    def draw(self, surface: pygame.Surface, frostAmount: int, heatwave: list, lastHeatwave: int, playerLives: int, tutorialPhase: int, tutorialStep: int, num) -> None:
         # Draw right UI
         self.rightUi = pygame.Surface((WIDTH/4, HEIGHT))
         self.rightUiRect = self.rightUi.get_rect(topright=(WIDTH, 0))
@@ -44,8 +44,12 @@ class UI:
 
         timeNextHeatwave = self.timeUntilNextHeatwave(lastHeatwave)
 
-        if tutorialPhase >= 2: 
+
+        if num != 0:
             self.drawTimer(surface, timeNextHeatwave, heatwave)
+        elif (tutorialPhase == 2 and tutorialStep == 1) or tutorialPhase > 2:
+            self.drawTimer(surface, timeNextHeatwave, heatwave)
+
 
 
         if (timeNextHeatwave < 2000) and (sum(heatwave) > 0) and (timeNextHeatwave > 1975):
