@@ -1,14 +1,14 @@
 {
     "name": "goingDown",
     "image": "basicEnemy",
-    "health": 5,
+    "health": 41,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 1,
         "projectileSpeed": 2,
         "rotateSpeedDeg": 0,
         "initialRotationDeg": 90,
-        "shotCooldownMs": 2000
+        "shotCooldownMs": 1500
     },
     "moves": [
         {

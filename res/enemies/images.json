@@ -2,5 +2,7 @@
     "basicProjectile": "res/intro_ball.gif",
     "basicEnemy": "res/shnake.png",
     "basicEnemyReverse" : "res/shnake.png",
-    "basic16projectile": "res/templateProjectile.png"
+    "basic16projectile": "res/templateProjectile.png",
+    "wisp": "res/wisp.png",
+    "imp": "res/imp.png"
 }

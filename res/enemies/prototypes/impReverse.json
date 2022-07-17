@@ -1,6 +1,6 @@
 {
     "name": "impReverse",
-    "image": "basicEnemy",
+    "image": "imp",
     "health": 90,
     "attack": {
         "projectileImage": "basic16projectile",
@@ -13,11 +13,11 @@
     "moves": [
         {
             "delta": [-800, 300],
-            "durationSec": 10
+            "durationSec": 3
         },
         {
             "delta": [800, 300],
-            "durationSec": 10
+            "durationSec": 3
         }
     ]
 }
