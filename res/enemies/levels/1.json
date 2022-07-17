@@ -1,6 +1,95 @@
 [
     {
-        "timeToSpawnMs": 0,
+        "timeToSpawnMs": 5000,
+        "enemies": [
+            {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 5500,
+        "enemies": [
+            {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 6000,
+        "enemies": [
+            {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+        ]
+    },
+        {
+        "timeToSpawnMs": 9000,
+        "enemies": [
+            {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 9500,
+        "enemies": [
+            {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 10000,
+        "enemies": [
+            {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 10500,
+        "enemies": [
+            {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 13500,
+        "enemies": [
+            {"prototypeName": "holdStraight", "spawnPosition": [800, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [720, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [640, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [560, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [480, 50]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 17000,
+        "enemies": [
+            {"prototypeName": "holdStraight", "spawnPosition": [0, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [80, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [160, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [240, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [320, 50]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 20000,
+        "enemies": [
+            {"prototypeName": "impHalf", "spawnPosition": [200, 0]},
+            {"prototypeName": "impHalfReverse", "spawnPosition": [600, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 25000,
+        "enemies": [
+            {"prototypeName": "holdStraight", "spawnPosition": [0, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [80, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [720, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [800, 50]},
+            {"prototypeName": "holdStraight", "spawnPosition": [400, 50]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 30000,
+        "enemies": [
+            {"prototypeName": "bigRock", "spawnPosition": [200, 0]}
+        ]
+    },
+
+
+
+
+    {
+        "timeToSpawnMs": 50000,
         "enemies": [
             {"prototypeName": "shnakeHalf", "spawnPosition": [450, 0]},
             {"prototypeName": "shnakeHalfReverse", "spawnPosition": [450, 0]},
@@ -9,14 +98,14 @@
         ]
     },
     {
-        "timeToSpawnMs": 350,
+        "timeToSpawnMs": 50350,
         "enemies": [
             {"prototypeName": "shnakeHalf", "spawnPosition": [350, 0]},
             {"prototypeName": "shnakeHalfReverse", "spawnPosition": [459, 0]}
         ]
     },
     {
-        "timeToSpawnMs": 700,
+        "timeToSpawnMs": 50700,
         "enemies": [
             {"prototypeName": "shnakeHalf", "spawnPosition": [450, 0]},
             {"prototypeName": "shnakeHalfReverse", "spawnPosition": [450, 0]},
@@ -25,14 +114,14 @@
         ]
     },
     {
-        "timeToSpawnMs": 750,
+        "timeToSpawnMs": 50750,
         "enemies": [
             {"prototypeName": "holdStraight", "spawnPosition": [50, 50]},
             {"prototypeName": "holdStraight", "spawnPosition": [750, 50]}
         ]
     },
     {
-        "timeToSpawnMs": 1050,
+        "timeToSpawnMs": 51750,
         "enemies": [
             {"prototypeName": "shnakeHalf", "spawnPosition": [450, 0]},
             {"prototypeName": "shnakeHalfReverse", "spawnPosition": [450, 0]}

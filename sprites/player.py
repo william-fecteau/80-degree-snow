@@ -12,7 +12,15 @@ class Player(pygame.sprite.Sprite):
 
         # Loading images
         self.spritesheet = SpriteSheet("res/frosto.png", 64, 64)
-        self.image = self.spritesheet.image_at(0, 0, -1)
+        self.frontImage = self.spritesheet.image_at(1, 1, -1)
+        self.backImage = self.spritesheet.image_at(1, 0, -1)
+        self.states = {
+            "FRONT": self.frontImage,
+            "BACK": self.backImage
+        }
+        self.curState = "FRONT"
+        self.image = self.states[self.curState]
+
         self.initialSize = self.image.get_size()
         self.gameWorldSurf = gameWorldSurf
         self.rect = self.image.get_rect(**kwargs)
@@ -20,9 +28,9 @@ class Player(pygame.sprite.Sprite):
         self.canShoot = True
         self.isAlive = True
         self.speed = 10
-        self.lastFrost = 5
         self.pewSound = pygame.mixer.Sound("res/pew1.mp3")
         self.dieSound = pygame.mixer.Sound("res/playerHit1.mp3")
+        self.oldFrost = 5
 
         self.playerProjectileGroup = playerProjectileGroup
         self.enemyProjectileGroup = enemyProjectileGroup
@@ -37,17 +45,13 @@ class Player(pygame.sprite.Sprite):
 
     def resetHitbox(self):
         self.hitbox = pygame.Rect(self.rect.left, self.rect.top, self.rect.width / 2, self.rect.height)
+        self.hitbox.center = self.rect.center
 
 
     def setShotCooldown(self, shotSpeedMs: int) -> None:
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, 0)
         self.canShoot = True
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, shotSpeedMs)
-
-
-    def setHitboxSize(self, size: tuple[int, int]) -> None:
-        self.hitbox.width = size[0]
-        self.hitbox.height = size[1]
 
 
     def shoot(self) -> None:
@@ -79,24 +83,30 @@ class Player(pygame.sprite.Sprite):
             self.shoot()
 
         # Move player
+        oldState = self.curState
         if keys[pygame.K_UP] or keys[pygame.K_w]:
             self.direction.y = -1
-            self.image = self.spritesheet.image_at(1, 1, -1)
+            self.curState = "FRONT"
         elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.direction.y = 1
-            self.image = self.spritesheet.image_at(1, 0, -1)
+            self.curState = "BACK"
 
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.direction.x = 1
         elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.direction.x = -1
 
-        self.rect.center += self.direction * self.speed
+        if self.curState != oldState:
+            self.image = self.states[self.curState]
+            oldPos = self.rect.center
+            self.rect = self.image.get_rect(center=oldPos)
 
         # Scale hitbox in function of frostlevel if it has changed
-        if frostLevel:
+        if oldState != self.curState or self.oldFrost != frostLevel:
             self.scalePlayer(frostLevel)
-            self.lastFrost = frostLevel
+            self.oldFrost = frostLevel
+
+        self.rect.center += self.direction * self.speed
 
         # If player goes offscreen, dont lmao
         rect = self.gameWorldSurf.get_rect()
@@ -115,10 +125,12 @@ class Player(pygame.sprite.Sprite):
         
 
     def scalePlayer(self, frostLevel: int) -> None:
-        factor = frostLevel/5
+        frostFactor = frostLevel if frostLevel > 3 else 3
+
+        factor = frostFactor/5
         curPos = self.rect.center
 
-        self.image = pygame.transform.scale(self.image, (self.initialSize[0] * factor, self.initialSize[1] * factor))
+        self.image = pygame.transform.scale(self.states[self.curState].copy(), (self.initialSize[0] * factor, self.initialSize[1] * factor))
         self.rect = self.image.get_rect(center=curPos)
 
         self.resetHitbox()

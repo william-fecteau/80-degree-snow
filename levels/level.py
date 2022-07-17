@@ -58,7 +58,6 @@ class Level:
         self.gameWorldSurf = gameWorldSurf
         self.dicEnemySpawns = dicEnemySpawns
         self.background = self.BG
-        self.mockFrost = 10
 
         # TODO Change this to spritesheet
         self.diceFaces = [pygame.image.load(
@@ -184,7 +183,7 @@ class Level:
         self.enemies.update(events=events, keys=keys)
         self.enemyProjectileGroup.update()
         self.playerProjectileGroup.update()
-        self.player.update(events, keys, self.mockFrost)
+        self.player.update(events, keys, self.frostLevel)
         self.backgroundObjectsGroup.update()
         self.backgroundTilesGroup.update()
         if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
