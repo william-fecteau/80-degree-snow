@@ -40,13 +40,6 @@ class Player(pygame.sprite.Sprite):
         # Frost setup
         self.oldFrost = 10
         self.scaleDamage(self.oldFrost)
-        frostFactor = self.oldFrost if self.oldFrost > 3 else 3
-
-        factor = frostFactor/5
-        curPos = self.rect.center
-
-        self.image = pygame.transform.scale(self.states[self.curState].copy(), (self.initialSize[0] * factor, self.initialSize[1] * factor))
-        self.rect = self.image.get_rect(center=curPos)
 
         self.resetHitbox()
 
@@ -149,13 +142,12 @@ class Player(pygame.sprite.Sprite):
         
 
     def scalePlayer(self, frostLevel: int) -> None:
-        # frostFactor = frostLevel if frostLevel > 3 else 3
+        frostFactor = frostLevel if frostLevel > 3 else 3
 
-        # factor = frostFactor/5
-        # curPos = self.rect.center
+        factor = frostFactor/5
+        curPos = self.rect.center
 
-        # self.image = pygame.transform.scale(self.states[self.curState].copy(), (self.initialSize[0] * factor, self.initialSize[1] * factor))
-        # self.rect = self.image.get_rect(center=curPos)
+        self.image = pygame.transform.scale(self.states[self.curState].copy(), (self.initialSize[0] * factor, self.initialSize[1] * factor))
+        self.rect = self.image.get_rect(center=curPos)
 
-        # self.resetHitbox()
-        pass
+        self.resetHitbox()
