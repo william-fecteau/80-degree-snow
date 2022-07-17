@@ -1,6 +1,6 @@
 {
     "name": "lemurian",
-    "image": "basicEnemy",
+    "image": "lemurian",
     "health": 451,
     "width" : 80,
     "attack": {
