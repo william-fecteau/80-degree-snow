@@ -143,4 +143,4 @@ class UI:
             else:
                 hearthSurf.blit(self.emptyHeartImg, (0, i * (hearthHeight + offsetHeart)))
 
-        self.rightUi.blit(hearthSurf, (0, 0))
+        self.rightUi.blit(hearthSurf, (200, 0))
