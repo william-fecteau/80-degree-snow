@@ -201,7 +201,8 @@ class Level:
             if event.type == E_NEXT_SPAWN:
                 self.spawnEnemies()
             elif event.type == E_HEATWAVE:
-                self.applyHeatwave()
+                if self.player.isAlive:
+                    self.applyHeatwave()
             elif event.type == E_END_LEVEL:
                 pygame.mixer.Sound.play(self.levelEnd)
                 self.game.switchState(
