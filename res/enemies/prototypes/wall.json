@@ -2,7 +2,7 @@
     "name": "wall",
     "image": "cannon",
     "health": 500,
-    "width": 100,
+    "width": 65,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 1,
