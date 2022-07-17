@@ -1,9 +1,10 @@
 {
     "basicProjectile": "res/intro_ball.gif",
-    "basicEnemy": "res/shnake.png",
-    "basicEnemyReverse": "res/shnake.png",
+    "basicEnemy": "res/wisp.png",
+    "basicEnemyReverse": "res/wisp-reversed.png",
     "basic16projectile": "res/enemyProjectile.png",
     "wisp": "res/wisp.png",
     "imp": "res/imp.png",
-    "scie": "res/scie.png"
+    "scie": "res/scie.png",
+    "cannon": "res/cannon.png"
 }
