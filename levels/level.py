@@ -32,16 +32,12 @@ INVINCIBLE_FLASH_MS = 100
 
 class Level:
     CLOUDSIMG = [
-        pygame.image.load("res/cloud-1.png"),
-        pygame.image.load("res/cloud-2.png"),
-        pygame.image.load("res/cloud-3.png"),
-        pygame.image.load("res/cloud-4.png"),
-        pygame.image.load("res/cloud-5.png"),
+        pygame.image.load(resource_path(os.path.join('res', f'cloud-{i}.png'))) for i in range(1, 6)
     ]
 
     LVL_VALS = {
         "grass1": {
-            "img_location": "res/grass-1.jpg",
+            "img_location": resource_path("res/grass-1.jpg"),
             "NB_HEIGHT_TILES" : 3,
             "BG_SPEED" : 3,
             "OFFSET" : 3,
@@ -49,7 +45,7 @@ class Level:
             "CLOUD_SPEED": 5
         },
         "grass2": {
-            "img_location": "res/grass-2.jpg",
+            "img_location": resource_path("res/grass-2.jpg"),
             "NB_HEIGHT_TILES" : 3,
             "BG_SPEED" : 10,
             "OFFSET" : 3,
@@ -57,7 +53,7 @@ class Level:
             "CLOUD_SPEED": 5
         },
         "grass3": {
-            "img_location": "res/grass-3.jpg",
+            "img_location": resource_path("res/grass-3.jpg"),
             "NB_HEIGHT_TILES" : 3,
             "BG_SPEED" : 10,
             "OFFSET" : 3,
@@ -65,7 +61,7 @@ class Level:
             "CLOUD_SPEED": 5
         },
         "sea1": {
-            "img_location": "res/sea-1.jpg",
+            "img_location": resource_path("res/sea-1.jpg"),
             "NB_HEIGHT_TILES" : 4,
             "BG_SPEED" : 2,
             "OFFSET" : 5,
@@ -73,7 +69,7 @@ class Level:
             "CLOUD_SPEED": 2
         },
         "sea2": {
-            "img_location": "res/sea-2.jpg",
+            "img_location": resource_path("res/sea-2.jpg"),
             "NB_HEIGHT_TILES" : 4,
             "BG_SPEED" : 2,
             "OFFSET" : 2,
@@ -87,7 +83,7 @@ class Level:
     NB_HEIGHT_TILES = LVL_VALS[LEVEL]["NB_HEIGHT_TILES"]     # note: must be higher than 1
     BG_SPEED = LVL_VALS[LEVEL]["BG_SPEED"]
     OFFSET = LVL_VALS[LEVEL]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
-    BG = pygame.image.load(LVL_VALS[LEVEL]["img_location"],)
+    BG = pygame.image.load(resource_path(LVL_VALS[LEVEL]["img_location"]))
     SIZE_TILE = int(HEIGHT/(NB_HEIGHT_TILES-1))
     NB_WIDTH_TILES = ceil(WIDTH/(2*SIZE_TILE))
     NB_TOT_TILES = NB_WIDTH_TILES * NB_HEIGHT_TILES
@@ -131,17 +127,6 @@ class Level:
         # enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
         # self.enemies.add(enemy)
         # self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
-
-        for _ in range(self.CLOUDS):
-            self.backgroundObjectsGroup.add(self.generateCloud(True))
-
-        # Generate initial bg
-        for i in range(self.NB_WIDTH_TILES):
-            for j in range(self.NB_HEIGHT_TILES):
-                self.backgroundTilesGroup.add(
-                    BackgroundObject(self.BG, pygame.Vector2(
-                        0, self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.SIZE_TILE * j))
-                )
 
         self.playerInvincible = False
 
@@ -366,14 +351,14 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
     # Loading images
     dicImages = {}
-    with open('res/enemies/images.json', 'r') as file:
+    with open(resource_path('res/enemies/images.json'), 'r') as file:
         data = jstyleson.loads(file.read())
         for key in data.keys():
-            dicImages[key] = pygame.image.load(data[key])
+            dicImages[key] = pygame.image.load(resource_path(data[key]))
 
     # Loading prototypes
     dicEnemyPrototypes = {}
-    directory = 'res/enemies/prototypes'
+    directory = resource_path('res/enemies/prototypes')
     for filename in os.listdir(directory):
         filePath = os.path.join(directory, filename)
         with open(filePath, 'r') as file:
@@ -409,9 +394,10 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
     # Loading enemy spawns
     dicEnemySpawns = {}
     endTimeMs = None
-    with open(f'res/levels/{levelNum}.json') as file:
+    with open(resource_path(f'res/levels/{levelNum}.json')) as file:
         levelData = jstyleson.loads(file.read())
         endTimeMs = levelData['endTimeMs']
+
         for spawn in levelData['spawns']:
             enemies = spawn['enemies']
             lstEnemiesSpawn = []
@@ -424,4 +410,32 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
             dicEnemySpawns[spawn['timeToSpawnMs']] = lstEnemiesSpawn
 
-    return Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns, endTimeMs)
+    level = Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns, endTimeMs)
+
+    with open(f'res/levels/{levelNum}.json') as file:
+        levelData = jstyleson.loads(file.read())
+
+        # Load Bg elems
+        level.CLOUDS = levelData["bgOptions"]["CLOUDS"]
+        level.CLOUD_SPEED = levelData["bgOptions"]["CLOUD_SPEED"]
+        level.NB_HEIGHT_TILES = levelData["bgOptions"]["NB_HEIGHT_TILES"]     # note: must be higher than 1
+        level.BG_SPEED = levelData["bgOptions"]["BG_SPEED"]
+        level.OFFSET = levelData["bgOptions"]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
+        level.BG = pygame.image.load(levelData["bgOptions"]["img_location"],)
+        level.SIZE_TILE = int(HEIGHT/(level.NB_HEIGHT_TILES-1))
+        level.NB_WIDTH_TILES = ceil(WIDTH/(2*level.SIZE_TILE))
+        level.NB_TOT_TILES = level.NB_WIDTH_TILES * level.NB_HEIGHT_TILES
+
+        # Generate initial clouds
+        for _ in range(level.CLOUDS):
+            level.backgroundObjectsGroup.add(level.generateCloud(True))
+
+        # Generate initial bg
+        for i in range(level.NB_WIDTH_TILES):
+            for j in range(level.NB_HEIGHT_TILES):
+                level.backgroundTilesGroup.add(
+                    BackgroundObject(level.BG, pygame.Vector2(
+                        0, level.BG_SPEED), level.SIZE_TILE, topleft=(level.SIZE_TILE * i, level.SIZE_TILE * j))
+                )
+    
+    return level

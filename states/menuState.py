@@ -6,6 +6,7 @@ import os
 from math import floor
 from anim.spritesheet import SpriteSheet
 from constants import BLACK, DARK_BLUE, WHITE, BLUE, SURFACE_SIZE, WIDTH, HEIGHT
+from utils import resource_path
 
 from .payloads import InGameStatePayload
 from .state import State
@@ -27,13 +28,13 @@ class MenuState (State):
         # Add other sprite to the right, maybe animate it NTH
 
         self.bigSnakeFont = pygame.font.Font(
-            os.path.join("res", "fonts", 'PressStart2P.ttf'), 36)
+            resource_path(os.path.join("res", "fonts", 'PressStart2P.ttf')), 36)
 
         self.setupMenu()
 
     def draw(self) -> None:
         self.menu.draw(self.surf)
-        logo = pygame.image.load(os.path.join('res', 'title.png'))
+        logo = pygame.image.load(resource_path(os.path.join('res', 'title.png')))
         logoRect = logo.get_rect()
         logoRect.centerx = WIDTH/2
         logoRect.centery = 150

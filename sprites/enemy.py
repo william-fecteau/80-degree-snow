@@ -52,11 +52,18 @@ class Enemy(pygame.sprite.Sprite):
                 pygame.mixer.Sound.play(self.hitSound)
 
                 if self.health <= 0:
-                    cube = IceCube(self.enemyPrototype.iceDrop, self.playerProjectileGroup, center=self.rect.center)
-                    self.iceCubes.add(cube)
+                    if self.enemyPrototype.iceDrop:
+                        for i in range(self.enemyPrototype.iceDrop):
+                            cube = IceCube(1, self.playerProjectileGroup, 
+                                center=(random.randint(self.rect.center[0]-20, self.rect.center[0]+20),
+                                      random.randint(self.rect.center[1]-20, self.rect.center[1]+20))
+                            )
+                            self.iceCubes.add(cube)
+                    else:
+                        cube = IceCube(1, self.playerProjectileGroup, center=(self.rect.center))
+                        self.iceCubes.add(cube)
                     self.die()
                     return
-
                 projectile.kill()
 
 
