@@ -1,6 +1,6 @@
 {
     "name": "suicideHalfReverse",
-    "image": "basicEnemy",
+    "image": "mine",
     "health": 41,
     "attack": {
         "projectileImage": "basic16projectile",

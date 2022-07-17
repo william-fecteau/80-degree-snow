@@ -187,6 +187,38 @@
             ]
         },
         {
+            "timeToSpawnMs": 10700,
+            "enemies": [
+                {"prototypeName": "suicide2Third", "spawnPosition": [100, 0]},
+                {"prototypeName": "suicide2Third", "spawnPosition": [0, 0]},
+                {"prototypeName": "suicide2Third", "spawnPosition": [200, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 11200,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 11400,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 100]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 11600,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 200]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 11800,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 300]}
+            ]
+        },
+        {
             "timeToSpawnMs": 12000,
             "enemies": [
                 {"prototypeName": "wall", "spawnPosition": [40, 0]},
@@ -250,8 +282,7 @@
                 {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 0]},
                 {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 100]},
                 {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 200]},
-                {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 300]},
-                {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 400]}
+                {"prototypeName": "suicideHalfReverse", "spawnPosition": [800, 300]}
             ]
         },
         {
@@ -266,6 +297,36 @@
                 {"prototypeName": "wall", "spawnPosition": [680, 0]},
                 {"prototypeName": "wall", "spawnPosition": [760, 0]}
     
+            ]
+        },
+        {
+            "timeToSpawnMs": 14700,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 14825,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
+            ]
+        },
+        {    
+            "timeToSpawnMs": 14950,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 15075,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 15200,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [0, 0]}
             ]
         },
         {

@@ -1,6 +1,6 @@
 {
     "name": "suicideHalf",
-    "image": "basicEnemy",
+    "image": "mine",
     "health": 21,
     "attack": {
         "projectileImage": "basic16projectile",
