@@ -1,5 +1,5 @@
 {
-    "endTimeMs": 41000,
+    "endTimeMs": 33000,
     "bgOptions": {
         "img_location": "res/sea-2.jpg",
         "NB_HEIGHT_TILES" : 4,
@@ -205,45 +205,6 @@
                 {"prototypeName": "suicide", "spawnPosition": [0, 0]},
                 {"prototypeName": "suicide", "spawnPosition": [500, 0]}
             ]
-        },
-        {
-            "timeToSpawnMs": 34750,
-            "enemies": [
-                {"prototypeName": "imp", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
-                {"prototypeName": "suicide", "spawnPosition": [500, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 35750,
-            "enemies": [
-                {"prototypeName": "goingDown", "spawnPosition": [210, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [410, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [610, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 36750,
-            "enemies": [
-                {"prototypeName": "goingDown", "spawnPosition": [590, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [490, 0]},
-                {"prototypeName": "goingDown", "spawnPosition": [390, 0]}
-            ]
-        },
-        {
-            "timeToSpawnMs": 37350,
-            "enemies": [
-                {"prototypeName": "impHalfReverse", "spawnPosition": [100, 0]}
-            ]
         }
-,
-        {
-            "timeToSpawnMs": 40750,
-            "enemies": [
-                {"prototypeName": "wisp", "spawnPosition": [800, 0]},
-                {"prototypeName": "wispReverse", "spawnPosition": [0, 0]}
-            ]
-        }
-
     ]
 }

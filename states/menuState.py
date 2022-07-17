@@ -32,6 +32,20 @@ class MenuState (State):
 
         self.setupMenu()
 
+        # Setup sounds
+        self.menuBoop = pygame.mixer.Sound(resource_path("res/menu2.mp3"))
+        self.menuBip = pygame.mixer.Sound(resource_path("res/menu3.mp3"))
+
+        # Sound volumes
+
+        # Setup Music
+        self.pourquoiPapillon = pygame.mixer.music.load("res\songs\everythingGoesToShitAgain.mp3")
+        pygame.mixer.music.set_volume(0.22)
+        pygame.mixer.music.play(0,0,1000)
+        pygame.mixer.music.queue("res\songs\pourquoiYaUnPapillon.mp3")
+        
+        
+
     def draw(self) -> None:
         self.menu.draw(self.surf)
         logo = pygame.image.load(resource_path(os.path.join('res', 'title.png')))
@@ -49,9 +63,11 @@ class MenuState (State):
         self.menu.update(events)
 
     def menuAction(self) -> None:
+        pygame.mixer.Sound.play(self.menuBoop)
         self.game.switchState("InGameState", InGameStatePayload(1))
 
     def creditsAction(self) -> None:
+        pygame.mixer.Sound.play(self.menuBoop)
         self.game.switchState("CreditsState")
 
     def setupMenu(self) -> None:
