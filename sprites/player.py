@@ -3,7 +3,7 @@ import pygame
 from anim.spritesheet import SpriteSheet
 from sprites.projectile import Projectile
 
-DEFAULT_SHOT_SPEED_MS = 100
+DEFAULT_SHOT_SPEED_MS = 1000
 E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
 
 

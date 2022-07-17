@@ -1,0 +1,70 @@
+[
+    {
+        "timeToSpawnMs": 1000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [800, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 1500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [700, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [100, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 2000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [600, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [200, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 2500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [300, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 3000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 4000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [800, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 4500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [700, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [100, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 5000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [600, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [200, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 5500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [300, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 6000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]}
+        ]
+    }
+]
