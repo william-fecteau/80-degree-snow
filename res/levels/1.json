@@ -4,7 +4,7 @@
         {
             "timeToSpawnMs": 5000,
             "enemies": [
-                {"prototypeName": "bigRock", "spawnPosition": [100, 0]}
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]}
             ]
         },
         {
