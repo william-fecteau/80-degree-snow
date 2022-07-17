@@ -24,11 +24,8 @@ E_NEXT_SPAWN = pygame.USEREVENT + 5
 E_HEATWAVE = pygame.USEREVENT + 6
 E_INVINCIBILITY_FRAME = pygame.USEREVENT + 7
 
-HEATWAVE_INTERVAL_SEC = 5
-NB_DICE = 2
-DICE_SIZE = 64
-INVINCIBLE_TIME_MS = 2000
 
+INVINCIBLE_TIME_MS = 2000
 
 class Level:
     CLOUDSIMG = [
@@ -192,8 +189,7 @@ class Level:
 
         if (frostLeft <= 0):
             # ur dead lol remove a life here
-            print('ur dead')
-            self.frostLevel = 1
+            self.player.die()
             pass
         else:
             self.frostLevel = frostLeft
@@ -249,7 +245,6 @@ class Level:
                 self.applyHeatwave()
                 break
             elif event.type == E_INVINCIBILITY_FRAME:
-                print("ALIVE")
                 self.player.isAlive = True
                 self.playerInvincible = False
 
@@ -294,13 +289,7 @@ class Level:
             if event.type == pygame.KEYUP and event.key == pygame.K_r:
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num))
-            if event.type == pygame.KEYUP and event.key == pygame.K_f:
-                print(self.mockFrost)
-                self.mockFrost -= 1
 
-            # TODO remove this once heatwave is implemented
-            elif event.type == pygame.KEYUP and event.key == pygame.K_k:
-                self.addFrost(1)
 
     def addFrost(self, amount: int) -> None:
         if self.frostLevel + amount <= self.MAX_FROST:
