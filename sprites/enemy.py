@@ -6,6 +6,7 @@ from iceCube import IceCube
 from sprites.enemyPrototype import EnemyPrototype
 from sprites.projectile import Projectile
 from constants import TARGET_FPS
+from utils import resource_path
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, gameWorldSurf: pygame.Surface, enemyPrototype: EnemyPrototype, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, iceCubes: pygame.sprite.Group, width, **kwargs):
@@ -29,6 +30,11 @@ class Enemy(pygame.sprite.Sprite):
         self.shotEventId = self.enemyPrototype.attack.createShotTimer()
 
 
+        # Setup sounds
+        self.hitSound = pygame.mixer.Sound(resource_path("res/enemyDmg1.mp3"))
+        pygame.mixer.Sound.set_volume(self.hitSound,1)
+
+
     def die(self):
         self.kill()
         self.enemyPrototype.attack.removeShotTimer(self.shotEventId)
@@ -43,6 +49,7 @@ class Enemy(pygame.sprite.Sprite):
         for projectile in self.playerProjectileGroup.sprites():
             if self.rect.colliderect(projectile.rect):
                 self.health -= projectile.damage
+                pygame.mixer.Sound.play(self.hitSound)
 
                 if self.health <= 0:
                     if self.enemyPrototype.iceDrop:

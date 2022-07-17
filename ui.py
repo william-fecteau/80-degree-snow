@@ -16,6 +16,14 @@ class UI:
         self.warningSprite = SpriteSheet("res/warning.png", 32, 32)
         self.heartSprite = SpriteSheet("res/iceHeart.png", 128, 128)
 
+
+        # Setup sounds
+        self.heatwaveSound = pygame.mixer.Sound(resource_path("res/heatwave1.mp3"))
+        self.dieSound = pygame.mixer.Sound(resource_path("res/playerHit1.mp3"))
+
+        # Sound volumes
+        pygame.mixer.Sound.set_volume(self.heatwaveSound,0.35)
+
     def draw(self, surface: pygame.Surface, frostAmount: int, heatwave: list, lastHeatwave: int, playerLives: int) -> None:
         # Draw right UI
         self.rightUi = pygame.Surface((WIDTH/4, HEIGHT))
@@ -37,12 +45,18 @@ class UI:
                        timeNextHeatwave,
                        heatwave)
 
+
+        if (timeNextHeatwave < 2000) and (sum(heatwave) > 0) and (timeNextHeatwave > 1975):
+            pygame.mixer.Sound.play(self.heatwaveSound)
+
         if (timeNextHeatwave < 2000) and (sum(heatwave) > 0):
             # Gamescreen surface
             heatwaveSurf = pygame.Surface((WIDTH/2, HEIGHT))
             heatwaveRect = heatwaveSurf.get_rect(center=(WIDTH/2, HEIGHT/2))
 
             heatwaveSurf.fill(RED)
+
+            
 
             # Set greater opacity the closer you get to 0
             max_opacity = 100  # Solid block is 255
