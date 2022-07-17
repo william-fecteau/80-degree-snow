@@ -25,7 +25,7 @@ E_HEATWAVE = pygame.USEREVENT + 6
 
 HEATWAVE_INTERVAL_SEC = 5
 NB_DICE = 3
-DICE_SIZE = 100
+DICE_SIZE = 64
 
 
 class Level:
@@ -236,9 +236,7 @@ class Level:
 
         self.screen.blit(self.gameWorldSurf, (WIDTH/4, 0))
 
-        self.drawUI()
-
-        self.ui.draw(self.screen, self.frostLevel)
+        self.ui.draw(self.screen, self.frostLevel, self.nextHeatWave)
 
     def pollInput(self, events, keys) -> None:
         for event in events:
@@ -252,24 +250,6 @@ class Level:
             # TODO remove this once heatwave is implemented
             elif event.type == pygame.KEYUP and event.key == pygame.K_k:
                 self.addFrost(1)
-
-    def drawUI(self) -> None:
-        # Draw left UI rectangle
-        leftUi = pygame.Surface((WIDTH/4, HEIGHT))
-        leftUiRect = leftUi.get_rect(topleft=(0, 0))
-
-        # If we're not on the first round, draw the dices
-        if self.nextHeatWave[0] != 0:
-            # Dices
-            diceYOffset = 10
-            diceYStart = HEIGHT - (NB_DICE * (DICE_SIZE + diceYOffset))
-            centerx = leftUiRect.centerx
-            for i in range(NB_DICE):
-                num = self.nextHeatWave[i] - 1
-                leftUi.blit(self.diceFaces[num], (centerx - DICE_SIZE /
-                            2, diceYStart + i * (DICE_SIZE + diceYOffset)))
-
-        self.screen.blit(leftUi, leftUiRect)
 
     def addFrost(self, amount: int) -> None:
         if self.frostLevel + amount <= self.MAX_FROST:
