@@ -1,8 +1,22 @@
 [
     {
-        "timeToSpawnMs": 0,
+        "timeToSpawnMs": 3000,
         "enemies": [
-            {"prototypeName": "shnake", "spawnPosition": [450, 0]}
+            {"prototypeName": "wisp", "spawnPosition": [0, 0]},
+            {"prototypeName": "wisp", "spawnPosition": [450, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 3250,
+        "enemies": [
+            {"prototypeName": "wispReverse", "spawnPosition": [800, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 3750,
+        "enemies": [
+            {"prototypeName": "wisp", "spawnPosition": [200, 0]},
+            {"prototypeName": "wispReverse", "spawnPosition": [450, 0]}
         ]
     }
 ]
