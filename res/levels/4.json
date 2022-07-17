@@ -1,5 +1,5 @@
 {
-    "endTimeMs": 102000,
+    "endTimeMs": 42000,
     "spawns": [ //lvl de wave de mob a repetition, servent a fournir le joueur en frost abondament
         {//wave1
             "timeToSpawnMs": 1000,
@@ -291,6 +291,12 @@
             "enemies": [
                 {"prototypeName": "goingDown", "spawnPosition": [500, 0]},
                 {"prototypeName": "goingDown", "spawnPosition": [300, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 20700,
+            "enemies": [
+                {"prototypeName": "lemurian", "spawnPosition": [630, 0]}
             ]
         },
         {

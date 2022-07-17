@@ -1,8 +1,10 @@
 import math
+from pkg_resources import resource_stream
 import pygame
 from anim.spritesheet import SpriteSheet
 from sprites.projectile import Projectile
 from constants import PLAYER_LIVES
+from utils import resource_path
 
 DEFAULT_SHOT_SPEED_MS = 100
 E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
@@ -16,8 +18,12 @@ class Player(pygame.sprite.Sprite):
         self.gameWorldSurf = gameWorldSurf
 
         # Setup sounds
-        self.pewSound = pygame.mixer.Sound("res/pew1.mp3")
-        self.dieSound = pygame.mixer.Sound("res/playerHit1.mp3")
+        self.pewSound = pygame.mixer.Sound(resource_path("res/pew1.mp3"))
+        self.dieSound = pygame.mixer.Sound(resource_path("res/playerHit1.mp3"))
+
+        # Sound volumes
+        pygame.mixer.Sound.set_volume(self.pewSound,0.5)
+        pygame.mixer.Sound.set_volume(self.dieSound,0.6)
 
         # Setup images
         self.spritesheet = SpriteSheet("res/frosto.png", 64, 64)

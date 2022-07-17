@@ -19,6 +19,7 @@ import jstyleson
 import os
 
 from states.payloads import InGameStatePayload
+from utils import resource_path
 
 E_NEXT_SPAWN = pygame.USEREVENT + 5
 E_HEATWAVE = pygame.USEREVENT + 6
@@ -91,6 +92,7 @@ class Level:
     NB_WIDTH_TILES = ceil(WIDTH/(2*SIZE_TILE))
     NB_TOT_TILES = NB_WIDTH_TILES * NB_HEIGHT_TILES
     LOADING_TILES = False
+    
 
     MAX_FROST = 10
 
@@ -104,6 +106,14 @@ class Level:
         self.background = self.BG
 
         self.frostLevel = self.MAX_FROST/2
+
+        # Setup sounds
+        self.icePickup = pygame.mixer.Sound(resource_path("res/pickup.mp3"))
+        self.diceRoll = pygame.mixer.Sound(resource_path("res/diceroll1.mp3"))
+        self.levelEnd = pygame.mixer.Sound(resource_path("res/levelEnd.mp3"))
+
+        # Sound volumes
+        pygame.mixer.Sound.set_volume(self.diceRoll,0.5)
 
         # Setting up groups
         self.playerProjectileGroup = pygame.sprite.Group()
@@ -190,6 +200,7 @@ class Level:
         return BackgroundObject(img, speed, width, topleft=(randomX,  Y))
 
     def rollDices(self, diceCount: int):
+        pygame.mixer.Sound.play(self.diceRoll)
         for i in range(diceCount):
             self.nextHeatWave[i] = random.randint(1, 6)
 
@@ -228,6 +239,7 @@ class Level:
         for iceCube in self.iceCubes:
             if self.player.rect.colliderect(iceCube.rect):
                 self.addFrost(iceCube.nbIce)
+                pygame.mixer.Sound.play(self.icePickup)
                 iceCube.kill()
                 break
 
@@ -270,6 +282,7 @@ class Level:
                 pygame.time.set_timer(E_INVINCIBILITY_FRAME, 0)
                 pygame.time.set_timer(E_INVINCIBILITY_FLASH, 0)
             elif event.type == E_END_LEVEL:
+                pygame.mixer.Sound.play(self.levelEnd)
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num + 1))
 

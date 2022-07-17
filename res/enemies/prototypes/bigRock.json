@@ -1,7 +1,7 @@
 {
     "name": "bigRock",
     "image": "scie",
-    "health": 3000,
+    "health": 1500,
     "width": 120,
     "attack": {
         "projectileImage": "basic16projectile",

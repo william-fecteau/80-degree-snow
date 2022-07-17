@@ -1,0 +1,109 @@
+{
+    "endTimeMs": 102000,
+    "spawns": [
+        {//pattern de \  \ avec des suicide dans les airs
+            "timeToSpawnMs": 650,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
+                {"prototypeName": "suicide", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 1600,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]},
+                {"prototypeName": "suicideReverse", "spawnPosition": [300, 0]}
+            ]
+        },
+        {//2e pattern
+            "timeToSpawnMs": 2200,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
+                {"prototypeName": "suicide", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 2750,
+            "enemies": [
+                {"prototypeName": "impHalfReverse", "spawnPosition": [550, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 3150,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]},
+                {"prototypeName": "suicideReverse", "spawnPosition": [300, 0]}
+            ]
+        },
+        {//3e fois le pattern
+            "timeToSpawnMs": 3750,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
+                {"prototypeName": "suicide", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 4070,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 4100,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 4130,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 4160,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 4190,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 4220,
+            "enemies": [
+                {"prototypeName": "shnake", "spawnPosition": [0, 0]},
+                {"prototypeName": "shnakeReverse", "spawnPosition": [800, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 4700,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]},
+                {"prototypeName": "suicideReverse", "spawnPosition": [300, 0]}
+            ]
+        },
+        {//4e fois 
+            "timeToSpawnMs": 5300,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [0, 0]},
+                {"prototypeName": "suicide", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 6250,
+            "enemies": [
+                {"prototypeName": "suicideReverse", "spawnPosition": [800, 0]},
+                {"prototypeName": "suicideReverse", "spawnPosition": [300, 0]}
+            ]
+        }
+    ]
+}
