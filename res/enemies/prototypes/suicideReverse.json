@@ -1,7 +1,7 @@
 {
     "name": "suicideReverse",
     "image": "mine",
-    "health": 25,
+    "health": 21,
     "width": 50,
     "attack": {
         "projectileImage": "basic16projectile",

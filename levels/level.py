@@ -300,7 +300,7 @@ class Level:
         self.screen.blit(self.gameWorldSurf, (WIDTH/4, 0))
 
         self.ui.draw(self.screen, self.frostLevel,
-                     self.nextHeatWave, self.lastHeatwaveTime)
+                     self.nextHeatWave, self.lastHeatwaveTime, self.player.lives)
 
     def pollInput(self, events, keys) -> None:
         for event in events:

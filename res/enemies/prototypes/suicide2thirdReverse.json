@@ -1,7 +1,7 @@
 {
     "name": "suicide2Third",
     "image": "mine",
-    "health": 41,
+    "health": 21,
     "width": 50,
     "attack": {
         "projectileImage": "basic16projectile",
@@ -13,7 +13,7 @@
     },
     "moves": [
         {
-            "delta": [800, 300],
+            "delta": [800, 600],
             "durationSec": 3
         }
     ]

@@ -8,6 +8,8 @@ TARGET_FPS = 60
 
 # Gameplay
 HEATWAVE_INTERVAL_SEC = 14
+PLAYER_LIVES = 3
+
 
 # Colors
 GREEN_COLOR = 0, 146, 32
