@@ -1,5 +1,5 @@
 {
-    "name": "shnake",
+    "name": "goingDown",
     "image": "basicEnemy",
     "health": 5,
     "attack": {
@@ -8,12 +8,12 @@
         "projectileSpeed": 2,
         "rotateSpeedDeg": 0,
         "initialRotationDeg": 90,
-        "shotCooldownMs": 500
+        "shotCooldownMs": 4000
     },
     "moves": [
         {
-            "delta": [800, 300],
-            "durationSec": 5
+            "delta": [0, 900],
+            "durationSec": 12
         }
     ]
 }

@@ -12,7 +12,7 @@
     },
     "moves": [
         {
-            "delta": [0, 10],
+            "delta": [0, 50],
             "durationSec": 2
         },
         {

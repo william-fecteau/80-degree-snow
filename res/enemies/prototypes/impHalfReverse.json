@@ -18,6 +18,10 @@
         {
             "delta": [400, 300],
             "durationSec": 5
+        },
+        {
+            "delta": [400, 300],
+            "durationSec": 5
         }
     ]
 }
