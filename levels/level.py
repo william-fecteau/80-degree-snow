@@ -5,7 +5,7 @@ from math import ceil
 import pygame
 from attack import Attack
 import pygame_menu
-from constants import BLACK, WIDTH, HEIGHT, HEATWAVE_INTERVAL_SEC
+from constants import BLACK, WHITE, WIDTH, HEIGHT, HEATWAVE_INTERVAL_SEC
 from enemyMove import EnemyMove
 from enemySpawn import EnemySpawn
 from sprites import Player
@@ -115,9 +115,10 @@ class Level:
             for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
                 prototype = enemySpawn.enemyPrototype
                 spawn = enemySpawn.spawnPosition
-                width = prototype.width if(hasattr(prototype, "width")) else None
+                width = prototype.width if(
+                    hasattr(prototype, "width")) else None
                 enemy = Enemy(self.gameWorldSurf, prototype, self.playerProjectileGroup,
-                            self.enemyProjectileGroup, self.iceCubes, center=(spawn.x, spawn.y), width=width)
+                              self.enemyProjectileGroup, self.iceCubes, center=(spawn.x, spawn.y), width=width)
                 self.enemies.add(enemy)
                 self.enemyProjectileGroup.add(enemy)
 
@@ -240,9 +241,10 @@ class Level:
                 pygame.mixer.Sound.play(self.levelEnd)
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num + 1))
-        if (keys[pygame.K_x] or keys[pygame.K_j]): 
+        if (keys[pygame.K_x] or keys[pygame.K_j]):
             self.framesHeld %= 5
-            if self.frostLevel > 0 and self.framesHeld == 0: self.addFrost(-1) # remove frost levels yourself
+            if self.frostLevel > 0 and self.framesHeld == 0:
+                self.addFrost(-1)  # remove frost levels yourself
             self.framesHeld += 1
 
     def tutorialUpdate(self, events) -> None:
@@ -250,7 +252,8 @@ class Level:
         if self.tutorialPhase == 0 and self.tutorialStep == -1:
             self.tutorialTextTop = "Press WASD to move, SPACE to shoot"
             self.tutorialStep = 0
-            pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 10000, 1) # First tutorial phase duration
+            # First tutorial phase duration
+            pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 6000, 1)
 
         for event in events:
             if event.type == E_NEXT_TUTORIAL_PHASE:
@@ -274,11 +277,22 @@ class Level:
                     # 2 Heatwave hitting
                     self.rollDices(self.diceCount)
                     self.nextHeatWave = [2]
+
+                    self.tutorialTextTop = "Every 13 seconds, a heatwave hits you"
+                    self.tutorialTextBot = "The dice represents its intensity"
+
                     pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 5000, 1)
                 if self.tutorialPhase == 3:
                     # Phase 3 is the final step, just a wait before real level 1:
+                    self.tutorialTextTop = "Pick up ice to increase your frost"
+                    self.tutorialTextBot = "You can skip levels by pressing N"
                     pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 4000, 1)
                 if self.tutorialPhase == 4:
+                    # Phase 3 is the final step, just a wait before real level 1:
+                    self.tutorialTextTop = "Good luck have fun!"
+                    self.tutorialTextBot = ""
+                    pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 4000, 1)
+                if self.tutorialPhase == 5:
                     self.game.switchState("InGameState", InGameStatePayload(1))
             if event.type == E_NEXT_TUTORIAL_STEP:
                 # PHASE 1
@@ -286,7 +300,7 @@ class Level:
                     if self.tutorialStep == 0:
                         self.tutorialStep += 1
                         self.frostLevel = 10
-                        pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 1000, 10)
+                        pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 500, 10)
                     elif self.frostLevel > 1:
                         self.frostLevel -= 1
                     else:
@@ -295,11 +309,23 @@ class Level:
                 # PHASE 2
                 if self.tutorialPhase == 2:
                     if self.tutorialStep == 0:
-                        self.lastHeatwaveTime = pygame.time.get_ticks() # start timer
-                        pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, HEATWAVE_INTERVAL_SEC * 1000, 1)
+                        self.tutorialTextTop = "It will hit once the timer hits 0"
+                        self.tutorialTextBot = "The red dice reduces your frost level"
+
+                        self.lastHeatwaveTime = pygame.time.get_ticks()  # start timer
+                        pygame.time.set_timer(
+                            E_NEXT_TUTORIAL_STEP, HEATWAVE_INTERVAL_SEC * 1000, 1)
                     if self.tutorialStep == 1:
+                        self.tutorialTextTop = "Since your frost dropped below 0, you lost a life"
+                        self.tutorialTextBot = "Next heatwave is coming!"
                         self.applyHeatwave()
-                        pygame.event.post(pygame.event.Event(E_NEXT_TUTORIAL_PHASE))
+                        pygame.time.set_timer(
+                            E_NEXT_TUTORIAL_STEP, 4000, 1)
+
+                    if self.tutorialStep == 2:
+                        pygame.event.post(
+                            pygame.event.Event(E_NEXT_TUTORIAL_PHASE))
+
                     self.tutorialStep += 1
 
     def draw(self) -> None:
@@ -340,13 +366,13 @@ class Level:
 
         if (self.num == 0):
             tutoTextTop = self.tutorialFont.render(
-                self.tutorialTextTop, True, (255, 255, 255))
+                self.tutorialTextTop, True, WHITE)
             tutoTextRect = tutoTextTop.get_rect()
             tutoTextRect.center = (WIDTH/2, HEIGHT - 100)
             self.screen.blit(tutoTextTop, tutoTextRect)
 
             tutoTextBot = self.tutorialFont.render(
-                self.tutorialTextBot, True, (255, 255, 255))
+                self.tutorialTextBot, True, WHITE)
             tutoTextRectBot = tutoTextBot.get_rect()
             tutoTextRectBot.center = (WIDTH/2, HEIGHT - 50)
             self.screen.blit(tutoTextBot, tutoTextRectBot)
