@@ -46,8 +46,7 @@ class Level:
 
         self.tutorialTextTop = ""
         self.tutorialTextBot = ""
-        self.tutorialFont = pygame.font.Font(
-            "res/fonts/PressStart2P.ttf", 16)
+        self.tutorialFont = pygame.font.Font(resource_path("res/fonts/PressStart2P.ttf"), 16)
 
         self.tutorialStep = -1
         self.tutorialPhase = 0 if num == 0 else 999
