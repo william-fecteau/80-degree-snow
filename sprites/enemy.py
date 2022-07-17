@@ -45,7 +45,6 @@ class Enemy(pygame.sprite.Sprite):
         self.dead = True
         
     def update(self, **kwargs) -> None:
-        # If it goes offscreen, die
         if self.dead:
             self.deathAnim += 1
             if self.deathAnim > self.ANIM_FPS*(len(self.deathAnimsDic)-1): self.kill()
@@ -55,6 +54,7 @@ class Enemy(pygame.sprite.Sprite):
 
 
         if not self.dead:
+            # If it goes offscreen, die
             if self.rect.right < 0 or self.rect.bottom < 0 or self.rect.left > self.gameWorldSurf.get_width() or self.rect.top > self.gameWorldSurf.get_height():
                 self.kill()
                 return
@@ -94,7 +94,7 @@ class Enemy(pygame.sprite.Sprite):
 
                 # If there are no more moves, kill the sprite
                 if self.curMoveIndex >= len(self.enemyPrototype.moves):
-                    self.die()
+                    self.kill()
                     return
 
                 # Compute speed for next move
