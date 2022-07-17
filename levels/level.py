@@ -148,8 +148,9 @@ class Level:
         for enemySpawn in self.dicEnemySpawns[self.nextSpawnTimeMs]:
             prototype = enemySpawn.enemyPrototype
             spawn = enemySpawn.spawnPosition
+            width = prototype.width if(hasattr(prototype, "width")) else None
             enemy = Enemy(self.gameWorldSurf, prototype, self.playerProjectileGroup,
-                          self.enemyProjectileGroup, self.iceCubes, center=(spawn.x, spawn.y))
+                          self.enemyProjectileGroup, self.iceCubes, center=(spawn.x, spawn.y), width=width)
             self.enemies.add(enemy)
             self.enemyProjectileGroup.add(enemy)
 
@@ -278,7 +279,7 @@ class Level:
                 self.game.switchState(
                     "InGameState", InGameStatePayload(self.num))
             if event.type == pygame.KEYUP and event.key == pygame.K_f:
-                print(self.mockFrost)
+                # print(self.mockFrost)
                 self.mockFrost -= 1
 
             # TODO remove this once heatwave is implemented
@@ -354,8 +355,9 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             # Load prototype
             imageName = prototypeData['image']
             iceDrop = prototypeData['iceDrop'] if 'iceDrop' in prototypeData else 1
+            width = prototypeData['width'] if 'width' in prototypeData else None
             prototypeObj = EnemyPrototype(
-                dicImages[imageName], prototypeData['health'], attackObj, movesObj, iceDrop)
+                dicImages[imageName], prototypeData['health'], attackObj, movesObj, iceDrop, width)
 
             prototypeName = prototypeData['name']
             dicEnemyPrototypes[prototypeName] = prototypeObj

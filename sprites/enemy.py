@@ -8,7 +8,7 @@ from sprites.projectile import Projectile
 from constants import TARGET_FPS
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, gameWorldSurf: pygame.Surface, enemyPrototype: EnemyPrototype, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, iceCubes: pygame.sprite.Group, **kwargs):
+    def __init__(self, gameWorldSurf: pygame.Surface, enemyPrototype: EnemyPrototype, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, iceCubes: pygame.sprite.Group, width, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
         self.gameWorldSurf = gameWorldSurf
@@ -18,7 +18,7 @@ class Enemy(pygame.sprite.Sprite):
         self.iceCubes = iceCubes
 
         self.enemyPrototype = enemyPrototype
-        self.image = enemyPrototype.image
+        self.image = pygame.transform.scale(enemyPrototype.image, (width, enemyPrototype.image.get_height() * (width / enemyPrototype.image.get_width()))) if width != None else enemyPrototype.image
         self.rect = self.image.get_rect(**kwargs)
         self.curMoveIndex = 0
         self.speed = pygame.Vector2(0, 0)

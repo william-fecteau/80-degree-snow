@@ -2,6 +2,7 @@
     "name": "wisp",
     "image": "wisp",
     "health": 50,
+    "width": 50,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 3,
