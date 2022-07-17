@@ -49,7 +49,12 @@
     {
         "timeToSpawnMs": 4300,
         "enemies": [
-            {"prototypeName": "impReverse", "spawnPosition": [800, 0]},
+            {"prototypeName": "imp", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 4450,
+        "enemies": [
             {"prototypeName": "imp", "spawnPosition": [0, 0]}
         ]
     },
@@ -78,6 +83,42 @@
         "timeToSpawnMs": 6000,
         "enemies": [
             {"prototypeName": "goingDown", "spawnPosition": [400, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 6100,
+        "enemies": [
+            {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 6200,
+        "enemies": [
+            {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 6300,
+        "enemies": [
+            {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 6400,
+        "enemies": [
+            {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 6500,
+        "enemies": [
+            {"prototypeName": "shnake", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 6600,
+        "enemies": [
+            {"prototypeName": "shnake", "spawnPosition": [0, 0]}
         ]
     },
     {

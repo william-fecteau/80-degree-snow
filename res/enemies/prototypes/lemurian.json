@@ -1,0 +1,31 @@
+{
+    "name": "lemurian",
+    "image": "basicEnemy",
+    "health": 41,
+    "attack": {
+        "projectileImage": "basic16projectile",
+        "nbProjectiles": 15,
+        "projectileSpeed": 1.5,
+        "rotateSpeedDeg": 24,
+        "initialRotationDeg": 90,
+        "shotCooldownMs": 2500
+    },
+    "moves": [
+        {
+            "delta": [0, 450],
+            "durationSec": 2
+        },
+        {
+            "delta": [0, 50],
+            "durationSec": 10
+        },
+        {
+            "delta": [0, -50],
+            "durationSec": 10
+        },
+        {
+            "delta": [0, 450],
+            "durationSec": 2
+        }
+    ]
+}
