@@ -1,11 +1,5 @@
 [
     {
-        "timeToSpawnMs": 0,
-        "enemies": [
-            {"prototypeName": "lemurian", "spawnPosition": [400, 0]}
-        ]
-    },
-    {
         "timeToSpawnMs": 7000,
         "enemies": [
             {"prototypeName": "wall", "spawnPosition": [40, 0]},
