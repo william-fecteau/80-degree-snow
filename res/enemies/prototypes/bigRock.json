@@ -1,7 +1,8 @@
 {
     "name": "bigRock",
-    "image": "basicEnemy",
+    "image": "scie",
     "health": 3000,
+    "width": 120,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 15,
