@@ -1,7 +1,7 @@
 {
     "name": "impHalf",
     "image": "basicEnemy",
-    "health": 10,
+    "health": 90,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 3,
