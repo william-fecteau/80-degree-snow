@@ -122,17 +122,6 @@ class Level:
         # self.enemies.add(enemy)
         # self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
 
-        for _ in range(self.CLOUDS):
-            self.backgroundObjectsGroup.add(self.generateCloud(True))
-
-        # Generate initial bg
-        for i in range(self.NB_WIDTH_TILES):
-            for j in range(self.NB_HEIGHT_TILES):
-                self.backgroundTilesGroup.add(
-                    BackgroundObject(self.BG, pygame.Vector2(
-                        0, self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.SIZE_TILE * j))
-                )
-
         self.playerInvincible = False
 
         # Check for first enemy spawn
@@ -399,6 +388,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
     with open(f'res/levels/{levelNum}.json') as file:
         levelData = jstyleson.loads(file.read())
         endTimeMs = levelData['endTimeMs']
+
         for spawn in levelData['spawns']:
             enemies = spawn['enemies']
             lstEnemiesSpawn = []
@@ -411,4 +401,32 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
             dicEnemySpawns[spawn['timeToSpawnMs']] = lstEnemiesSpawn
 
-    return Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns, endTimeMs)
+    level = Level(game, levelNum, screen, gameWorldSurf, dicEnemyPrototypes, dicEnemySpawns, endTimeMs)
+
+    with open(f'res/levels/{levelNum}.json') as file:
+        levelData = jstyleson.loads(file.read())
+
+        # Load Bg elems
+        level.CLOUDS = levelData["bgOptions"]["CLOUDS"]
+        level.CLOUD_SPEED = levelData["bgOptions"]["CLOUD_SPEED"]
+        level.NB_HEIGHT_TILES = levelData["bgOptions"]["NB_HEIGHT_TILES"]     # note: must be higher than 1
+        level.BG_SPEED = levelData["bgOptions"]["BG_SPEED"]
+        level.OFFSET = levelData["bgOptions"]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
+        level.BG = pygame.image.load(levelData["bgOptions"]["img_location"],)
+        level.SIZE_TILE = int(HEIGHT/(level.NB_HEIGHT_TILES-1))
+        level.NB_WIDTH_TILES = ceil(WIDTH/(2*level.SIZE_TILE))
+        level.NB_TOT_TILES = level.NB_WIDTH_TILES * level.NB_HEIGHT_TILES
+
+        # Generate initial clouds
+        for _ in range(level.CLOUDS):
+            level.backgroundObjectsGroup.add(level.generateCloud(True))
+
+        # Generate initial bg
+        for i in range(level.NB_WIDTH_TILES):
+            for j in range(level.NB_HEIGHT_TILES):
+                level.backgroundTilesGroup.add(
+                    BackgroundObject(level.BG, pygame.Vector2(
+                        0, level.BG_SPEED), level.SIZE_TILE, topleft=(level.SIZE_TILE * i, level.SIZE_TILE * j))
+                )
+    
+    return level
