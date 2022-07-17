@@ -11,7 +11,7 @@ class UI:
         self.pixelFont = pygame.font.Font(
             os.path.join("res", "fonts", 'PressStart2P.ttf'), 36)
         self.diceSprite = SpriteSheet("res/dice.png", 128, 128)
-        self.timerSprite = SpriteSheet("res/timer.png", 64, 64)
+        self.timerSprite = SpriteSheet("res/timer.png", 128, 128)
         self.frostMeterSprite = SpriteSheet("res/frostometer.png", 64, 512)
         self.warningSprite = SpriteSheet("res/warning.png", 32, 32)
 
@@ -28,9 +28,23 @@ class UI:
 
         self.drawDice(heatwave)
 
+        timeNextHeatwave = self.timeUntilNextHeatwave(lastHeatwave)
+
         self.drawTimer(surface,
-                       self.timeUntilNextHeatwave(lastHeatwave),
+                       timeNextHeatwave,
                        heatwave)
+
+        if (timeNextHeatwave < 2000):
+            # Gamescreen surface
+            heatwaveSurf = pygame.Surface((WIDTH/2, HEIGHT))
+            heatwaveRect = heatwaveSurf.get_rect(center=(WIDTH/2, HEIGHT/2))
+
+            heatwaveSurf.fill(RED)
+
+            # Set greater opacity the closer you get to 0
+            max_opacity = 100  # Solid block is 255
+            heatwaveSurf.set_alpha(int(max_opacity - (timeNextHeatwave / 20)))
+            surface.blit(heatwaveSurf, heatwaveRect)
 
         surface.blit(self.rightUi, self.rightUiRect)
         surface.blit(self.leftUi, self.leftUiRect)
