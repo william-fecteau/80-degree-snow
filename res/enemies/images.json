@@ -6,5 +6,6 @@
     "wisp": "res/wisp.png",
     "imp": "res/imp.png",
     "scie": "res/scie.png",
-    "cannon": "res/cannon.png"
+    "cannon": "res/cannon.png",
+    "mine": "res/mine.png"
 }
