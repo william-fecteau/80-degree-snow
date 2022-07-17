@@ -1,6 +1,6 @@
 {
     "name": "wispReverse",
-    "image": "basicEnemy",
+    "image": "wisp",
     "health": 50,
     "attack": {
         "projectileImage": "basic16projectile",
