@@ -16,9 +16,6 @@ class UI:
         self.warningSprite = SpriteSheet("res/warning.png", 32, 32)
         self.heartSprite = SpriteSheet("res/iceHeart.png", 128, 128)
 
-        self.fullHeartImg = pygame.image.load('res/images/hearth-full.png')
-        self.emptyHeartImg = pygame.image.load('res/images/hearth-empty.png')
-
     def draw(self, surface: pygame.Surface, frostAmount: int, heatwave: list, lastHeatwave: int, playerLives: int) -> None:
         # Draw right UI
         self.rightUi = pygame.Surface((WIDTH/4, HEIGHT))

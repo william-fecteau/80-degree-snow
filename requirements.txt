@@ -2,3 +2,4 @@ pygame
 pygame_menu
 numpy
 jstyleson
+pyinstaller

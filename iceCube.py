@@ -1,9 +1,10 @@
 import pygame
 import os
+from utils import resource_path
 
 NB_STACK_MAX = 5
-CUBES_IMG = [pygame.image.load(os.path.join(
-    'res', f'ice{i+1}.png')) for i in range(NB_STACK_MAX)]
+CUBES_IMG = [pygame.image.load(resource_path(os.path.join(
+    'res', f'ice{i+1}.png'))) for i in range(NB_STACK_MAX)]
 SPEED_DOWN = 3
 HIT_BEFORE_BREAK = 5
 
