@@ -44,7 +44,7 @@ class Player(pygame.sprite.Sprite):
 
         # Shooting
         self.canShoot = True
-        self.projectileSurface = pygame.image.load("res/intro_ball.gif")
+        self.projectileSurface = pygame.image.load("res/templateProjectile.png")
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, DEFAULT_SHOT_SPEED_MS)
 
         # Hitbox

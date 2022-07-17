@@ -8,7 +8,7 @@
         "projectileSpeed": 2,
         "rotateSpeedDeg": 0,
         "initialRotationDeg": 90,
-        "shotCooldownMs": 4000
+        "shotCooldownMs": 2000
     },
     "moves": [
         {

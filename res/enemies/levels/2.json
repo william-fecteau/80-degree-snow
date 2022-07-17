@@ -7,20 +7,6 @@
         ]
     },
     {
-        "timeToSpawnMs": 0,
-        "enemies": [
-            {"prototypeName": "shnake", "spawnPosition": [0, 0]},
-            {"prototypeName": "shnakeReverse", "spawnPosition": [0, 0]}
-        ]
-    },
-    {
-        "timeToSpawnMs": 750,
-        "enemies": [
-            {"prototypeName": "shnake", "spawnPosition": [200, 0]},
-            {"prototypeName": "shnakeReverse", "spawnPosition": [700, 0]}
-        ]
-    },
-    {
         "timeToSpawnMs": 1500,
         "enemies": [
             {"prototypeName": "shnake", "spawnPosition": [150, 0]},
