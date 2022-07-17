@@ -4,5 +4,6 @@
     "basicEnemyReverse": "res/shnake.png",
     "basic16projectile": "res/enemyProjectile.png",
     "wisp": "res/wisp.png",
-    "imp": "res/imp.png"
+    "imp": "res/imp.png",
+    "scie": "res/scie.png"
 }

@@ -1,7 +1,7 @@
 {
-    "name": "suicide",
+    "name": "suicide2Third",
     "image": "basicEnemy",
-    "health": 31,
+    "health": 41,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 0,
@@ -12,8 +12,8 @@
     },
     "moves": [
         {
-            "delta": [800, 900],
-            "durationSec": 4
+            "delta": [800, 300],
+            "durationSec": 3
         }
     ]
 }
