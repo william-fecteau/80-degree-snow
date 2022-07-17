@@ -32,8 +32,6 @@ class Enemy(pygame.sprite.Sprite):
     def die(self):
         self.kill()
         self.enemyPrototype.attack.removeShotTimer(self.shotEventId)
-        cube = IceCube(self.enemyPrototype.iceDrop, center=self.rect.center)
-        self.iceCubes.add(cube)
 
     def update(self, **kwargs) -> None:
         # If it goes offscreen, die
@@ -47,6 +45,8 @@ class Enemy(pygame.sprite.Sprite):
                 self.health -= projectile.damage
 
                 if self.health <= 0:
+                    cube = IceCube(self.enemyPrototype.iceDrop, self.playerProjectileGroup, center=self.rect.center)
+                    self.iceCubes.add(cube)
                     self.die()
                     return
 
