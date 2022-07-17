@@ -309,7 +309,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
             radianRotate = math.radians(attack['initialRotationDeg'])
             radianInitialRotation = math.radians(attack['rotateSpeedDeg'])
             attackObj = Attack(dicImages[projectileImgName], attack['nbProjectiles'],
-                               attack['projectileSpeed'], radianInitialRotation, radianRotate, attack['shotCooldownMs'])
+                               attack['projectileSpeed'], radianInitialRotation, radianRotate, attack['shotCooldownMs'], projectileWidth=20)
 
             # Load moves
             moves = prototypeData['moves']

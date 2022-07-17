@@ -7,7 +7,7 @@
         "OFFSET" : 3,
         "CLOUDS" : 5,
         "CLOUD_SPEED": 5,
-        "CLOUD_TYPE": "sunset"
+        "CLOUD_TYPE": "set"
     },
     "spawns": [ //lvl de wave de mob a repetition, servent a fournir le joueur en frost abondament
         {//wave1

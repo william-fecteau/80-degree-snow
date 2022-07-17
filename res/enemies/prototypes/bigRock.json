@@ -3,7 +3,7 @@
     "image": "scie",
     "health": 1500,
     "width": 120,
-    "iceDrop": 2,
+    "iceDrop": 3,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 15,
