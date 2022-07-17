@@ -38,8 +38,10 @@ class Player(pygame.sprite.Sprite):
         self.speed = 10
 
         # Frost setup
-        self.oldFrost = 5
+        self.oldFrost = 10
         self.scaleDamage(self.oldFrost)
+
+        self.resetHitbox()
 
 
         # Shooting

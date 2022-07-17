@@ -1,18 +1,18 @@
 {
-    "name": "holdStraight",
+    "name": "wall",
     "image": "basicEnemy",
-    "health": 50,
+    "health": 500,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 1,
         "projectileSpeed": 4,
         "rotateSpeedDeg": 0,
         "initialRotationDeg": 90,
-        "shotCooldownMs": 500
+        "shotCooldownMs": 1000
     },
     "moves": [
         {
-            "delta": [0, 50],
+            "delta": [0, 100],
             "durationSec": 2
         },
         {

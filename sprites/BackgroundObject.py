@@ -16,7 +16,7 @@ class BackgroundObject(pygame.sprite.Sprite):
 
 
     def update(self) -> None:
-        self.rect.center -= self.speed
+        self.rect.center += self.speed
 
         # If it goes offscreen, die
         screen = pygame.display.get_surface()

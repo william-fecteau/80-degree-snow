@@ -25,7 +25,6 @@ E_HEATWAVE = pygame.USEREVENT + 6
 
 
 class Level:
-    CLOUDS = 20
     CLOUDSIMG = [
         pygame.image.load("res/cloud-1.png"),
         pygame.image.load("res/cloud-2.png"),
@@ -34,15 +33,51 @@ class Level:
         pygame.image.load("res/cloud-5.png"),
     ]
 
-    BG = pygame.image.load("res/sea-2.jpg")
-    NB_HEIGHT_TILES = 4  # note: must be higher than 1
+    LVL_VALS = {
+        "grass1": {
+            "img_location": "res/grass-3.jpg",
+            "NB_HEIGHT_TILES" : 3,
+            "BG_SPEED" : 10,
+            "OFFSET" : 3,
+            "CLOUDS" : 2,
+            "CLOUD_SPEED": 5
+        },
+        "grass2": {
+            "img_location": "res/grass-2.jpg",
+            "NB_HEIGHT_TILES" : 3,
+            "BG_SPEED" : 10,
+            "OFFSET" : 3,
+            "CLOUDS" : 2,
+            "CLOUD_SPEED": 5
+        },
+        "sea1": {
+            "img_location": "res/sea-1.jpg",
+            "NB_HEIGHT_TILES" : 4,
+            "BG_SPEED" : 2,
+            "OFFSET" : 5,
+            "CLOUDS" : 40,
+            "CLOUD_SPEED": 2
+        },
+        "sea2": {
+            "img_location": "res/sea-2.jpg",
+            "NB_HEIGHT_TILES" : 4,
+            "BG_SPEED" : 2,
+            "OFFSET" : 2,
+            "CLOUDS" : 50,
+            "CLOUD_SPEED": 10
+        }
+    }
+    LEVEL = "grass1"
+    CLOUDS = LVL_VALS[LEVEL]["CLOUDS"]
+    CLOUD_SPEED = LVL_VALS[LEVEL]["CLOUD_SPEED"]
+    NB_HEIGHT_TILES = LVL_VALS[LEVEL]["NB_HEIGHT_TILES"]     # note: must be higher than 1
+    BG_SPEED = LVL_VALS[LEVEL]["BG_SPEED"]
+    OFFSET = LVL_VALS[LEVEL]["OFFSET"]                      # tweek if you see gaps in the textures (this shit is black magic)
+    BG = pygame.image.load(LVL_VALS[LEVEL]["img_location"],)
     SIZE_TILE = int(HEIGHT/(NB_HEIGHT_TILES-1))
     NB_WIDTH_TILES = ceil(WIDTH/(2*SIZE_TILE))
     NB_TOT_TILES = NB_WIDTH_TILES * NB_HEIGHT_TILES
     LOADING_TILES = False
-    BG_SPEED = 2
-    # tweek if you see gaps in the textures (this shit is black magic)
-    OFFSET = 2
 
     MAX_FROST = 10
 
@@ -81,7 +116,7 @@ class Level:
             for j in range(self.NB_HEIGHT_TILES):
                 self.backgroundTilesGroup.add(
                     BackgroundObject(self.BG, pygame.Vector2(
-                        0, -self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.SIZE_TILE * j))
+                        0, self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.SIZE_TILE * j))
                 )
 
         # Check for first enemy spawn
@@ -127,23 +162,9 @@ class Level:
         randomX = random.randint(-int(width/2), WIDTH+int(width/2))
         # Pick a randon Y position or top of the screen
         Y = random.randint(
-            0 - HEIGHT/2, HEIGHT) if randomY else 0 - img.get_height()
-        # Pick a speed calculated by size of image
-        speed = pygame.Vector2(0, -(width*2.5 / WIDTH)*10)
-        return BackgroundObject(img, speed, width, center=(randomX,  Y))
-
-    def generateCloud(self, randomY=False):
-        # Pick a random sprite
-        img = self.CLOUDSIMG[random.randint(0, len(self.CLOUDSIMG)-1)]
-        # Pick a random size
-        width = random.randint(int(WIDTH/10), int(WIDTH))
-        # Pick a random X position
-        randomX = random.randint(-int(width/2), WIDTH+int(width/2))
-        # Pick a randon Y position or top of the screen
-        Y = random.randint(
             0 - HEIGHT/2, HEIGHT) if randomY else -img.get_height()*1.75
         # Pick a speed calculated by size of image
-        speed = pygame.Vector2(0, -(width*2.5 / WIDTH)*12)
+        speed = pygame.Vector2(0, self.BG_SPEED + (width*2.5 / WIDTH) * self.CLOUD_SPEED)
         return BackgroundObject(img, speed, width, topleft=(randomX,  Y))
 
     def rollDices(self, diceCount: int):
@@ -180,13 +201,21 @@ class Level:
         self.player.update(events, keys, self.frostLevel)
         self.backgroundObjectsGroup.update()
         self.backgroundTilesGroup.update()
+
+        # Check if player collects ice cube
+        for iceCube in self.iceCubes:
+            if self.player.rect.colliderect(iceCube.rect):
+                self.addFrost(iceCube.nbIce)
+                iceCube.kill()
+                break
+
         if(len(self.backgroundObjectsGroup.sprites()) < self.CLOUDS):
             self.backgroundObjectsGroup.add(self.generateCloud())
         if(len(self.backgroundTilesGroup.sprites()) < self.NB_TOT_TILES):
             for i in range(self.NB_WIDTH_TILES):
                 self.backgroundTilesGroup.add(
                     BackgroundObject(self.BG, pygame.Vector2(
-                        0, -self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
+                        0, self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
                 )
 
         if not self.player.isAlive:

@@ -1,24 +1,185 @@
 [
     {
+        "timeToSpawnMs": 1000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [800, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 1500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [700, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [100, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 2000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [600, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [200, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 2500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [300, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 2900,
+        "enemies": [
+            {"prototypeName": "imp", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
         "timeToSpawnMs": 3000,
         "enemies": [
-            {"prototypeName": "wisp", "spawnPosition": [0, 0]},
-            {"prototypeName": "wisp", "spawnPosition": [450, 0]}
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]}
         ]
     },
     {
-        "timeToSpawnMs": 3250,
+        "timeToSpawnMs": 4000,
         "enemies": [
-            {"prototypeName": "wisp", "spawnPosition": [450, 0]}
+            {"prototypeName": "goingDown", "spawnPosition": [800, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [0, 0]}
         ]
     },
     {
-        "timeToSpawnMs": 3750,
+        "timeToSpawnMs": 4300,
         "enemies": [
-            {"prototypeName": "wisp", "spawnPosition": [200, 0]},
-            {"prototypeName": "wisp", "spawnPosition": [450, 0]}
+            {"prototypeName": "impReverse", "spawnPosition": [800, 0]},
+            {"prototypeName": "imp", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 4500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [700, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [100, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 5000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [600, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [200, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 5500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [300, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 6000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 7000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [800, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 7500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [700, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [100, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 8000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [600, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [200, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 8500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [300, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 9000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 10000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [800, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 10500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [700, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [100, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 11000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [600, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [200, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 11500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [300, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 12000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 13000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [800, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [0, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 13500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [700, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [100, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 14000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [600, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [200, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 14500,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [500, 0]},
+            {"prototypeName": "goingDown", "spawnPosition": [300, 0]}
+        ]
+    },
+    {
+        "timeToSpawnMs": 15000,
+        "enemies": [
+            {"prototypeName": "goingDown", "spawnPosition": [400, 0]}
         ]
     }
-
-
 ]
