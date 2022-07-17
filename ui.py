@@ -34,7 +34,7 @@ class UI:
                        timeNextHeatwave,
                        heatwave)
 
-        if (timeNextHeatwave < 2000):
+        if (timeNextHeatwave < 2000) and (sum(heatwave) > 0):
             # Gamescreen surface
             heatwaveSurf = pygame.Surface((WIDTH/2, HEIGHT))
             heatwaveRect = heatwaveSurf.get_rect(center=(WIDTH/2, HEIGHT/2))

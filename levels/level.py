@@ -5,7 +5,7 @@ from math import ceil
 import pygame
 from attack import Attack
 import pygame_menu
-from constants import BLACK, WIDTH, HEIGHT, HEATWAVE_INTERVAL_SEC, GREEN_COLOR, HONEYDEW, MINT_GREEN, EMERALD, ZOMP, EGGPLANT, WHITE, RED, DARK_BLUE, BLUE
+from constants import BLACK, WIDTH, HEIGHT, HEATWAVE_INTERVAL_SEC
 from enemyMove import EnemyMove
 from enemySpawn import EnemySpawn
 from sprites import Player
