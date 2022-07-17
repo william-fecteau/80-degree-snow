@@ -146,6 +146,20 @@
             ]
         },
         {
+            "timeToSpawnMs": 44150,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [400, 0]},
+                {"prototypeName": "suicideReverse", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
+            "timeToSpawnMs": 44300,
+            "enemies": [
+                {"prototypeName": "suicide", "spawnPosition": [400, 0]},
+                {"prototypeName": "suicideReverse", "spawnPosition": [500, 0]}
+            ]
+        },
+        {
             "timeToSpawnMs": 45000,
             "enemies": [
                 {"prototypeName": "goingDown", "spawnPosition": [400, 0]},
