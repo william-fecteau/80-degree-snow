@@ -383,6 +383,13 @@
             ]
         },
         {
+            "timeToSpawnMs": 33000,
+            "enemies": [
+                {"prototypeName": "lemurian", "spawnPosition": [200, 0]},
+                {"prototypeName": "lemurian", "spawnPosition": [600, 0]}    
+            ]
+        },
+        {
             "timeToSpawnMs": 35000,
             "enemies": [
                 {"prototypeName": "impHalf", "spawnPosition": [0, 0]},
