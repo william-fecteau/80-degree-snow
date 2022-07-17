@@ -20,6 +20,7 @@ class Enemy(pygame.sprite.Sprite):
         self.speed = pygame.Vector2(0, 0)
         self.precisePos = pygame.Vector2(0, 0) # This is needed for the enemy to move because pygame.Rect does not take into account floating point precision
         self.speed = self.computeSpeed()
+        self.health = self.enemyPrototype.health
 
         self.shotEventId = self.enemyPrototype.attack.createShotTimer()
 
@@ -37,9 +38,9 @@ class Enemy(pygame.sprite.Sprite):
         # Kill enemy if it's hit by a player projectile
         for projectile in self.playerProjectileGroup.sprites():
             if self.rect.colliderect(projectile.rect):
-                self.enemyPrototype.health -= 1
+                self.health -= projectile.damage
 
-                if self.enemyPrototype.health <= 0:
+                if self.health <= 0:
                     self.die()
                     return
 

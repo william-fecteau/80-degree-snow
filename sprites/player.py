@@ -1,3 +1,4 @@
+import math
 import pygame
 from anim.spritesheet import SpriteSheet
 from sprites.projectile import Projectile
@@ -10,7 +11,15 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, gameWorldSurf: pygame.Surface, **kwargs):
         pygame.sprite.Sprite.__init__(self)
 
-        # Loading images
+        self.playerProjectileGroup = playerProjectileGroup
+        self.enemyProjectileGroup = enemyProjectileGroup
+        self.gameWorldSurf = gameWorldSurf
+
+        # Setup sounds
+        self.pewSound = pygame.mixer.Sound("res/pew1.mp3")
+        self.dieSound = pygame.mixer.Sound("res/playerHit1.mp3")
+
+        # Setup images
         self.spritesheet = SpriteSheet("res/frosto.png", 64, 64)
         self.frontImage = self.spritesheet.image_at(1, 1, -1)
         self.backImage = self.spritesheet.image_at(1, 0, -1)
@@ -20,22 +29,21 @@ class Player(pygame.sprite.Sprite):
         }
         self.curState = "FRONT"
         self.image = self.states[self.curState]
-
         self.initialSize = self.image.get_size()
-        self.gameWorldSurf = gameWorldSurf
         self.rect = self.image.get_rect(**kwargs)
+
         self.direction = pygame.math.Vector2()
-        self.canShoot = True
+
         self.isAlive = True
         self.speed = 10
-        self.pewSound = pygame.mixer.Sound("res/pew1.mp3")
-        self.dieSound = pygame.mixer.Sound("res/playerHit1.mp3")
-        self.oldFrost = 5
 
-        self.playerProjectileGroup = playerProjectileGroup
-        self.enemyProjectileGroup = enemyProjectileGroup
+        # Frost setup
+        self.oldFrost = 5
+        self.scaleDamage(self.oldFrost)
+
 
         # Shooting
+        self.canShoot = True
         self.projectileSurface = pygame.image.load("res/intro_ball.gif")
         pygame.time.set_timer(E_PLAYER_SHOT_COOLDOWN, DEFAULT_SHOT_SPEED_MS)
 
@@ -59,7 +67,7 @@ class Player(pygame.sprite.Sprite):
             pygame.mixer.Sound.play(self.pewSound)
 
             projectile = Projectile(self.gameWorldSurf, self.projectileSurface, pygame.Vector2(
-                0, -20), bottom=(self.rect.top), centerx=self.rect.centerx)
+                0, -20), self.projectileDamage, bottom=(self.rect.top), centerx=self.rect.centerx)
             self.playerProjectileGroup.add(projectile)
             self.canShoot = False
 
@@ -104,6 +112,7 @@ class Player(pygame.sprite.Sprite):
         # Scale hitbox in function of frostlevel if it has changed
         if oldState != self.curState or self.oldFrost != frostLevel:
             self.scalePlayer(frostLevel)
+            self.scaleDamage(frostLevel)
             self.oldFrost = frostLevel
 
         self.rect.center += self.direction * self.speed
@@ -122,6 +131,12 @@ class Player(pygame.sprite.Sprite):
 
         self.hitbox.center = self.rect.center
 
+        
+    def scaleDamage(self, frostLevel) -> None:
+        # frost 1 => 30 damage
+        # frost 10 => 10 damage
+        self.projectileDamage =  math.floor((20/9) * frostLevel + (70/9))
+        print(self.projectileDamage)
         
 
     def scalePlayer(self, frostLevel: int) -> None:
