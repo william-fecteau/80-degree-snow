@@ -1,6 +1,6 @@
 # 80 Degree Snow 
 
-**The sun melted all his friends and he's out to get revenge!**
+**The sun melted all Frosto's snowy friends and he's out to get revenge!**
 
 Fight a variety of enemies and make your way to the sun to freeze him! Be careful, he sends out heatwaves every so often to melt you! Freezing his minions give you protection against this deadly attack.
 
