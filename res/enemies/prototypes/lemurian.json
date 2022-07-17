@@ -2,6 +2,7 @@
     "name": "lemurian",
     "image": "basicEnemy",
     "health": 451,
+    "width" : 80,
     "attack": {
         "projectileImage": "basic16projectile",
         "nbProjectiles": 8,
