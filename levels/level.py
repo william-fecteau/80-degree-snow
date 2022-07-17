@@ -24,6 +24,8 @@ from utils import resource_path
 E_NEXT_SPAWN = pygame.USEREVENT + 5
 E_HEATWAVE = pygame.USEREVENT + 6
 E_END_LEVEL = pygame.USEREVENT + 9
+E_NEXT_TUTORIAL_PHASE = pygame.USEREVENT + 10
+E_NEXT_TUTORIAL_STEP = pygame.USEREVENT + 11
 
 INVINCIBILITY_FLASH = 300
 INVINCIBILITY_TIME = 2000
@@ -39,6 +41,13 @@ class Level:
         self.gameWorldSurf = gameWorldSurf
         self.dicEnemySpawns = dicEnemySpawns
         self.frostLevel = self.MAX_FROST/2
+
+        self.tutorialStep = -1
+        self.tutorialPhase = 0 if num == 0 else 999
+        # 0 - wasd + space
+        # 1 - frost-o-meter
+        # 2 - Dice and heatwave
+        # 3 - Ice cubes
 
         # Setup sounds
         self.icePickup = pygame.mixer.Sound(resource_path("res/pickup.mp3"))
@@ -69,20 +78,26 @@ class Level:
 
         self.invincibilityFrameStart = None
 
-        # Check for first enemy spawn
-        self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
-        if (self.nextSpawnTimeMs == 0):
-            self.spawnEnemies()
-        else:
-            pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs)
+        if self.num > 0: # No enemy to spawn on tutorial
+            # Check for first enemy spawn
+            self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
+            if (self.nextSpawnTimeMs == 0):
+                self.spawnEnemies()
+            else:
+                pygame.time.set_timer(E_NEXT_SPAWN, self.nextSpawnTimeMs)
 
         # Setup UI
         self.ui = UI()
 
         # Heatwave setup
-        self.diceCount = self.num if self.num <= 3 else 3
-        self.nextHeatWave = [0 for _ in range(self.diceCount)]
-        pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
+        if self.num == 0: # Dont start heatwave on start of tutorial
+            self.diceCount = 1
+            self.nextHeatWave = [0]
+        else: 
+            self.diceCount = self.num if self.num <= 3 else 3
+            self.nextHeatWave = [0 for _ in range(self.diceCount)]
+            pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
+
         self.lastHeatwaveTime = pygame.time.get_ticks()
 
         # End level timer
@@ -150,6 +165,9 @@ class Level:
 
     def update(self, game, events, keys) -> None:
         self.pollInput(events, keys)
+        if self.num == 0:
+            self.tutorialUpdate(events)
+
         self.enemies.update(events=events, keys=keys)
         self.iceCubes.update()
         self.enemyProjectileGroup.update()
@@ -211,6 +229,42 @@ class Level:
                     "InGameState", InGameStatePayload(self.num + 1))
 
 
+    def tutorialUpdate(self, events) -> None:
+        if self.tutorialPhase == 0 and self.tutorialStep == -1:  # On the first frame just start a timer for the wasd + space section
+            self.tutorialStep = 0
+            pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 10000) # First tutorial phase duration
+
+        for event in events:
+            if event.type == E_NEXT_TUTORIAL_PHASE:
+                self.tutorialPhase += 1
+                self.tutorialStep = 0
+
+                if self.tutorialPhase == 1:
+                    # Phase 1 has 11 steps:
+                    # 0 Introducing frost-o-meter
+                    # 1 frost = 10
+                    # 2 frost = 9
+                    # 3 frost = 8
+                    # 4 frost = ...
+                    pygame.time.set_timer(E_NEXT_TUTORIAL_PHASE, 0)
+                    pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 5000)
+                if self.tutorialPhase == 2:
+                    print("DICE PHASE")
+            if event.type == E_NEXT_TUTORIAL_STEP:
+                if self.tutorialPhase == 1:
+                    if self.tutorialStep == 0:
+                        self.tutorialStep += 1
+                        self.frostLevel = 10
+                        pygame.time.set_timer(E_NEXT_TUTORIAL_STEP, 1000)
+                    elif self.frostLevel > 1:
+                        self.frostLevel -= 1
+                    else:
+                        pygame.event.post(pygame.event.Event(E_NEXT_TUTORIAL_PHASE))
+
+
+
+
+
     def draw(self) -> None:
         # Background tiles
         for sprite in self.backgroundTilesGroup.sprites():
@@ -245,7 +299,7 @@ class Level:
         self.screen.blit(self.gameWorldSurf, (WIDTH/4, 0))
 
         self.ui.draw(self.screen, self.frostLevel,
-                     self.nextHeatWave, self.lastHeatwaveTime, self.player.lives)
+                     self.nextHeatWave, self.lastHeatwaveTime, self.player.lives, self.tutorialPhase)
 
     def pollInput(self, events, keys) -> None:
         for event in events:
@@ -329,6 +383,7 @@ def loadLevel(game, screen: pygame.Surface, levelNum: int) -> Level:
 
             prototypeName = prototypeData['name']
             dicEnemyPrototypes[prototypeName] = prototypeObj
+
 
     # Loading enemy spawns
     dicEnemySpawns = {}
