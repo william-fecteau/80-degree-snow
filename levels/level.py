@@ -23,12 +23,10 @@ from utils import resource_path
 
 E_NEXT_SPAWN = pygame.USEREVENT + 5
 E_HEATWAVE = pygame.USEREVENT + 6
-E_INVINCIBILITY_FRAME = pygame.USEREVENT + 7
-E_INVINCIBILITY_FLASH = pygame.USEREVENT + 8
 E_END_LEVEL = pygame.USEREVENT + 9
 
-INVINCIBLE_TIME_MS = 2000
-INVINCIBLE_FLASH_MS = 100
+INVINCIBILITY_FLASH = 300
+INVINCIBILITY_TIME = 2000
 
 class Level:
     CLOUDSIMG = [
@@ -128,7 +126,7 @@ class Level:
         # self.enemies.add(enemy)
         # self.enemyProjectileGroup.add(enemy)  # Enemy will count as a projectile cuz if it collides with player it will kill him
 
-        self.playerInvincible = False
+        self.invincibilityFrameStart = None
 
         # Check for first enemy spawn
         self.nextSpawnTimeMs = list(self.dicEnemySpawns.keys())[0]
@@ -237,9 +235,16 @@ class Level:
                         0, self.BG_SPEED), self.SIZE_TILE, topleft=(self.SIZE_TILE * i, self.OFFSET-self.SIZE_TILE))
                 )
 
-        if not self.player.isAlive and not self.playerInvincible:
-            self.playerInvincible = True
-            
+        if self.invincibilityFrameStart is not None:
+            delta = pygame.time.get_ticks() - self.invincibilityFrameStart
+            if delta % INVINCIBILITY_FLASH > 100:
+                self.drawPlayer = not self.drawPlayer
+            if delta > INVINCIBILITY_TIME:
+                self.drawPlayer = True
+                self.player.isAlive = True
+                self.invincibilityFrameStart = None
+
+        if not self.player.isAlive and self.invincibilityFrameStart is None:            
             if self.player.lives <= 0:
                 self.game.switchState("InGameState", InGameStatePayload(self.num))
 
@@ -249,8 +254,8 @@ class Level:
                 pygame.time.set_timer(E_HEATWAVE, HEATWAVE_INTERVAL_SEC * 1000)
                 self.frostLevel = 5 
             
-            pygame.time.set_timer(E_INVINCIBILITY_FRAME, INVINCIBLE_TIME_MS)
-            pygame.time.set_timer(E_INVINCIBILITY_FLASH, INVINCIBLE_FLASH_MS)
+            self.invincibilityFrameStart = pygame.time.get_ticks()
+
 
         # Spawn enemies
         for event in events:
@@ -258,14 +263,6 @@ class Level:
                 self.spawnEnemies()
             elif event.type == E_HEATWAVE:
                 self.applyHeatwave()
-            elif event.type == E_INVINCIBILITY_FLASH:
-                self.drawPlayer = not self.drawPlayer
-            elif event.type == E_INVINCIBILITY_FRAME:
-                self.player.isAlive = True
-                self.playerInvincible = False
-                self.drawPlayer = True
-                pygame.time.set_timer(E_INVINCIBILITY_FRAME, 0)
-                pygame.time.set_timer(E_INVINCIBILITY_FLASH, 0)
             elif event.type == E_END_LEVEL:
                 pygame.mixer.Sound.play(self.levelEnd)
                 self.game.switchState(
