@@ -3,6 +3,7 @@ import pygame
 from typing import NamedTuple
 from constants import TARGET_FPS, SURFACE_SIZE
 from states import InGameState, MenuState, CreditsState, State
+from states.endGameState import EndGameState
 
 
 class Game:
@@ -20,7 +21,8 @@ class Game:
         self.dicStates = {
             InGameState.__name__: InGameState(self, self.screen),
             MenuState.__name__: MenuState(self, self.screen),
-            CreditsState.__name__: CreditsState(self, self.screen)
+            CreditsState.__name__: CreditsState(self, self.screen),
+            EndGameState.__name__: EndGameState(self, self.screen)
         }
         self.curState = MenuState.__name__
         self.nextState = None

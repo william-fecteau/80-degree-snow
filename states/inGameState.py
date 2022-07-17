@@ -16,8 +16,11 @@ class InGameState(State):
             if event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
                 self.game.switchState("MenuState")
             elif event.type == pygame.KEYUP and event.key == pygame.K_n:
-                self.game.switchState(
-                    "InGameState", InGameStatePayload(self.level.num + 1))
+                if (self.level.num + 1 == 5):
+                    self.game.switchState("EndGameState")
+                else:
+                    self.game.switchState(
+                        "InGameState", InGameStatePayload(self.level.num + 1))
 
         self.level.update(self.game, events, keys)
 
@@ -25,7 +28,9 @@ class InGameState(State):
         self.level.draw()
 
     def onEnterState(self, payload: InGameStatePayload) -> None:
-        self.level: Level = loadLevel(self.game, self.screen, payload.levelNum)
+
+        self.level: Level = loadLevel(
+            self.game, self.screen, payload.levelNum)
 
     def onExitState(self) -> None:
         self.level = None
