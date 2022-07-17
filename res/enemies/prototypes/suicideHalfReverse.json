@@ -1,5 +1,5 @@
 {
-    "name": "suicide2ThirdReverse",
+    "name": "suicideHalfReverse",
     "image": "basicEnemy",
     "health": 41,
     "attack": {
@@ -12,8 +12,8 @@
     },
     "moves": [
         {
-            "delta": [800, 600],
-            "durationSec": 3
+            "delta": [-800, 300],
+            "durationSec": 2
         }
     ]
 }
