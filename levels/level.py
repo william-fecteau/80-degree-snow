@@ -23,9 +23,10 @@ from states.payloads import InGameStatePayload
 E_NEXT_SPAWN = pygame.USEREVENT + 5
 E_HEATWAVE = pygame.USEREVENT + 6
 E_INVINCIBILITY_FRAME = pygame.USEREVENT + 7
-
+E_INVINCIBILITY_FLASH = pygame.USEREVENT + 8
 
 INVINCIBLE_TIME_MS = 2000
+INVINCIBLE_FLASH_MS = 100
 
 class Level:
     CLOUDSIMG = [
@@ -106,6 +107,7 @@ class Level:
         # Setting up player
         self.player = Player(self.playerProjectileGroup, self.enemyProjectileGroup,
                              self.gameWorldSurf, centerx=0, bottom=HEIGHT)
+        self.drawPlayer = True
 
         # enemy = Enemy(dicEnemyPrototypes["shnake"], self.playerProjectileGroup, self.enemyProjectileGroup, topleft=(0, 0))
         # self.enemies.add(enemy)
@@ -235,18 +237,23 @@ class Level:
                 self.frostLevel = 5 
             
             pygame.time.set_timer(E_INVINCIBILITY_FRAME, INVINCIBLE_TIME_MS)
+            pygame.time.set_timer(E_INVINCIBILITY_FLASH, INVINCIBLE_FLASH_MS)
 
         # Spawn enemies
         for event in events:
             if event.type == E_NEXT_SPAWN:
                 self.spawnEnemies()
-                break
             elif event.type == E_HEATWAVE:
                 self.applyHeatwave()
-                break
+            elif event.type == E_INVINCIBILITY_FLASH:
+                self.drawPlayer = not self.drawPlayer
             elif event.type == E_INVINCIBILITY_FRAME:
                 self.player.isAlive = True
                 self.playerInvincible = False
+                self.drawPlayer = True
+                pygame.time.set_timer(E_INVINCIBILITY_FRAME, 0)
+                pygame.time.set_timer(E_INVINCIBILITY_FLASH, 0)
+                break
 
 
     def draw(self) -> None:
@@ -275,7 +282,8 @@ class Level:
             self.gameWorldSurf.blit(sprite.image, sprite.rect)
 
         # Player
-        self.gameWorldSurf.blit(self.player.image, self.player.rect)
+        if self.drawPlayer:
+            self.gameWorldSurf.blit(self.player.image, self.player.rect)
 
         pygame.draw.rect(self.gameWorldSurf, "red", self.player.hitbox, 1)
 
