@@ -1,6 +1,6 @@
 {
     "name": "imp",
-    "image": "basicEnemy",
+    "image": "imp",
     "health": 90,
     "attack": {
         "projectileImage": "basic16projectile",
