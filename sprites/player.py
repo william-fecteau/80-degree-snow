@@ -5,9 +5,11 @@ from anim.spritesheet import SpriteSheet
 from sprites.projectile import Projectile
 from constants import PLAYER_LIVES
 from utils import resource_path
+import os
 
 DEFAULT_SHOT_SPEED_MS = 100
 E_PLAYER_SHOT_COOLDOWN = pygame.USEREVENT + 1
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, playerProjectileGroup: pygame.sprite.Group, enemyProjectileGroup: pygame.sprite.Group, gameWorldSurf: pygame.Surface, **kwargs):
@@ -22,13 +24,14 @@ class Player(pygame.sprite.Sprite):
         self.dieSound = pygame.mixer.Sound(resource_path("res/playerHit1.mp3"))
 
         # Sound volumes
-        pygame.mixer.Sound.set_volume(self.pewSound,0.5)
-        pygame.mixer.Sound.set_volume(self.dieSound,0.6)
+        pygame.mixer.Sound.set_volume(self.pewSound, 0.5)
+        pygame.mixer.Sound.set_volume(self.dieSound, 0.6)
 
         # Setup images
-        self.spritesheet = SpriteSheet("res/frosto.png", 64, 64)
-        self.frontImage = self.spritesheet.image_at(1, 1, -1)
-        self.backImage = self.spritesheet.image_at(1, 0, -1)
+        self.spritesheet = SpriteSheet(
+            os.path.join('res', 'frosto-anim.png'), 64, 64)
+        self.frontImage = self.spritesheet.image_at(0, 1, -1)
+        self.backImage = self.spritesheet.image_at(0, 0, -1)
         self.states = {
             "FRONT": self.frontImage,
             "BACK": self.backImage
@@ -68,7 +71,7 @@ class Player(pygame.sprite.Sprite):
 
     def resetHitbox(self):
         self.hitbox = pygame.Rect(
-            self.rect.left, self.rect.top, self.rect.width / 2, self.rect.height)
+            self.rect.left, self.rect.top, self.rect.width / 2, self.rect.height - 10)
         self.hitbox.center = self.rect.center
 
 

@@ -5,7 +5,7 @@ import numpy
 import os
 from math import floor
 from anim.spritesheet import SpriteSheet
-from constants import BLACK, DARK_BLUE, WHITE, BLUE, SURFACE_SIZE, WIDTH, HEIGHT
+from constants import BLACK, DARK_BLUE, WHITE, BLUE, SURFACE_SIZE, WIDTH, HEIGHT, GAME_VERSION
 from utils import resource_path
 
 from .payloads import InGameStatePayload
@@ -30,6 +30,11 @@ class MenuState (State):
         self.wispRect = self.wispSpritesheet.image_at(0, 0, -1).get_rect()
         self.wispRect.centerx = WIDTH - WIDTH/6
         self.wispRect.centery = HEIGHT/2
+
+        self.title = SpriteSheet(os.path.join('res', 'title.png'), 600, 225)
+        self.titleRect = self.title.image_at(0, 0, -1).get_rect()
+        self.titleRect.centerx = WIDTH/2
+        self.titleRect.centery = 150
 
         # Add other sprite to the right, maybe animate it NTH
 
@@ -57,25 +62,21 @@ class MenuState (State):
 
     def draw(self) -> None:
         self.menu.draw(self.surf)
-        logo = pygame.image.load(resource_path(
-            os.path.join('res', 'title.png')))
-        logoRect = logo.get_rect()
-        logoRect.centerx = WIDTH/2
-        logoRect.centery = 150
 
-        self.surf.blit(logo, logoRect)
+        frameFours = int(pygame.time.get_ticks() / 250 % 4)
+        frameTwos = int(pygame.time.get_ticks() / 500 % 2)
+        frameOne = int(pygame.time.get_ticks() / 1000 % 2)
 
-        frameFrosto = int(pygame.time.get_ticks() / 250 % 4)
-        frameWisp = int(pygame.time.get_ticks() / 500 % 2)
+        self.surf.blit(self.title.image_at(frameOne, 0, -1), self.titleRect)
 
         self.surf.blit(self.playerSpritesheet.image_at(
-            frameFrosto, 0, -1), self.frostoRect)
+            frameFours, 0, -1), self.frostoRect)
 
         self.surf.blit(self.wispSpritesheet.image_at(
-            frameWisp, 0, -1), self.wispRect)
+            frameTwos, 0, -1), self.wispRect)
 
         versionText = self.pixelFont.render(
-            "Version 0.1 Alpha", True, WHITE)
+            "Version " + GAME_VERSION, True, WHITE)
         versionRect = versionText.get_rect()
         versionRect.bottomright = (WIDTH - 10, HEIGHT - 10)
         self.surf.blit(versionText, versionRect)
@@ -85,7 +86,7 @@ class MenuState (State):
     def update(self, events, keys) -> None:
         self.menu.update(events)
 
-    def menuAction(self) -> None:
+    def startAction(self) -> None:
         pygame.mixer.Sound.play(self.menuBoop)
         self.game.switchState("InGameState", InGameStatePayload(0))
 
@@ -106,6 +107,6 @@ class MenuState (State):
             '', WIDTH, HEIGHT, theme=cool_theme, center_content=False)
         self.menu.get_menubar().hide()
 
-        self.menu.add.button('Play', self.menuAction)
+        self.menu.add.button('Play', self.startAction)
         self.menu.add.button('Credits', self.creditsAction)
         self.menu.add.button('Quit', pygame_menu.events.EXIT)
