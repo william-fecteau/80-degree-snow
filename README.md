@@ -6,6 +6,10 @@ Fight a variety of enemies and make your way to the sun to freeze him! Be carefu
 
 Game made for the GMTK Game Jam 2022 with the theme : Roll of the Dice.
 
+## Playing the game
+
+If you want to play the game without cloning the repo, follow this link where you can download the .exe : https://itsseraphii.itch.io/80-degree-snow
+
 ## Project setup
 To set up the project, you must have `Python 3.10` or higher installed, as well as `pip` if it was not included in your install.
 
